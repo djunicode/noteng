@@ -49,25 +49,25 @@ const Sidebar = () => {
       </div>
       <div className='flex flex-col my-3'>
         <div className='flex flex-col mx-12 gap-5'>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 mt-8'>
             <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createJob}>
               <AddIcon style={{color:'#394DFD'}}/>
             </div>
             <p className='mt-1 font-bold text-white'>Add Job Opportunity</p>
           </div>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 mt-8'>
             <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
               <AddIcon style={{color:'#394DFD'}}/>
             </div>
             <p className='mt-1 font-bold text-white'>Create New Post</p>
           </div>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 mt-8'>
             <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
               <AddIcon style={{color:'#394DFD'}}/>
             </div>
             <p className='mt-1 font-bold text-white'> Upload Notes</p>
           </div>
-          <div className='flex gap-5'>
+          <div className='flex gap-5 mt-8'>
             <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
               <AddIcon style={{color:'#394DFD'}}/>
             </div>

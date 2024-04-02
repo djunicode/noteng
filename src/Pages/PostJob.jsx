@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Sidebar from '../../Components/Home/Sidebar';
-import './PostJob.css'; // Import CSS file for styles
+import Sidebar from '../Components/Home/Sidebar';
+import '../styles/PostJob.css';
 
 const PostJob = () => {
   const [jobType, setJobType] = useState(null);
