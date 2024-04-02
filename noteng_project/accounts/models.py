@@ -108,3 +108,20 @@ class eventModel(postModel):
     event_id=models.AutoField(primary_key=True)
     organised_by=models.CharField(max_length=50,choices=organizer)
     subtype=models.CharField(max_length=20,choices=eventType)
+
+class notesModel(models.Model):
+    rating_choices = [
+        (1, 'One Star'),
+        (2, 'Two Stars'),
+        (3, 'Three Stars'),
+        (4, 'Four Stars'),
+        (5, 'Five Stars'),
+    ]
+    note_id = models.IntegerField(primary_key=True)
+    note_title = models.TextField()
+    note_description = models.TextField()
+    subject= models.TextField()
+    department = models.CharField(max_length = 100)
+    rating = models.IntegerChoices(choices=rating_choices)
+    document = models.FileField(upload_to='documents/')
+    sapid=models.ForeignKey(User,on_delete=models.CASCADE)
