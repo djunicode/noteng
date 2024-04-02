@@ -40,3 +40,18 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+class Professor(User):
+    department = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100)
+
+class Student(User):
+    YEAR_CHOICES = [
+        ('First Year', 'First Year'),
+        ('Second Year', 'Second Year'),
+        ('Third Year', 'Third Year'),
+        ('Fourth Year', 'Fourth Year'),
+    ]
+    
+    current_year = models.CharField(max_length=20, choices=YEAR_CHOICES)
+    branch = models.CharField(max_length=100)
