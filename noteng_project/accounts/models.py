@@ -87,7 +87,7 @@ class jobBoardModel(postModel):
     ]
     status=[
         ('Offline','offline'),
-        ('Online','on;ine')
+        ('Online','online')
     ]
     job_id=models.AutoField(primary_key=True)
     company=models.CharField(max_length=50)
