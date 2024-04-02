@@ -6,7 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar() {
   return (
-    <div className='flex flex-col bg-custom-blue h-[100vh] w-[22vw] '>
+    <div className='flex'>
+    <div className='flex flex-col bg-custom-blue h-full w-[22vw] '>
       <div className='flex flex-row  px-4 py-4'>
         <div className='flex flex-col'>
           <p className='text-2xl font-poppins text-white'>NOTENG</p>
@@ -63,6 +64,7 @@ function Sidebar() {
           <p className='mt-1 font-bold text-white'>Share Video</p>
          </div>
       </div>
+    </div>
     </div>
     </div>
   );
