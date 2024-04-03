@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 function Sidebar() {
   return (
     <div className=' flex'>
-    <div className='hidden md:flex flex-col bg-custom-blue h-full w-[19vw] '>
+    <div className='hidden md:flex flex-col bg-custom-blue h-full w-[20vw] '>
       <div className='flex flex-row  px-4 py-4'>
         <div className='flex flex-col'>
           <p className='text-2xl font-poppins text-white'>NOTENG</p>
