@@ -48,11 +48,11 @@ function JobOpportunity() {
       <p className=' md:ml-6 md:justify-start mt-10 flex justify-center items-center'>
         <span className='font-bold'>Explore Latest Job Opportunities</span>
       </p>
-      <div className='ml-6 w-[78vw] border-b-2'></div>
-      <div className='flex flex-col m-10 gap-5 md:flex-row md:ml-1 mt-4 justify-evenly'>
+      <div className='ml-6  border-b-2'></div>
+      <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row md:ml-1 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
-          return <div className='flex max-w-full justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
-            <div className='border p-3 rounded-lg bg-gray-200'>
+          return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 ' key={i}>
+            <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
               <p className='font-bold '>{data.heading1}</p>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
               <p className='mt-2 text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.body}</p>

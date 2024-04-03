@@ -62,7 +62,7 @@ function ShareNotes() {
       <div className='ml-6 w-[78vw] border-b-2'></div>
       <div className='flex  flex-col m-10 gap-5 md:flex-row md:ml-1 mt-4 justify-evenly'>
         {cardData.map((data, i) => {
-          return <div className='flex max-w-full justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
+          return <div className='flex  justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-200'>
                 <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
                     <p className='font-bold'>{data.heading1}</p>
@@ -90,4 +90,4 @@ function ShareNotes() {
   )
 }
 
-export default ShareNotes
+export default ShareNotes 
