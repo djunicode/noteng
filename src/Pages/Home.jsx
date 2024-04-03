@@ -3,6 +3,7 @@ import Sidebar from '../Components/Home/Sidebar'
 import JobOpportunity from '../Components/Home/JobOpportunity'
 import LatestPosts from '../Components/Home/LatestPosts'
 import ShareNotes from '../Components/Home/ShareNotes'
+import SharedResources from '../Components/Home/SharedResources'
 function Home() {
   return (
     <div className='flex'>
@@ -11,6 +12,7 @@ function Home() {
             <JobOpportunity/>
             <LatestPosts/>
             <ShareNotes/>
+            <SharedResources/>
         </div>
     </div>
   )

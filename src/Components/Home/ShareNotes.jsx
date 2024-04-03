@@ -56,11 +56,11 @@ const cardData = [
 function ShareNotes() {
   return (
     <div className='flex flex-col '>
-         <p className='ml-6  flex items-center'>
+         <p className='justify-center md:ml-6 md:justify-start flex items-center'>
         <span className='font-bold'>Share Notes</span>
       </p>
       <div className='ml-6 w-[78vw] border-b-2'></div>
-      <div className='flex flex-row ml-1 mt-4 justify-evenly'>
+      <div className='flex  flex-col m-10 gap-5 md:flex-row md:ml-1 mt-4 justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex max-w-full justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-200'>
@@ -77,7 +77,7 @@ function ShareNotes() {
                 </div>
                 <div className='flex justify-between'>
                     
-                    {data.department}
+                   <p className='text-custom-blue font-bold md:font-normal'>{data.department}</p> 
                     {data.pdf}
                 </div>
             </div>

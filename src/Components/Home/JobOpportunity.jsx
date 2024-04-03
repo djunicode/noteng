@@ -8,36 +8,36 @@ const cardData = [
     "heading1": 'Internship',
     "heading2": 'Company Name',
     "body": "We are seeking highly motivated and enthusiastic technology intern to join us",
-    "icon": <CalendarTodayIcon className=" text-blue-500 " style={{width:'20px',height:'20px'}}  />,
+    "icon": <CalendarTodayIcon className=" text-custom-blue " style={{width:'20px',height:'20px'}}  />,
     "time": "3 Months",
-    "timeicon": <AccessTimeOutlinedIcon className=" text-blue-500  " style={{width:'20px',height:'20px'}}  />,
+    "timeicon": <AccessTimeOutlinedIcon className=" text-custom-blue  " style={{width:'20px',height:'20px'}}  />,
     'timelimit': 'Part-time',
     "mode": "Online",
-    "mobile": <SmartphoneOutlinedIcon className="h-2 w-2 text-blue-500 " style={{width:'20px',height:'20px'}} />,
+    "mobile": <SmartphoneOutlinedIcon className="h-2 w-2 text-custom-blue " style={{width:'20px',height:'20px'}} />,
     "date": "24th March,2024"
   },
   {
     "heading1": 'Internship',
     "heading2": 'Company Name',
     "body": "We are seeking highly motivated and enthusiastic technology intern to join us",
-    "icon": <CalendarTodayIcon className=" text-blue-500" style={{width:'20px',height:'20px'}}  />,
+    "icon": <CalendarTodayIcon className=" text-custom-blue" style={{width:'20px',height:'20px'}}  />,
     "time": "3 Months",
-    "timeicon": <AccessTimeOutlinedIcon className=" text-blue-500"style={{width:'20px',height:'20px'}}  />,
+    "timeicon": <AccessTimeOutlinedIcon className=" text-custom-blue "style={{width:'20px',height:'20px'}}  />,
     'timelimit': 'Part-time',
     "mode": "Online",
-    "mobile": <SmartphoneOutlinedIcon className=" text-blue-500" style={{width:'20px',height:'20px'}} />,
+    "mobile": <SmartphoneOutlinedIcon className=" text-custom-blue" style={{width:'20px',height:'20px'}} />,
     "date": "24th March,2024",
   },
   {
     "heading1": 'Internship',
     "heading2": 'Company Name',
     "body": "We are seeking highly motivated and enthusiastic technology intern to join us",
-    "icon": <CalendarTodayIcon className=" text-blue-500" style={{width:'20px',height:'20px'}}  />,
+    "icon": <CalendarTodayIcon className=" text-custom-blue" style={{width:'20px',height:'20px'}}  />,
     "time": "3 Months",
-    "timeicon": <AccessTimeOutlinedIcon className=" text-blue-500  " style={{width:'20px',height:'20px'}} />,
+    "timeicon": <AccessTimeOutlinedIcon className=" text-custom-blue " style={{width:'20px',height:'20px'}} />,
     'timelimit': 'Part-time',
     "mode": "Online",
-    "mobile": <SmartphoneOutlinedIcon className=" text-blue-500" style={{width:'20px',height:'20px'}} />,
+    "mobile": <SmartphoneOutlinedIcon className=" text-custom-blue" style={{width:'20px',height:'20px'}} />,
     "date": "24th March,2024",
   },
 ]
@@ -45,11 +45,11 @@ const cardData = [
 function JobOpportunity() {
   return (
     <div className='flex flex-col'>
-      <p className='ml-6 mt-10 flex items-center'>
+      <p className=' md:ml-6 md:justify-start mt-10 flex justify-center items-center'>
         <span className='font-bold'>Explore Latest Job Opportunities</span>
       </p>
       <div className='ml-6 w-[78vw] border-b-2'></div>
-      <div className='flex flex-row ml-1 mt-4 justify-evenly'>
+      <div className='flex flex-col m-10 gap-5 md:flex-row md:ml-1 mt-4 justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex max-w-full justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200'>
@@ -59,18 +59,18 @@ function JobOpportunity() {
               <div className='flex justify-between'>
                 <div className='flex items-center'>
                   {data.icon }
-                  <p className='text-blue-500 text-[8px] md:text-[10px] lg:text-[12px]'>{data.time}</p>
+                  <p className='text-custom-blue text-[8px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.time}</p>
                 </div>
                 <div className='flex items-center'>
                   {data.timeicon}
-                  <p className='text-blue-500 text-[8px] md:text-[10px] lg:text-[12px]'>{data.timelimit}</p>
+                  <p className='text-custom-blue text-[8px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.timelimit}</p>
                 </div>
                 <div className='flex items-center'>
                   {data.mobile}
-                  <p className='text-blue-500 text-[8px] md:text-[10px] lg:text-[12px]'>{data.mode}</p>
+                  <p className='text-custom-blue text-[9px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.mode}</p>
                 </div>
                 <div className='flex items-center'>
-                  <p className='text-blue-500 text-[8px] md:text-[10px] lg:text-[12px]'>{data.date}</p>
+                  <p className='text-custom-blue text-[9px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.date}</p>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@ function JobOpportunity() {
           </div>
         })}
       </div>
-      <p className='flex justify-end mr-5 text-custom-blue font-bold '>See more</p>
+      <p className='flex justify-end mr-12 md:mr-5 text-custom-blue font-bold '>See more</p>
     </div>
   )
 }

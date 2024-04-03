@@ -37,30 +37,30 @@ const cardData = [
 function LatestPosts() {
   return (
     <div className='flex flex-col'>
-      <p className='ml-6  flex items-center'>
-        <span className='font-bold'>Latest Posts</span>
+      <p className=' flex items-center justify-center md:justify-start md:ml-6'>
+        <span className='flex font-bold  '>Latest Posts</span>
       </p>
       <div className='ml-6 w-[78vw] border-b-2'></div>
-      <div className='flex flex-row ml-1 mt-4 justify-evenly'>
+      <div className='flex flex-col gap-5  ml-10 mr-10 md:flex-row  md:ml-1 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex max-w-full justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200'>
-              <p className='font-bold '>{data.heading1}</p>
+              <p className='font-bold text-[18px] md:text-[15px] '>{data.heading1}</p>
               
-              <p className='mt-2 text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.body}</p>
+              <p className=' mt-2 text-sm border-b-[1px] pb-3 border-custom-blue text-[16px]'>{data.body}</p>
               <div className='flex justify-between'>
                 <div className='flex items-center'>
                   {data.icon }
-                  <p className='text-custom-blue text-[8px] md:text-[10px] lg:text-[12px]'>{data.timelimit}</p>
+                  <p className='text-custom-blue font-bold md:font-normal '>{data.timelimit}</p>
                 </div>
-              <p className='text-custom-blue'>Categories</p>
+              <p className='text-custom-blue font-bold md:font-normal'>Categories</p>
               </div>
             </div>
            
           </div>
         })}
       </div>
-      <p className='flex justify-end mr-5 text-custom-blue font-bold '>See more</p>
+      <p className='flex justify-end mr-12 text-custom-blue font-bold '>See more</p>
     </div>
   )
 }
