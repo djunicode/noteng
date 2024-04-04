@@ -32,7 +32,7 @@ const Sidebar = () => {
         </div>
       )}
       <div className='flex h-full '>
-      <div className={`lg:flex lg:flex-col lg:w-[20vw] bg-custom-blue h-full w-full  ${isOpen ? '' : 'hidden'}`}>
+      <div className={`lg:flex lg:flex-col lg:w-[19vw] bg-custom-blue h-full w-full  ${isOpen ? '' : 'hidden'}`}>
 
           <div className='flex justify-end p-3 lg:hidden 'onClick={toggleSidebar}>
               <CloseIcon/>
