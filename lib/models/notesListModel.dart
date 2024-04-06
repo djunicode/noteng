@@ -6,10 +6,10 @@ class NotesListModel {
   final String? department;
 
   NotesListModel({
-    this.title,
-    this.rating,
-    this.description,
-    this.subject,
-    this.department,
+    required this.title,
+    required this.rating,
+    required this.description,
+    required this.subject,
+    required this.department,
   });
 }
