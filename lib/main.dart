@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/jobListWidget.dart';
-
+import 'package:noteng/Widgets/app_bar_widget.dart';
+import 'package:noteng/Widgets/button_widget.dart';
+import 'package:noteng/Widgets/notesListWidget.dart';
+import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -9,53 +12,62 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'NOTENG',
-      // theme: ThemeData(
-      //   fontFamily: 'Poppins',
-      //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-      //   useMaterial3: true,
-      // ),
-      home: Trial(),
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      // home: AddNewPostPage(),
+      home: trial(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class Trial extends StatefulWidget {
-  const Trial({Key? key});
+class trial extends StatefulWidget {
+  const trial({super.key});
 
   @override
-  State<Trial> createState() => _TrialState();
+  State<trial> createState() => _trialState();
 }
 
-class _TrialState extends State<Trial> {
+class _trialState extends State<trial> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
+    return const Scaffold(
+      appBar: AppBarWidget(title: "Dummy Title"),
       body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(
-            5,
-            (index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: JobListWidget(
-                width: 200.0,
-                height: 500.0,
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 150.0,
               ),
-            ),
+              SizedBox(
+                height: 15,
+              ),
+              textFieldWidget(
+                readOnly: true,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              textFieldWidget(
+                readOnly: false,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              textFieldWidget(
+                maxLines: 8,
+              ),
+            ],
           ),
         ),
       ),

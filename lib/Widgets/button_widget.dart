@@ -3,14 +3,14 @@ import 'package:noteng/constants/colors.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String name;
-  final String action;
+  final VoidCallback onPressed;
   final double? height;
   final double? width;
 
-  const ButtonWidget({
+   ButtonWidget({
     Key? key,
     required this.name,
-    required this.action,
+    required this.onPressed, 
     this.width,
     this.height,
   }) : super(key: key);
@@ -19,11 +19,10 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double finalWidth = width ?? screenWidth;
+    final double finalHeight = height ?? 50;
 
-    final double finalHeight = height ?? finalWidth * 0.15;
-    
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed, 
       style: TextButton.styleFrom(
         backgroundColor: primaryColor,
         fixedSize: Size(finalWidth, finalHeight),
