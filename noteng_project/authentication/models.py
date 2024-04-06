@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
     lname = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     contact_number = models.CharField(max_length=10, unique=True)
-    mentor = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='mentees')
+    mentors = models.ManyToManyField('self', blank=True, related_name='mentees')
     expertise = models.CharField(max_length=100, blank=True)
 
     objects = CustomUserManager()
