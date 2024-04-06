@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteng/Widgets/notesListWidget.dart';
+import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -18,17 +20,39 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        backgroundColor: primaryColor,
-        body: Center(
-          child: Text('NOTENG',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold)),
-        ),
-      ),
+      home: trial(),
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class trial extends StatefulWidget {
+  const trial({super.key});
+
+  @override
+  State<trial> createState() => _trialState();
+}
+
+class _trialState extends State<trial> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(
+            height: 150.0,
+          ),
+          textFieldWidget(),
+          SizedBox(
+            height: 15.0,
+          ),
+          textFieldWidget(),
+          SizedBox(
+            height: 15.0,
+          ),
+          textFieldWidget(),
+        ],
+      ),
     );
   }
 }
