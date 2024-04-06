@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -9,6 +10,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      shadowColor: backgroundColor,
       title: Text(
         title,
         style: const TextStyle(
@@ -17,22 +19,22 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       leading: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Container(
           decoration: BoxDecoration(
             color: secondaryAccentColor,
             borderRadius: BorderRadius.circular(10),
+          ),
+          constraints: const BoxConstraints(
+            minWidth: 40,
+            minHeight: 40,
           ),
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back,
               color: secondaryColor,
             ),
-            onPressed: () => Navigator.pop(context),
-            constraints: const BoxConstraints(
-              minWidth: 40,
-              minHeight: 40,
-            ),
+            onPressed: () => Get.back(),
           ),
         ),
       ),

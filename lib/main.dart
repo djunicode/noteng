@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:noteng/Widgets/app_bar_widget.dart';
+import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'constants/colors.dart';
@@ -36,28 +39,43 @@ class trial extends StatefulWidget {
 class _trialState extends State<trial> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 150.0,
+    return const Scaffold(
+      appBar: AppBarWidget(title: "Dummy Title"),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 150.0,
+              ),
+              ButtonWidget(
+                name: "Submit",
+                action: "",
+                height: null,
+                width: null,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              textFieldWidget(
+                readOnly: true,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              textFieldWidget(
+                readOnly: false,
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              textFieldWidget(
+                maxLines: 8,
+              ),
+            ],
           ),
-          textFieldWidget(
-            readOnly: true,
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          textFieldWidget(
-            readOnly: false,
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          textFieldWidget(
-            maxLines: 8,
-          ),
-        ],
+        ),
       ),
     );
   }
