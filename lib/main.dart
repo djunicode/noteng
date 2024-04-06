@@ -6,6 +6,7 @@ import 'package:noteng/Widgets/dropdown_widget.dart';
 import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/Widgets/upload_widget.dart';
+import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/pages/add_new_post.dart';
 import 'constants/colors.dart';
 
@@ -26,12 +27,14 @@ class MyApp extends StatelessWidget {
       //   useMaterial3: true,
       // ),
       home: Trial(),
+      // home: Trial(),
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
       
+      home: AddNewPostPage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -56,7 +59,10 @@ class _TrialState extends State<Trial> {
             5,
             (index) => Padding(
               padding: const EdgeInsets.all(8.0),
-              child: NotesListWidget(),
+              child: PostListWidget(
+                width: 200.0,
+                height: 500.0,
+              ),
             ),
           ),
         ),
