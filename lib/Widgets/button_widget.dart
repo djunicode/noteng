@@ -21,7 +21,7 @@ class ButtonWidget extends StatelessWidget {
     final double finalWidth = width ?? screenWidth;
 
     final double finalHeight = height ?? finalWidth * 0.15;
-
+    
     return TextButton(
       onPressed: () {},
       style: TextButton.styleFrom(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
+import 'package:noteng/pages/add_new_post.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -19,7 +20,13 @@ class MyApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       //   useMaterial3: true,
       // ),
-      home: Trial(),
+      // home: Trial(),
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+        useMaterial3: true,
+      ),
+      home: AddNewPostPage(),
       debugShowCheckedModeBanner: false,
     );
   }
