@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/notesListWidget.dart';
-import 'package:noteng/Widgets/textFieldWidget.dart';
+import 'package:noteng/Widgets/postListWidget.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -45,7 +44,10 @@ class _TrialState extends State<Trial> {
             5,
             (index) => Padding(
               padding: const EdgeInsets.all(8.0),
-              child: NotesListWidget(),
+              child: PostListWidget(
+                width: 200.0,
+                height: 500.0,
+              ),
             ),
           ),
         ),
