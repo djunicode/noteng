@@ -9,55 +9,46 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'NOTENG',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
-        useMaterial3: true,
-      ),
-      home: trial(),
+      // theme: ThemeData(
+      //   fontFamily: 'Poppins',
+      //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+      //   useMaterial3: true,
+      // ),
+      home: Trial(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class trial extends StatefulWidget {
-  const trial({super.key});
+class Trial extends StatefulWidget {
+  const Trial({Key? key});
 
   @override
-  State<trial> createState() => _trialState();
+  State<Trial> createState() => _TrialState();
 }
 
-class _trialState extends State<trial> {
+class _TrialState extends State<Trial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 150.0,
+      backgroundColor: backgroundColor,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(
+            5,
+            (index) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NotesListWidget(),
+            ),
           ),
-          textFieldWidget(
-            readOnly: true,
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          textFieldWidget(
-            readOnly: false,
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          textFieldWidget(
-            maxLines: 8,
-          ),
-        ],
+        ),
       ),
     );
   }
