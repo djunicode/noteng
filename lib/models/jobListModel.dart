@@ -7,11 +7,11 @@ class JobListModel {
   final String? dateTime;
 
   JobListModel({
-    this.cName,
-    this.cDesc,
-    this.duration,
-    this.jobMode,
-    this.mode,
-    this.dateTime,
+    required this.cName,
+    required this.cDesc,
+    required this.duration,
+    required this.jobMode,
+    required this.mode,
+    required this.dateTime,
   });
 }
