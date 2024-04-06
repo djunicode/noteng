@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-<<<<<<< HEAD
-=======
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/dropdown_widget.dart';
->>>>>>> a3c357c (add new post)
 import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/Widgets/upload_widget.dart';
@@ -23,21 +20,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'NOTENG',
-<<<<<<< HEAD
       // theme: ThemeData(
       //   fontFamily: 'Poppins',
       //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       //   useMaterial3: true,
       // ),
       home: Trial(),
-=======
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      home: AddNewPostPage(),
->>>>>>> a3c357c (add new post)
+      
       debugShowCheckedModeBanner: false,
     );
   }
