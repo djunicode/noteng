@@ -1,17 +1,13 @@
 class PostListModel {
-  final String? cName;
-  final String? cDesc;
-  final String? duration;
-  final String? jobMode;
-  final String? mode;
-  final String? dateTime;
+  final String? pTitle;
+  final String? pDesc;
+  final int? pLikes;
+  final String? pCategory;
 
   PostListModel({
-    this.cName,
-    this.cDesc,
-    this.duration,
-    this.jobMode,
-    this.mode,
-    this.dateTime,
+    this.pTitle,
+    this.pDesc,
+    this.pLikes,
+    this.pCategory,
   });
 }
