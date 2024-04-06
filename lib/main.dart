@@ -42,15 +42,21 @@ class _trialState extends State<trial> {
           SizedBox(
             height: 150.0,
           ),
-          textFieldWidget(),
+          textFieldWidget(
+            readOnly: true,
+          ),
           SizedBox(
             height: 15.0,
           ),
-          textFieldWidget(),
+          textFieldWidget(
+            readOnly: false,
+          ),
           SizedBox(
             height: 15.0,
           ),
-          textFieldWidget(),
+          textFieldWidget(
+            maxLines: 8,
+          ),
         ],
       ),
     );
