@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+<<<<<<< HEAD
+=======
+import "@fontsource/poppins"; // Defaults to weight 400
+>>>>>>> 290f7b5b6760637f9cb9858b2b669fa12e27c5a4
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
