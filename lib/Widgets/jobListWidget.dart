@@ -8,13 +8,9 @@ class JobListWidget extends StatelessWidget {
   const JobListWidget({
     super.key,
     this.jLM,
-    required this.width,
-    required this.height,
   });
 
   final JobListModel? jLM;
-  final double? width;
-  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +18,6 @@ class JobListWidget extends StatelessWidget {
       padding: EdgeInsets.all(16.0),
       child: Container(
         clipBehavior: Clip.antiAlias,
-        height: height,
-        width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: backgroundColor,

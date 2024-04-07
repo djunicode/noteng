@@ -6,14 +6,11 @@ class PostListWidget extends StatelessWidget {
   const PostListWidget({
     Key? key,
     this.pLM,
-    required this.height,
-    required this.width,
     this.onPressed,
   }) : super(key: key);
 
   final PostListModel? pLM;
-  final double? width;
-  final double? height;
+
   final VoidCallback? onPressed;
 
   @override
@@ -26,8 +23,6 @@ class PostListWidget extends StatelessWidget {
           horizontal: 16.0,
         ),
         clipBehavior: Clip.antiAlias,
-        height: height,
-        width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: backgroundColor,
