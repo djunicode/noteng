@@ -2,9 +2,9 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from .models import CalendarModel, PostModel
+from .models import CalendarModel, PostModel,NotesModel
 from rest_framework_simplejwt.settings import api_settings
-from .serializers import CalendarSerializer, PostSerializer
+from .serializers import CalendarSerializer, PostSerializer,NotesSerializer
 from authentication.models import User
 
 
@@ -41,5 +41,17 @@ class PostListView(generics.ListCreateAPIView):
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
+
+class NotesListCreateAPIView(generics.ListCreateAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
+
+class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]

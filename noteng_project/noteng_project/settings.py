@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 from pathlib import Path
-
+import os #new addition for MEDIA_ROOT
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -125,6 +125,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 SIMPLE_JWT= {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
