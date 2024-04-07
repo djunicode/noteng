@@ -25,14 +25,14 @@ const Sidebar = () => {
   }
 
   return (
-    <div>
+    <div className='flex '>
       {!isOpen && (
         <div onClick={toggleSidebar} className='lg:hidden '>
           <Sidebarresponsive />
         </div>
       )}
-      <div className='flex h-full '>
-      <div className={`lg:flex lg:flex-col lg:w-[19vw] bg-custom-blue h-full absolute top-0 left-0 lg:relative z-10  ${isOpen ? '' : 'hidden'}`}>
+      <div className='flex h-full lg:h-[100vh] '>
+      <div className={`lg:flex lg:flex-col lg:w-[19vw]  bg-custom-blue h-full absolute top-0 left-0 lg:relative z-10  ${isOpen ? '' : 'hidden'}`}>
 
           <div className='flex justify-end p-3 lg:hidden 'onClick={toggleSidebar}>
               <CloseIcon/>
