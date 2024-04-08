@@ -5,9 +5,14 @@ import 'package:noteng/Widgets/chip_selection_widget.dart';
 import 'package:noteng/Widgets/dropdown_widget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 
-class AddNewJob extends StatelessWidget {
+class AddNewJob extends StatefulWidget {
   AddNewJob({Key? key});
 
+  @override
+  _AddNewJobState createState() => _AddNewJobState();
+}
+
+class _AddNewJobState extends State<AddNewJob> {
   final TextEditingController _companyName = TextEditingController();
   final TextEditingController _location = TextEditingController();
   final TextEditingController _description = TextEditingController();
@@ -16,6 +21,7 @@ class AddNewJob extends StatelessWidget {
   final TextEditingController _requirements = TextEditingController();
   final TextEditingController _jobTitle = TextEditingController();
 
+  String _selectedJobType = '';
   String _selectedWorkType = '';
   String _selectedWorkMode = '';
 
@@ -36,13 +42,11 @@ class AddNewJob extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  const  Text(
+                    const Text(
                       "Company Name",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
-                        height:
-                            5),
+                    SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Name",
                       controller: _companyName,
@@ -60,9 +64,7 @@ class AddNewJob extends StatelessWidget {
                       "Company Location",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(
-                        height:
-                            5), 
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Location",
                       controller: _location,
@@ -79,9 +81,7 @@ class AddNewJob extends StatelessWidget {
                       "Job Title",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(
-                        height:
-                            5), 
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Job Title",
                       controller: _jobTitle,
@@ -100,9 +100,7 @@ class AddNewJob extends StatelessWidget {
                       "Company Contact",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
-                        height:
-                            5), 
+                    SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Phone/Email/url",
                       controller: _contact,
@@ -116,13 +114,11 @@ class AddNewJob extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                 const   Text(
+                    const Text(
                       "Job Description",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                  const  SizedBox(
-                        height:
-                            5), 
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Job Description",
                       controller: _description,
@@ -132,30 +128,51 @@ class AddNewJob extends StatelessWidget {
                   ],
                 ),
               ),
-              // Job Tenure
+              // Job Type
               Padding(
-                padding:const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  const  Row(
+                    const Text(
+                      "Job Type",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    ChipSelectionWidget(
+                      options: ["Internship", "Full Time Job"],
+                      onTypeSelected: (selectedType) {
+                        setState(() {
+                          _selectedJobType = selectedType;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              // Job Tenure
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
                       children: [
                         Text(
                           "Job Tenure",
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
-                            width:
-                                5), 
+                        SizedBox(width: 5),
                         Text(
                           "Months",
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
-                   const  SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    SizedBox(
+                      height: 5,
+                    ),
+                    // Add some space between the text and the text field
                     textFieldWidget(
                       hintText: "Enter Job Tenure",
                       controller: _tenure,
@@ -166,7 +183,7 @@ class AddNewJob extends StatelessWidget {
 
               // Job Requirements
               Padding(
-                padding:const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -174,9 +191,7 @@ class AddNewJob extends StatelessWidget {
                       "Job Requirements",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(
-                        height:
-                            5), 
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Job Requirements",
                       maxLines: 4,
@@ -199,10 +214,12 @@ class AddNewJob extends StatelessWidget {
                     const SizedBox(height: 5),
                     ChipSelectionWidget(
                       options: const ["Full Time", "Part Time"],
-                      onTypeSelected: (selectedtype) {
-                        _selectedWorkType = selectedtype;
+                      onTypeSelected: (selectedType) {
+                        setState(() {
+                          _selectedWorkType = selectedType;
+                        });
                       },
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -216,23 +233,25 @@ class AddNewJob extends StatelessWidget {
                       "Work Mode",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                   const SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     ChipSelectionWidget(
-                      onTypeSelected: (selectedmode) {
-                        _selectedWorkMode = selectedmode;
+                      onTypeSelected: (selectedMode) {
+                        setState(() {
+                          _selectedWorkMode = selectedMode;
+                        });
                       },
-                      options:const ["Online", "Offline"],
-                    )
+                      options: const ["Online", "Offline"],
+                    ),
                   ],
                 ),
               ),
-              ButtonWidget(
-                name: "Add New Job Opportunity",
-                onPressed: () {},
-              )
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: ButtonWidget(
+        name: "Add New Job Opportunity",
+        onPressed: () {},
       ),
     );
   }

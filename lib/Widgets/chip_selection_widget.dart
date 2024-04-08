@@ -25,25 +25,25 @@ class _ChipSelectionWidgetState extends State<ChipSelectionWidget> {
       child: Row(
         children: widget.options
             .map(
-              (jobType) => GestureDetector(
+              (option) => GestureDetector(
                 onTap: () {
                   setState(() {
-                    _selectedType = jobType;
-                    widget.onTypeSelected?.call(jobType);
+                    _selectedType = option;
+                    widget.onTypeSelected?.call(option);
                   });
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color:
-                        _selectedType == jobType ? primaryColor : Colors.white,
+                        _selectedType == option ? primaryColor : Colors.white,
                     borderRadius: BorderRadius.circular(4),
                     border: Border.all(color: Colors.grey),
                   ),
                   child: Text(
-                    jobType,
+                    option,
                     style: TextStyle(
-                      color: _selectedType == jobType
+                      color: _selectedType == option
                           ? Colors.white
                           : Colors.black,
                     ),
