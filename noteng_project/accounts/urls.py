@@ -2,7 +2,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import CalendarListView, CalendarDetailView, PostListView, PostDetailView, NotesDetailAPIView, NotesListCreateAPIView
+from .views import *
 
 urlpatterns = [
     path('calendar', CalendarListView.as_view(), name='calendar-list'),
@@ -11,6 +11,8 @@ urlpatterns = [
     path('posts/<int:pk>', PostDetailView.as_view(), name='post-detail'),
     path('notes/', NotesListCreateAPIView.as_view(), name='notes-list'),
     path('notes/<int:pk>/', NotesDetailAPIView.as_view(), name='notes-detail'),
+    path('videolinks/', VideolinksAPIView.as_view(), name='videolinks-list-create'),
+    path('videolinks/<int:pk>/', VideolinksDetailAPIView.as_view(), name='videolinks-detail'),
 ]
 
 if settings.DEBUG:

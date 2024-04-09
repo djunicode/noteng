@@ -1,10 +1,10 @@
-from rest_framework import generics
+from rest_framework import generics,permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from .models import CalendarModel, PostModel,NotesModel
+from .models import CalendarModel, PostModel,NotesModel,VideolinksModel
 from rest_framework_simplejwt.settings import api_settings
-from .serializers import CalendarSerializer, PostSerializer,NotesSerializer
+from .serializers import CalendarSerializer, PostSerializer,NotesSerializer,VideolinksSerializer
 from authentication.models import User
 
 
@@ -55,3 +55,13 @@ class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = NotesSerializer
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
+    
+class VideolinksAPIView(generics.ListCreateAPIView):
+    queryset = VideolinksModel.objects.all()
+    serializer_class = VideolinksSerializer
+    permission_classes = [permissions.IsAdminUser]
+
+class VideolinksDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = VideolinksModel.objects.all()
+    serializer_class = VideolinksSerializer
+    permission_classes = [permissions.IsAdminUser]

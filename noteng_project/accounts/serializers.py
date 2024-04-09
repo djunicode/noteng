@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CalendarModel, PostModel,NotesModel,JobBoardModel
+from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel
 
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +20,9 @@ class JobBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobBoardModel
         fields = '__all__'
+        
+class VideolinksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= VideolinksModel
+        fields = '__all__'
+    
