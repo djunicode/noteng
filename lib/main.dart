@@ -7,6 +7,7 @@ import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/pages/add_new_job.dart';
 import 'package:noteng/pages/add_new_post.dart';
+import 'package:noteng/screens/intro_screen.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -25,8 +26,37 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      home: trial(),
+      home: const NotengApp(),
       debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class NotengApp extends StatelessWidget {
+  const NotengApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: primaryColor,
+      body: Center(
+        child: GestureDetector(
+          child: Text(
+            'NOTENG',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotengScreen()),
+            );
+          },
+        ),
+      ),
     );
   }
 }
