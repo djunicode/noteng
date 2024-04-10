@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class VideoListWidget extends StatelessWidget {
-  const VideoListWidget({
+class VideoListWidget extends StatefulWidget {
+  VideoListWidget({
     Key? key,
     this.vLink,
     this.vThumbnail,
@@ -15,61 +19,89 @@ class VideoListWidget extends StatelessWidget {
   final String? vLink;
 
   @override
+  _VideoListWidgetState createState() => _VideoListWidgetState();
+}
+
+class _VideoListWidgetState extends State<VideoListWidget> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    // Replace with your YouTube video ID
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.vLink!)!,
+      flags: YoutubePlayerFlags(
+          autoPlay: false, mute: false, showLiveFullscreenButton: false),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 16.0,
-        ),
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: backgroundColor,
-          border: Border.all(
-            color: secondaryColor.withOpacity(0.3),
-            width: 1.0,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  vTitle!,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: secondaryAccentColor.withAlpha(100),
+        // border: Border.all(
+        //   color: secondaryColor.withOpacity(0.3),
+        //   width: 1.0,
+        // ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.vTitle!,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0,
+                    fontSize: 13.0,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: FaIcon(FontAwesomeIcons.link),
+              ),
+              InkWell(
+                onTap: () {
+                  launchUrlString(widget.vLink!,
+                      mode: LaunchMode.externalApplication);
+                },
+                child: FaIcon(
+                  FontAwesomeIcons.link,
+                  size: 16,
                 ),
-                SizedBox(
-                  width: 18.0,
-                ),
-              ],
+              ),
+            ],
+          ),
+          Divider(
+            color: Colors.grey,
+            thickness: 1.0,
+            height: 20.0,
+            indent: 0,
+            endIndent: 0,
+          ),
+          YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            progressColors: ProgressBarColors(
+              playedColor: primaryColor,
+              handleColor: primaryColor,
             ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-              height: 20.0,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Image.network(
-              vThumbnail!,
-              fit: BoxFit.contain,
-            ),
-          ],
-        ),
+            onReady: () {
+              print('Player is ready.');
+            },
+          ),
+        ],
       ),
     );
   }

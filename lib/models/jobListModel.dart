@@ -1,4 +1,5 @@
 class JobListModel {
+  final String? jobType;
   final String? cName;
   final String? cDesc;
   final String? duration;
@@ -7,6 +8,7 @@ class JobListModel {
   final String? dateTime;
 
   JobListModel({
+    required this.jobType,
     required this.cName,
     required this.cDesc,
     required this.duration,

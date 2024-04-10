@@ -4,26 +4,21 @@ import 'package:flutter/widgets.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/models/notesListModel.dart';
 
-class NotesListWidget extends StatelessWidget {
-  const NotesListWidget(
+class DiscoverNotesListWidget extends StatelessWidget {
+  const DiscoverNotesListWidget(
     this.nLM, {
     super.key,
   });
 
   final NotesListModel? nLM;
-  final double? width = 161;
-  final double? height = 156;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-      margin: EdgeInsets.only(right: 10),
-      height: height,
-      width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: backgroundColor,
+        color: secondaryAccentColor.withAlpha(150),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
