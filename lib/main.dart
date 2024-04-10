@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/app_bar_widget.dart';
-import 'package:noteng/Widgets/button_widget.dart';
-import 'package:noteng/Widgets/chip_selection_widget.dart';
-import 'package:noteng/Widgets/notesListWidget.dart';
-import 'package:noteng/Widgets/textFieldWidget.dart';
-import 'package:noteng/pages/add_new_job.dart';
-import 'package:noteng/pages/add_new_post.dart';
 import 'package:noteng/screens/intro_screen.dart';
 import 'constants/colors.dart';
 
@@ -41,7 +34,7 @@ class NotengApp extends StatelessWidget {
       backgroundColor: primaryColor,
       body: Center(
         child: GestureDetector(
-          child: Text(
+          child:const Text(
             'NOTENG',
             style: TextStyle(
               color: Colors.white,
@@ -55,52 +48,6 @@ class NotengApp extends StatelessWidget {
               MaterialPageRoute(builder: (context) => NotengScreen()),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class trial extends StatefulWidget {
-  const trial({super.key});
-
-  @override
-  State<trial> createState() => _trialState();
-}
-
-class _trialState extends State<trial> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(title: "Dummy Title"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150.0,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              textFieldWidget(
-                readOnly: true,
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              textFieldWidget(
-                readOnly: false,
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              textFieldWidget(
-                maxLines: 8,
-              ),
-            ],
-          ),
         ),
       ),
     );
