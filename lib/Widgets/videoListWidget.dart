@@ -49,10 +49,10 @@ class _VideoListWidgetState extends State<VideoListWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: secondaryAccentColor.withAlpha(100),
-        border: Border.all(
-          color: secondaryColor.withOpacity(0.3),
-          width: 1.0,
-        ),
+        // border: Border.all(
+        //   color: secondaryColor.withOpacity(0.3),
+        //   width: 1.0,
+        // ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

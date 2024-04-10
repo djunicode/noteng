@@ -19,15 +19,15 @@ class PostListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
       height: 170,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: secondaryAccentColor.withAlpha(100),
-        border: Border.all(
-          color: secondaryColor.withOpacity(0.3),
-          width: 1.0,
-        ),
+        // border: Border.all(
+        //   color: secondaryColor.withOpacity(0.3),
+        //   width: 1.0,
+        // ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,6 +92,11 @@ class PostListWidget extends StatelessWidget {
                 ),
             ],
           ),
+          const Expanded(
+            child: SizedBox(
+              height: 0,
+            ),
+          ),
           const Divider(
             color: secondaryColor,
             thickness: 0.5,
@@ -117,7 +122,7 @@ class PostListWidget extends StatelessWidget {
                     style: const TextStyle(
                       color: secondaryColor,
                       fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

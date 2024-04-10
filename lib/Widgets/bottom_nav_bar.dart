@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteng/pages/Discover/discover_job.dart';
 import 'package:noteng/pages/Home/home_screen.dart';
 import '../../constants/colors.dart';
 
@@ -49,7 +50,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
           Get.offAll(() => const HomeScreen(), transition: Transition.fadeIn);
         }
         if (value == 1 && widget.currentIndex != 1) {
-          // Get.offAll(() => const Discover(), transition: Transition.fadeIn);
+          Get.offAll(() => const DiscoverJob(), transition: Transition.fadeIn);
         }
       },
     );

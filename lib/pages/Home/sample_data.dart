@@ -65,8 +65,6 @@ List<PostListModel> SamplePostList = [
         "Participate in our Mobile App Hackathon and showcase your innovative app ideas.",
     pLikes: 200,
     pCategory: "Hackathon",
-    pImg:
-        "https://res.infoq.com/articles/hackathon-developer-innovation/en/headerimage/generatedHeaderImage-1662578814159.jpg",
   ),
   PostListModel(
     pTitle: "Data Science Bootcamp",
