@@ -7,10 +7,10 @@ class ButtonWidget extends StatelessWidget {
   final double? height;
   final double? width;
 
-   ButtonWidget({
+  ButtonWidget({
     Key? key,
     required this.name,
-    required this.onPressed, 
+    required this.onPressed,
     this.width,
     this.height,
   }) : super(key: key);
@@ -22,13 +22,11 @@ class ButtonWidget extends StatelessWidget {
     final double finalHeight = height ?? 50;
 
     return TextButton(
-      onPressed: onPressed, 
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         backgroundColor: primaryColor,
         fixedSize: Size(finalWidth, finalHeight),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(),
       ),
       child: Text(
         name,

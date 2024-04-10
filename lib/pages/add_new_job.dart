@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
+import 'package:noteng/Widgets/chip_selection_widget.dart';
+import 'package:noteng/Widgets/dropdown_widget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 
-class AddNewJob extends StatelessWidget {
+class AddNewJob extends StatefulWidget {
   AddNewJob({Key? key});
 
+  @override
+  _AddNewJobState createState() => _AddNewJobState();
+}
+
+class _AddNewJobState extends State<AddNewJob> {
   final TextEditingController _companyName = TextEditingController();
   final TextEditingController _location = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final TextEditingController _contact = TextEditingController();
   final TextEditingController _tenure = TextEditingController();
   final TextEditingController _requirements = TextEditingController();
-  final TextEditingController _workType = TextEditingController();
+  final TextEditingController _jobTitle = TextEditingController();
+
+  String _selectedJobType = '';
+  String _selectedWorkType = '';
+  String _selectedWorkMode = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +42,11 @@ class AddNewJob extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Company Name"),
-                    SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    const Text(
+                      "Company Name",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Name",
                       controller: _companyName,
@@ -48,10 +60,11 @@ class AddNewJob extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Company Location"),
-                    SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    const Text(
+                      "Company Location",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Location",
                       controller: _location,
@@ -59,16 +72,35 @@ class AddNewJob extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Job Title",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    textFieldWidget(
+                      hintText: "Enter Job Title",
+                      controller: _jobTitle,
+                    ),
+                  ],
+                ),
+              ),
+
               // Company Contact
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Company Contact"),
-                    SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    Text(
+                      "Company Contact",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Company Phone/Email/url",
                       controller: _contact,
@@ -82,10 +114,11 @@ class AddNewJob extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Job Description"),
-                    SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    const Text(
+                      "Job Description",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Job Description",
                       controller: _description,
@@ -95,27 +128,51 @@ class AddNewJob extends StatelessWidget {
                   ],
                 ),
               ),
-              // Job Tenure
+              // Job Type
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Text(
+                      "Job Type",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    ChipSelectionWidget(
+                      options: ["Internship", "Full Time Job"],
+                      onTypeSelected: (selectedType) {
+                        setState(() {
+                          _selectedJobType = selectedType;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              // Job Tenure
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
                       children: [
-                        Text("Job Tenure"),
-                        SizedBox(
-                            width:
-                                5), // Add some space between the text and the "Months" text
                         Text(
-                          "Months", // "Months" text remains there permanently
+                          "Job Tenure",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          "Months",
                           style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),
                     SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                      height: 5,
+                    ),
+                    // Add some space between the text and the text field
                     textFieldWidget(
                       hintText: "Enter Job Tenure",
                       controller: _tenure,
@@ -123,16 +180,18 @@ class AddNewJob extends StatelessWidget {
                   ],
                 ),
               ),
+
               // Job Requirements
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Job Requirements"),
-                    SizedBox(
-                        height:
-                            5), // Add some space between the text and the text field
+                    const Text(
+                      "Job Requirements",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
                     textFieldWidget(
                       hintText: "Enter Job Requirements",
                       maxLines: 4,
@@ -144,16 +203,55 @@ class AddNewJob extends StatelessWidget {
               ),
               // Work Type
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: Text("Work Type"),
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Work Type",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    ChipSelectionWidget(
+                      options: const ["Full Time", "Part Time"],
+                      onTypeSelected: (selectedType) {
+                        setState(() {
+                          _selectedWorkType = selectedType;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              ButtonWidget(
-                name: "Add New Job Opportunity",
-                onPressed: () {}, // Empty function, no action will be performed
-              )
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Work Mode",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    ChipSelectionWidget(
+                      onTypeSelected: (selectedMode) {
+                        setState(() {
+                          _selectedWorkMode = selectedMode;
+                        });
+                      },
+                      options: const ["Online", "Offline"],
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: ButtonWidget(
+        name: "Add New Job Opportunity",
+        onPressed: () {},
       ),
     );
   }

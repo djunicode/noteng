@@ -17,7 +17,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
     return Scaffold(
       appBar: AppBarWidget(title: "Create New Post"),
       backgroundColor: backgroundColor,
-      bottomNavigationBar: ButtonWidget(name: "Add New Post", action: "", height: 60,),
+      // bottomNavigationBar: ButtonWidget(name: "Add New Post", action: "", height: 60,),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(15.0),

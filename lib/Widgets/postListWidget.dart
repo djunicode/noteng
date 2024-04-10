@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/models/postListModel.dart';
 
 class PostListWidget extends StatelessWidget {
-  const PostListWidget({
+  const PostListWidget(
+    this.pLM, {
     Key? key,
-    this.pLM,
     this.onPressed,
   }) : super(key: key);
 
@@ -15,121 +18,126 @@ class PostListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 16.0,
-        ),
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: backgroundColor,
-          border: Border.all(
-            color: secondaryColor.withOpacity(0.3),
-            width: 1.0,
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
+      height: 170,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: secondaryAccentColor.withAlpha(100),
+        // border: Border.all(
+        //   color: secondaryColor.withOpacity(0.3),
+        //   width: 1.0,
+        // ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  pLM!.pTitle!,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Text(
+                DateFormat('dd MMMM yyyy, HH:mm')
+                    .format(DateTime.parse(pLM!.pDate!)),
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: secondaryColor,
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    pLM!.pTitle!,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  pLM!.pDate!,
-                  style: TextStyle(
-                    color: secondaryColor,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(width: 16.0),
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: Text(
-                    pLM!.pDesc!,
-                    style: TextStyle(
-                      color: secondaryColor,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 24.0,
-                ),
-                if (pLM!.pImg != null)
-                  Flexible(
-                    child: Image.network(
-                      pLM!.pImg!,
-                    ),
-                  ),
-                SizedBox(
-                  width: 16.0,
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-              height: 20.0,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: onPressed,
-                  icon: Icon(
-                    Icons.favorite,
-                    color: primaryColor,
-                  ),
-                ),
-                SizedBox(width: 8.0),
-                Text(
-                  "${pLM!.pLikes!} Likes",
-                  style: TextStyle(
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Text(
+                  pLM!.pDesc!,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
                     color: secondaryColor,
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                Spacer(),
-                Text(
-                  pLM!.pCategory!,
-                  style: TextStyle(
-                    color: secondaryColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ),
+              if (pLM!.pImg != null)
+                Container(
+                  margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  height: 90,
+                  width: 90,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: DecorationImage(
+                        image: NetworkImage(pLM!.pImg!),
+                        fit: BoxFit.cover,
+                      )),
                 ),
-                SizedBox(width: 16.0),
-              ],
+            ],
+          ),
+          const Expanded(
+            child: SizedBox(
+              height: 0,
             ),
-          ],
-        ),
+          ),
+          const Divider(
+            color: secondaryColor,
+            thickness: 0.5,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () => onPressed ?? null,
+                    child: Icon(
+                      pLM!.isLiked ? Icons.favorite : Icons.favorite_outline,
+                      color: pLM!.isLiked ? Colors.red : secondaryColor,
+                      size: 16,
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    "${pLM!.pLikes!} Likes",
+                    style: const TextStyle(
+                      color: secondaryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                pLM!.pCategory!,
+                style: const TextStyle(
+                  color: secondaryColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
