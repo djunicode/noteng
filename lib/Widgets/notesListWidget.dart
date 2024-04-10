@@ -1,89 +1,98 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/models/notesListModel.dart';
 
 class NotesListWidget extends StatelessWidget {
-  const NotesListWidget({
+  const NotesListWidget(
+    this.nLM, {
     super.key,
-    this.nLM,
-    required this.width,
-    required this.height,
   });
 
   final NotesListModel? nLM;
-  final double? width;
-  final double? height;
+  final double? width = 161;
+  final double? height = 156;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Container(
-        clipBehavior: Clip.antiAlias,
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: backgroundColor,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Text(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      margin: EdgeInsets.only(right: 10),
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: backgroundColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Flexible(
+                child: Text(
                   nLM!.title!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18.0,
+                    fontSize: 13.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Spacer(),
-                Icon(Icons.star_outline_sharp),
-                SizedBox(
-                  width: 12.0,
-                ),
-                Text(
-                  nLM!.rating!,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-              height: 20.0,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Text(
-              nLM!.description!,
-              style: TextStyle(
-                fontSize: 12.0,
-                color: secondaryColor,
-                fontWeight: FontWeight.w500,
               ),
+              Column(
+                children: [
+                  const Icon(
+                    Icons.star,
+                    size: 16,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    nLM!.rating!,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Divider(
+            color: secondaryColor,
+            thickness: 0.5,
+          ),
+          Text(
+            nLM!.description!,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 10.0,
+              color: secondaryColor,
+              fontWeight: FontWeight.w500,
             ),
-            SizedBox(
-              height: 16.0,
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       nLM!.subject!,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 14.0,
+                        fontSize: 11.0,
                         color: secondaryColor,
                       ),
                     ),
@@ -91,17 +100,21 @@ class NotesListWidget extends StatelessWidget {
                       nLM!.department!,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
-                        fontSize: 13.0,
+                        fontSize: 9.0,
                         color: secondaryColor,
                       ),
                     ),
                   ],
                 ),
-                Icon(Icons.document_scanner),
-              ],
-            ),
-          ],
-        ),
+              ),
+              Icon(
+                Icons.file_present_outlined,
+                color: secondaryColor,
+                size: 16,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
