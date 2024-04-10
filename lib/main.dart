@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-<<<<<<< HEAD
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
-=======
 import 'package:noteng/pages/add_new_post.dart';
 
->>>>>>> 40766f0d8df78b9f06471bf77bc969f14dc0806f
 import 'constants/colors.dart';
 
 void main() {
@@ -23,30 +20,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'NOTENG',
-<<<<<<< HEAD
-=======
       // theme: ThemeData(
       //   fontFamily: 'Poppins',
       //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       //   useMaterial3: true,
       // ),
       // home: Trial(),
->>>>>>> 40766f0d8df78b9f06471bf77bc969f14dc0806f
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
-      home: trial(),
-=======
+      // home: trial(),
       home: AddNewPostPage(),
->>>>>>> 40766f0d8df78b9f06471bf77bc969f14dc0806f
       debugShowCheckedModeBanner: false,
     );
   }
 }
-<<<<<<< HEAD
 
 class trial extends StatefulWidget {
   const trial({super.key});
@@ -93,5 +83,3 @@ class _trialState extends State<trial> {
     );
   }
 }
-=======
->>>>>>> 40766f0d8df78b9f06471bf77bc969f14dc0806f
