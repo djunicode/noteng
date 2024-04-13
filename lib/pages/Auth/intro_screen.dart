@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:noteng/constants/colors.dart';
-import 'package:noteng/screens/login_screen.dart';
-import 'package:noteng/screens/signupscreen.dart';
+import 'package:noteng/pages/Auth/login_screen.dart';
+import 'package:noteng/pages/Auth/signupscreen.dart';
 
 class NotengApp extends StatelessWidget {
   @override
@@ -91,7 +91,7 @@ class NotengScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 64.0),
                     backgroundColor: primaryColor,
-                    foregroundColor: backgroundColor, 
+                    foregroundColor: backgroundColor,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10),
@@ -99,7 +99,7 @@ class NotengScreen extends StatelessWidget {
                       ),
                     ),
                     textStyle: const TextStyle(
-                      fontSize: 18.0, 
+                      fontSize: 18.0,
                     ),
                   ),
                   child: const Text('Signup'),
@@ -114,17 +114,15 @@ class NotengScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         vertical: 16.0, horizontal: 64.0),
-                    backgroundColor:
-                        secondaryAccentColor, 
-                    foregroundColor:
-                        secondaryColor, 
-                    elevation: 0, 
+                    backgroundColor: secondaryAccentColor,
+                    foregroundColor: secondaryColor,
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      side: BorderSide.none, 
+                      side: BorderSide.none,
                     ),
                     textStyle: const TextStyle(
                       fontSize: 18.0,

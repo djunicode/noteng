@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/pages/Job/add_new_job.dart';
+import 'package:noteng/pages/Posts/add_new_post.dart';
+import 'package:noteng/pages/Videos/share_video.dart';
 
 class Modalbottom extends StatefulWidget {
   const Modalbottom({Key? key}) : super(key: key);
@@ -35,8 +38,8 @@ class _ModalbottomState extends State<Modalbottom> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        // Get.off(CreatePost(),
-                        //     transition: Transition.circularReveal);
+                        Get.off(AddNewJob(),
+                            transition: Transition.circularReveal);
                       },
                       child: Container(
                         height: 140,
@@ -68,8 +71,8 @@ class _ModalbottomState extends State<Modalbottom> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        // Get.off(CreatePost(),
-                        //     transition: Transition.circularReveal);
+                        Get.off(AddNewPostPage(),
+                            transition: Transition.circularReveal);
                       },
                       child: Container(
                         height: 140,
@@ -139,8 +142,8 @@ class _ModalbottomState extends State<Modalbottom> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        // Get.off(CreatePost(),
-                        //     transition: Transition.circularReveal);
+                        Get.off(ShareVideo(),
+                            transition: Transition.circularReveal);
                       },
                       child: Container(
                         height: 140,

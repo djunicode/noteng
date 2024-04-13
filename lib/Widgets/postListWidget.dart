@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/constants/colors.dart';
@@ -37,24 +38,25 @@ class PostListWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: Text(
-                  pLM!.pTitle!,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                pLM!.pTitle!,
+                maxLines: 1,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                DateFormat('dd MMMM yyyy, HH:mm')
-                    .format(DateTime.parse(pLM!.pDate!)),
-                textAlign: TextAlign.right,
-                style: const TextStyle(
-                  color: secondaryColor,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w500,
+              Flexible(
+                child: Text(
+                  DateFormat('dd MMMM yyyy, HH:mm')
+                      .format(DateTime.parse(pLM!.pDate!)),
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: secondaryColor,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],

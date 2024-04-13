@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
-import 'package:noteng/screens/forgot_password.dart';
+import 'package:noteng/pages/Auth/forgot_password.dart';
+import 'package:noteng/pages/Home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -91,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // Perform login logic here
                     print('SAP ID: $_sapId');
                     print('Password: $_password');
+                    Get.offAll(HomeScreen(), transition: Transition.fadeIn);
                   }
                 },
                 style: ElevatedButton.styleFrom(
