@@ -1,17 +1,21 @@
+import 'dart:ffi';
+
 class PostListModel {
-  final String? cName;
-  final String? cDesc;
-  final String? duration;
-  final String? jobMode;
-  final String? mode;
-  final String? dateTime;
+  final String? pTitle;
+  final String? pDate;
+  final String? pDesc;
+  final int? pLikes;
+  final String? pCategory;
+  final String? pImg;
+  final bool isLiked;
 
   PostListModel({
-    this.cName,
-    this.cDesc,
-    this.duration,
-    this.jobMode,
-    this.mode,
-    this.dateTime,
+    required this.pTitle,
+    required this.pDate,
+    required this.pDesc,
+    required this.pLikes,
+    required this.pCategory,
+    this.isLiked = false,
+    this.pImg,
   });
 }

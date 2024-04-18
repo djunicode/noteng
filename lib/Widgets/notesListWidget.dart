@@ -1,29 +1,34 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/models/notesListModel.dart';
+import 'package:noteng/pages/notes/notes_detail.dart';
 
 class NotesListWidget extends StatelessWidget {
-  const NotesListWidget({
+  const NotesListWidget(
+    this.nLM, {
     super.key,
-    this.nLM,
-    required this.width,
-    required this.height,
   });
 
   final NotesListModel? nLM;
-  final double? width;
-  final double? height;
+  final double? width = 161;
+  final double? height = 156;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
+    return GestureDetector(
+      onTap: (){
+        Get.to(() => NotesDetails());
+      },
       child: Container(
-        clipBehavior: Clip.antiAlias,
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        margin: EdgeInsets.only(right: 10),
         height: height,
         width: width,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(8.0),
           color: backgroundColor,
         ),
         child: Column(
@@ -32,72 +37,87 @@ class NotesListWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  nLM!.title!,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Text(
+                    nLM!.title!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Spacer(),
-                Icon(Icons.star_outline_sharp),
-                SizedBox(
-                  width: 12.0,
-                ),
-                Text(
-                  nLM!.rating!,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1.0,
-              height: 20.0,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Text(
-              nLM!.description!,
-              style: TextStyle(
-                fontSize: 12.0,
-                color: secondaryColor,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              height: 16.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      nLM!.subject!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.0,
-                        color: secondaryColor,
-                      ),
+                    const Icon(
+                      Icons.star,
+                      size: 16,
+                      color: Colors.amber,
                     ),
                     Text(
-                      nLM!.department!,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13.0,
-                        color: secondaryColor,
+                      nLM!.rating!,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.0,
                       ),
                     ),
                   ],
                 ),
-                Icon(Icons.document_scanner),
+              ],
+            ),
+            Divider(
+              color: secondaryColor,
+              thickness: 0.5,
+            ),
+            Text(
+              nLM!.description!,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 10.0,
+                color: secondaryColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+                height: 5,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nLM!.subject!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11.0,
+                          color: secondaryColor,
+                        ),
+                      ),
+                      Text(
+                        nLM!.department!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 9.0,
+                          color: secondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.file_present_outlined,
+                  color: secondaryColor,
+                  size: 16,
+                ),
               ],
             ),
           ],

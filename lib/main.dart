@@ -1,21 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/app_bar_widget.dart';
-import 'package:noteng/Widgets/button_widget.dart';
-import 'package:noteng/Widgets/dropdown_widget.dart';
-import 'package:noteng/Widgets/notesListWidget.dart';
-import 'package:noteng/Widgets/textFieldWidget.dart';
-import 'package:noteng/Widgets/upload_widget.dart';
-import 'package:noteng/Widgets/postListWidget.dart';
-import 'package:noteng/pages/add_new_post.dart';
+import 'package:noteng/pages/Auth/intro_screen.dart';
 import 'constants/colors.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,46 +22,68 @@ class MyApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
       //   useMaterial3: true,
       // ),
-      home: Trial(),
+      home: SplashScreen(),
       // home: Trial(),
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      
-      home: AddNewPostPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class Trial extends StatefulWidget {
-  const Trial({Key? key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<Trial> createState() => _TrialState();
+  _MainState createState() => _MainState();
 }
 
-class _TrialState extends State<Trial> {
+class _MainState extends State<SplashScreen> {
+  var timer;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    timer = Timer(const Duration(seconds: 3), () {
+      Get.offAll(() => NotengScreen());
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(
-            5,
-            (index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PostListWidget(
-                width: 200.0,
-                height: 500.0,
-              ),
-            ),
+    return const Scaffold(
+      backgroundColor: primaryColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(),
+          Center(
+            child: Text('NOTENG',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold)),
           ),
-        ),
+          Center(
+            child: Text(
+                '© 2024 DJ UNICODE\nDwarkadas J. Sanghvi College of Engineering\n',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600)),
+          ),
+        ],
       ),
     );
   }
