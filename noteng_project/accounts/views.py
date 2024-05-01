@@ -67,7 +67,13 @@ class VideolinksDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAdminUser]
 
 
-class EventsAPIView(generics.RetrieveUpdateDestroyAPIView):
+class EventDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = EventModel.objects.all()
+    serializer_class = EventSerializer
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
+
+class EventListAPIView(generics.ListCreateAPIView):
     queryset = EventModel.objects.all()
     serializer_class = EventSerializer
     authentication_classes = [CustomJWTAuthentication]  
