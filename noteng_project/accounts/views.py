@@ -2,9 +2,9 @@ from rest_framework import generics,permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
-from .models import CalendarModel, PostModel,NotesModel,VideolinksModel, EventModel
+from .models import *
 from rest_framework_simplejwt.settings import api_settings
-from .serializers import CalendarSerializer, PostSerializer,NotesSerializer,VideolinksSerializer, EventSerializer
+from .serializers import *
 from authentication.models import User
 
 
@@ -78,3 +78,14 @@ class EventListAPIView(generics.ListCreateAPIView):
     serializer_class = EventSerializer
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
+    
+
+class JobBoardListCreateAPIView(generics.ListCreateAPIView):
+    queryset = JobBoardModel.objects.all()
+    serializer_class = JobBoardSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class JobBoardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = JobBoardModel.objects.all()
+    serializer_class = JobBoardSerializer
+    permission_classes = [permissions.IsAuthenticated]

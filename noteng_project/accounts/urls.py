@@ -13,6 +13,8 @@ urlpatterns = [
     path('notes/<int:pk>/', NotesDetailAPIView.as_view(), name='notes-detail'),
     path('videolinks/', VideolinksAPIView.as_view(), name='videolinks-list-create'),
     path('videolinks/<int:pk>/', VideolinksDetailAPIView.as_view(), name='videolinks-detail'),
+    path('jobboard/', JobBoardListCreateAPIView.as_view(), name='jobboard-list-create'),
+    path('jobboard/<int:pk>/', JobBoardDetailAPIView.as_view(), name='jobboard-detail'),
 ]
 
 if settings.DEBUG:
