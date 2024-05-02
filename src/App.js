@@ -6,6 +6,8 @@ import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
 import LoginPage from './Pages/LoginPage';
+import Profile from './Pages/profile';
+
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +18,7 @@ function App() {
         <Route path='/createjob' element={<PostJob />} />
         <Route path='/viewjob' element={<ViewJob />} />
         <Route path='/UploadNewPosts' element={<UploadNewPosts />} />
+        <Route path='/profile' element={< Profile />} />
       </Routes>
     </BrowserRouter>
   );

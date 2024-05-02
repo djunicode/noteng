@@ -90,4 +90,4 @@ function ShareNotes() {
   )
 }
 
-export default ShareNotes 
+export default ShareNotes
