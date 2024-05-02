@@ -5,12 +5,13 @@ import PostJob from './Pages/PostJob';
 import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
-
+import LoginPage from './Pages/LoginPage';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/LoginPage' element={<LoginPage />} />
         <Route path='/NewPost' element={<NewPost />} />
         <Route path='/createjob' element={<PostJob />} />
         <Route path='/viewjob' element={<ViewJob />} />
