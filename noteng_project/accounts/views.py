@@ -89,3 +89,11 @@ class JobBoardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = JobBoardModel.objects.all()
     serializer_class = JobBoardSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class MentorshipListView(generics.ListCreateAPIView):
+    queryset = MentorshipModel.objects.all()
+    serializer_class = MentorshipSerializer
+
+class MentorshipDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MentorshipModel.objects.all()
+    serializer_class = MentorshipSerializer

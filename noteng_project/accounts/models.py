@@ -81,3 +81,13 @@ class CalendarModel(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     note = models.TextField()
+
+class MentorshipModel(models.Model):
+    mentor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentor')
+    mentee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentee')
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ['mentor', 'mentee']
+
