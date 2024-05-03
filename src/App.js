@@ -5,6 +5,7 @@ import PostJob from './Pages/PostJob';
 import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
+import LoginPage from './Pages/LoginPage';
 import Profile from './Pages/profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
@@ -14,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/LoginPage' element={<LoginPage />} />
         <Route path='/createpost' element={<NewPost />} />
         <Route path='/createjob' element={<PostJob />} />
         <Route path='/viewjob' element={<ViewJob />} />

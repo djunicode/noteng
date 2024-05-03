@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import Sidebarresponsive from './Sidebarresponsive';
 import CloseIcon from '@mui/icons-material/Close';
-
+import LoginPage from '../../Pages/LoginPage';
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +25,9 @@ const Sidebar = () => {
     navigate('/createnote');
   }
 
+  function loginNavigate() {
+    navigate('/LoginPage');
+  }
   function toggleSidebar() {
     setIsOpen(!isOpen);
     document.body.style.overflowY = isOpen ? 'auto' : 'hidden';
@@ -40,7 +43,7 @@ const Sidebar = () => {
       <div className='flex h-full lg:h-auto '>
       <div className={`lg:flex lg:flex-col lg:w-[19vw]  min-h-[100vh] bg-custom-blue h-full absolute top-0 left-0 lg:relative z-10  ${isOpen ? '' : 'hidden'}`}>
 
-          <div className='flex justify-end p-3 lg:hidden 'onClick={toggleSidebar}>
+          <div className='flex justify-end p-3 lg:hidden' onClick={toggleSidebar}>
               <CloseIcon/>
           </div>
           <div className='flex flex-row px-4 py-4'>
@@ -51,7 +54,7 @@ const Sidebar = () => {
             </div>
             <div className='flex items-center justify-around h-16 ml-auto mr-3'>
               <div className='flex w-10 h-10 bg-custom-white justify-center items-center rounded-l-lg rounded-r-lg'>
-                <PersonOutlineIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} />
+                <PersonOutlineIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={loginNavigate}/>
               </div>
             </div>
           </div>
