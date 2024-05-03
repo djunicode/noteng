@@ -4,12 +4,12 @@ import Sidebar from '../Components/Home/Sidebar'; // Adjust the path according t
 import { Button } from '@mui/material';
 import BackButton from '../assets/BackButton.png';
 import '../styles/profile.css';
-import MyJobs from '../Components/Home/MyJobs';
-import MyPosts from '../Components/Home/MyPosts';
-import MyNotes from '../Components/Home/MyNotes';
-import MyResources from '../Components/Home/MyResources';
-import MyCard from '../Components/Home/MyCard';
-import DescriptionProfile from '../Components/Home/DescriptionProfile';
+import MyJobs from '../Components/Profile/MyJobs';
+import MyPosts from '../Components/Profile/MyPosts';
+import MyNotes from '../Components/Profile/MyNotes';
+import MyResources from '../Components/Profile/MyResources';
+import MyCard from '../Components/Profile/MyCard';
+import DescriptionProfile from '../Components/Profile/DescriptionProfile';
 
 const Profile=() => {
     const navigate = useNavigate();

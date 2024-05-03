@@ -2,7 +2,7 @@ import React from 'react';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import PhoneIcon from '@mui/icons-material/Phone';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-
+import '../../styles/profile.css';
 
 const cardData = [
     {
@@ -23,12 +23,12 @@ const cardData = [
         return (
             <div className='flex flex-col w-full h-auto'>
                 
-                <div className='ml-6  border-b-2'></div>
+                <div className='border-b-2'></div>
                 <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row md:ml-1 mt-4 md:justify-evenly'>
                     {cardData.map((data, i) => {
                         return (
-                            <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 ' key={i}>
-                                <div className='relative border p-3 rounded-lg bg-custom-blue md:full-width h-[110px]'>
+                            <div className='profilecard flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 ' key={i}>
+                                <div className=' border p-3 rounded-lg bg-custom-blue md:full-width h-[110px]'>
                                     <div className='absolute top-2 right-2 z-10'>
                                         <p className='relative border p-1 rounded-lg bg-white md:w-[100%] md:text-[10px]'>Student</p>
                                     </div>
