@@ -18,6 +18,12 @@ const Sidebar = () => {
   function createJob() {
     navigate('/createjob');
   }
+  function createPost() {
+    navigate('/createpost');
+  }
+  function createNote() {
+    navigate('/createnote');
+  }
 
   function toggleSidebar() {
     setIsOpen(!isOpen);
@@ -31,8 +37,8 @@ const Sidebar = () => {
           <Sidebarresponsive />
         </div>
       )}
-      <div className='flex h-full lg:h-[100vh] '>
-      <div className={`lg:flex lg:flex-col lg:w-[19vw]  bg-custom-blue h-full absolute top-0 left-0 lg:relative z-10  ${isOpen ? '' : 'hidden'}`}>
+      <div className='flex h-full lg:h-auto '>
+      <div className={`lg:flex lg:flex-col lg:w-[19vw]  min-h-[100vh] bg-custom-blue h-full absolute top-0 left-0 lg:relative z-10  ${isOpen ? '' : 'hidden'}`}>
 
           <div className='flex justify-end p-3 lg:hidden 'onClick={toggleSidebar}>
               <CloseIcon/>
@@ -76,13 +82,13 @@ const Sidebar = () => {
                 <p className='font-bold text-white'>Add Job Opportunity</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createPost}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Create New Post</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createNote}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Upload Notes</p>

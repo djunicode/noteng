@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from '../Components/Home/Sidebar'
-import UploadNotes from '../Components/Upload/UploadNotes'
+import UploadNotes from '../Components/Notes/UploadNotes'
 
 function UploadNewPosts() {
   return (
