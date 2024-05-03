@@ -4,6 +4,20 @@ from datetime import timedelta
 from pathlib import Path
 import os #new addition for MEDIA_ROOT
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from decouple import config
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET'),
+}
+
+
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -11,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-_k)3r0w^1n@dta7fr+)j%bu_052y5ufye#l$6h*)vsxm2)8kyj"
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -27,12 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'cloudinary_storage',
     "django.contrib.staticfiles",
     "authentication",
     "accounts",
     "rest_framework",
     "rest_framework_simplejwt",
     'drf_yasg',
+    'cloudinary',
 ]
 
 SWAGGER_SETTINGS = {
@@ -139,6 +155,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+
 
 SIMPLE_JWT= {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),

@@ -1,6 +1,6 @@
 from django.db import models
 from authentication.models import User
-
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 class VideolinksModel(models.Model):
     video_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -72,7 +72,7 @@ class NotesModel(models.Model):
     subject = models.TextField()
     department = models.CharField(max_length=100)
     rating = models.IntegerField(choices=RATING_CHOICES)
-    document = models.FileField(upload_to='documents/')
+    document = models.FileField(upload_to='raw/',  storage=RawMediaCloudinaryStorage())
 
 class CalendarModel(models.Model):
     calendar_id = models.AutoField(primary_key=True)

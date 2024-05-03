@@ -9,7 +9,13 @@ from authentication.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
-
+from .models import NotesModel
+from .serializers import NotesSerializer
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
+from cloudinary.uploader import upload
+from django.http import JsonResponse
 
 class CustomJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
@@ -18,7 +24,44 @@ class CustomJWTAuthentication(JWTAuthentication):
             return User.objects.get(sapid=user_id)
         except User.DoesNotExist:
             raise AuthenticationFailed('User not found', code='user_not_found')
+      
+class NotesListCreateAPIView(generics.ListCreateAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
+    authentication_classes = [CustomJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        if 'document' in request.FILES:
+            document = request.FILES['document']
+            print(document)
+            serializer = NotesSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save(user=self.request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Document is required.'}, status=status.HTTP_400_BAD_REQUEST)
         
+        #     try:
+        #         upload_result = upload(document, resource_type='auto') 
+        #         document_url = upload_result['url']
+        #         request.data['document'] = document_url
+        #     except Exception as e:
+        #         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        # return super().post(request, *args, **kwargs)
+    
+class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
+
+  
 class CalendarListView(generics.ListCreateAPIView):
     queryset = CalendarModel.objects.all()
     serializer_class = CalendarSerializer
@@ -66,18 +109,7 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({"error": "Post not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
-class NotesListCreateAPIView(generics.ListCreateAPIView):
-    queryset = NotesModel.objects.all()
-    serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]  
-    permission_classes = [IsAuthenticated]
 
-class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = NotesModel.objects.all()
-    serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]  
-    permission_classes = [IsAuthenticated]
-    
 class VideolinksAPIView(generics.ListCreateAPIView):
     queryset = VideolinksModel.objects.all()
     serializer_class = VideolinksSerializer

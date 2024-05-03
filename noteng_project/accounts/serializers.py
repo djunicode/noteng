@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel, EventModel, MentorshipModel
 from authentication.models import User
-
+from django.core.exceptions import ValidationError
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CalendarModel
@@ -17,6 +17,10 @@ class NotesSerializer(serializers.ModelSerializer):
         model = NotesModel
         fields = '__all__'
 
+    def validate_document(self, value):
+        if not (value.name.lower().endswith(('.jpg', '.jpeg', '.png', '.pdf'))):
+            raise ValidationError("Only images (JPEG, PNG) and PDF files are allowed.")
+        return value
 class JobBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobBoardModel
