@@ -109,7 +109,29 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({"error": "Post not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
+class NotesListCreateAPIView(generics.ListCreateAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
 
+class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = NotesModel.objects.all()
+    serializer_class = NotesSerializer
+    authentication_classes = [CustomJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+       
+        note = NotesModel.objects.filter(user=instance.user).first()
+        if note:
+            note.delete()
+            return Response({"message": "Note deleted successfully."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Note not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    
 class VideolinksAPIView(generics.ListCreateAPIView):
     queryset = VideolinksModel.objects.all()
     serializer_class = VideolinksSerializer
