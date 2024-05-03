@@ -37,3 +37,9 @@ class TokenObtainPairSerializer(serializers.Serializer):
                     'access': str(refresh.access_token),
                 }
         raise serializers.ValidationError('Unable to login with provided credentials.')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['sapid', 'fname', 'lname', 'email', 'contact_number', 'mentors', 'expertise']

@@ -6,6 +6,9 @@ from .models import *
 from rest_framework_simplejwt.settings import api_settings
 from .serializers import *
 from authentication.models import User
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class CustomJWTAuthentication(JWTAuthentication):
@@ -27,6 +30,15 @@ class CalendarDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CalendarSerializer
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Delete the associated calendar event when the instance is deleted
+        calendar_event = CalendarModel.objects.filter(user=instance.user).first()
+        if calendar_event:
+            calendar_event.delete()
+            return Response({"message": "Calendar event deleted successfully."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Calendar event not found."}, status=status.HTTP_404_NOT_FOUND)
 
 class PostListView(generics.ListCreateAPIView):
     queryset = PostModel.objects.all()
@@ -43,6 +55,16 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Delete the associated calendar event when the instance is deleted
+        post_event = PostModel.objects.filter(user=instance.user).first()
+        if post_event:
+            post_event.delete()
+            return Response({"message": "Post deleted successfully."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Post not found."}, status=status.HTTP_404_NOT_FOUND)
+
 
 class NotesListCreateAPIView(generics.ListCreateAPIView):
     queryset = NotesModel.objects.all()
