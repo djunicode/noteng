@@ -9,6 +9,10 @@ from authentication.models import User
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class CustomJWTAuthentication(JWTAuthentication):
@@ -75,8 +79,19 @@ class NotesListCreateAPIView(generics.ListCreateAPIView):
 class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NotesModel.objects.all()
     serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]  
+    authentication_classes = [CustomJWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Delete the associated calendar event when the instance is deleted
+        calendar_event = NotesModel.objects.filter(user=instance.user).first()
+        if calendar_event:
+            calendar_event.delete()
+            return Response({"message": "Calendar event deleted successfully."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Calendar event not found."}, status=status.HTTP_404_NOT_FOUND)
+
     
 class VideolinksAPIView(generics.ListCreateAPIView):
     queryset = VideolinksModel.objects.all()
