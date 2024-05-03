@@ -1,0 +1,89 @@
+.view-note-container {
+    display: flex;
+    flex-direction: column; /* By default, use flex-col for smaller screens */
+}
+
+@media (min-width: 768px) {
+    .view-note-container {
+        flex-direction: row; /* Switch to flex-row for screens 768px and larger */
+    }
+}
+
+
+.custom-heading {
+    font-family: Poppins;
+    font-size: 40px;
+  }
+  
+  .maincontent {
+    width: 100%;
+    font-family: Poppins;
+    color: #20222E;
+  }
+  
+  .maincontent label {
+    font-size: 20px;
+  }
+  
+  .maincontent input {
+    font-size: 15px;
+  }
+  
+  .inputarea {
+    background-color: #F7F8F9;
+    border: 1px solid #ccc;
+  }
+  .job-button-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .job-button-container button {
+    width: 270px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .job-button-container button:hover {
+    background-color: #eef2f8;
+  }
+  
+  .job-button-container button.selected {
+    background-color: #394dfd;
+    color: #fff;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .job-button-container {
+      flex-direction: column;
+    }
+    
+    .job-button-container button {
+      width: 100%; /* Make buttons full width */
+      margin-bottom: 10px; /* Add some space between buttons */
+    }
+  }
+  
+  .submit-button {
+    width: 60vw;
+    height: 65px;
+    font-family: Poppins;
+    font-size: 20px;
+    color: white;
+    background-color: #394dfd;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  
+.submit-btn{
+  display: flex;
+  justify-content: center;
+}

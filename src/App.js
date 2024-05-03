@@ -9,6 +9,7 @@ import LoginPage from './Pages/LoginPage';
 import Profile from './Pages/profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
+import UploadVideo from './Pages/UploadVideo';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/UploadNewPosts' element={<UploadNewPosts />} />
         <Route path='/profile' element={< Profile />} />
         <Route path='/createnote' element={< NewNotes />} />
+        <Route path='/uploadvideo' element={< UploadVideo />} />
       </Routes>
     </BrowserRouter>
   );
