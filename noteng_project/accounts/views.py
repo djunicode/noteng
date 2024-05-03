@@ -84,13 +84,13 @@ class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        # Delete the associated calendar event when the instance is deleted
-        calendar_event = NotesModel.objects.filter(user=instance.user).first()
-        if calendar_event:
-            calendar_event.delete()
-            return Response({"message": "Calendar event deleted successfully."}, status=status.HTTP_200_OK)
+       
+        note = NotesModel.objects.filter(user=instance.user).first()
+        if note:
+            note.delete()
+            return Response({"message": "Note deleted successfully."}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Calendar event not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Note not found."}, status=status.HTTP_404_NOT_FOUND)
 
     
 class VideolinksAPIView(generics.ListCreateAPIView):
