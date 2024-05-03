@@ -105,12 +105,14 @@ class EventListAPIView(generics.ListCreateAPIView):
 class JobBoardListCreateAPIView(generics.ListCreateAPIView):
     queryset = JobBoardModel.objects.all()
     serializer_class = JobBoardSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
 
 class JobBoardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = JobBoardModel.objects.all()
     serializer_class = JobBoardSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
 
 # class MentorshipListView(generics.ListCreateAPIView):
 #     queryset = MentorshipModel.objects.all()
