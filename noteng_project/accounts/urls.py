@@ -17,8 +17,8 @@ urlpatterns = [
     path('events/<int:pk>/', EventDetailAPIView.as_view(), name='event-detail'),
     path('jobboard/', JobBoardListCreateAPIView.as_view(), name='jobboard-list-create'),
     path('jobboard/<int:pk>/', JobBoardDetailAPIView.as_view(), name='jobboard-detail'),
-    path('mentorship/', MentorshipListView.as_view(), name='mentorship-list'),
-    path('mentorship/<int:pk>/', MentorshipDetailView.as_view(), name='mentorship-detail'),
+    # path('mentorship/', MentorshipListView.as_view(), name='mentorship-list'),
+    # path('mentorship/<int:pk>/', MentorshipDetailView.as_view(), name='mentorship-detail'),
 ]
 
 if settings.DEBUG:

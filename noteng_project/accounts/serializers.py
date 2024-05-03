@@ -32,15 +32,15 @@ class EventSerializer(serializers.ModelSerializer):
         model = EventModel
         fields = '__all__'
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'fname', 'lname', 'contact_number', 'mentors', 'expertise']
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['sapid', 'username', 'email', 'fname', 'lname', 'contact_number','expertise']
 
-class MentorshipSerializer(serializers.ModelSerializer):
-    mentor = UserSerializer()
-    mentee = UserSerializer()
+# class MentorshipSerializer(serializers.ModelSerializer):
+#     mentor = UserSerializer()
+#     mentee = UserSerializer()
 
-    class Meta:
-        model = MentorshipModel
-        fields = ['mentor', 'mentee', 'start_date', 'end_date']
+#     class Meta:
+#         model = MentorshipModel
+#         fields = ['mentorship_id', 'mentor', 'mentee', 'start_date', 'end_date']
