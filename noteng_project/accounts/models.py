@@ -25,6 +25,7 @@ class PostModel(models.Model):
     is_interested = models.BooleanField(default=False)
     date_updated = models.DateField(auto_now=True)
     date_uploaded = models.DateField(auto_now_add=True)
+    image=models.ImageField(upload_to='images/',  storage=RawMediaCloudinaryStorage())
 
 class JobBoardModel(models.Model):
     job_id = models.AutoField(primary_key=True)

@@ -12,6 +12,11 @@ class PostSerializer(serializers.ModelSerializer):
         model = PostModel
         fields = '__all__'
 
+        def validate_image(self, value):
+            if not (value.name.lower().endswith(('.jpg', '.jpeg', '.png'))):
+                raise ValidationError("Only images (JPEG, PNG) files are allowed.")
+            return value
+
 class NotesSerializer(serializers.ModelSerializer):
     class Meta:
         model = NotesModel
