@@ -1,0 +1,38 @@
+.subtitle{
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: #20222E;
+    margin-top: 32px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.head3{
+    font-size: 32px;
+    color: #8391A1;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.notes-description{
+    margin-top: 20px;
+    margin-left: 40px;
+    font-size: 24px;
+}
+.noteimg{
+    width: 1058px;
+    height: 302px;
+    margin-top: 40px;
+    margin-left: 67px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+.badges{
+    width: 200px;
+}
+.badges1{
+    margin-top: 30px;
+    width: 200px;
+}
