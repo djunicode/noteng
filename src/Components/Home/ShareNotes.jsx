@@ -56,7 +56,7 @@ const cardData = [
 function ShareNotes() {
   return (
     <div className='flex flex-col '>
-         <p className='justify-center md:ml-6 md:justify-start flex items-center'>
+         <p className='justify-center md:ml-6 md:justify-start flex items-center mt-10'>
         <span className='font-bold'>Share Notes</span>
       </p>
       <div className='ml-6 w-[78vw] border-b-2'></div>
@@ -85,7 +85,7 @@ function ShareNotes() {
           </div>
         })}
       </div>
-      <p className='flex justify-end mr-5 text-custom-blue font-bold '>See more</p>
+    
     </div>
   )
 }

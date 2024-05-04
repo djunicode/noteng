@@ -55,7 +55,7 @@ function JobOpportunity() {
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
               <p className='font-bold '>{data.heading1}</p>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
-              <p className='mt-2 text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.body}</p>
+              <p className=' text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.body}</p>
               <div className='flex justify-between'>
                 <div className='flex items-center'>
                   {data.icon }
@@ -78,7 +78,7 @@ function JobOpportunity() {
           </div>
         })}
       </div>
-      <p className='flex justify-end mr-12 md:mr-5 text-custom-blue font-bold '>See more</p>
+      
     </div>
   )
 }

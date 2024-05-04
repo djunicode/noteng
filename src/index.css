@@ -1,19 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-<<<<<<< HEAD
 
-body {
+* {
   margin: 0;
-  
+  /* Set margin to 0 for all elements */
 }
 
-=======
-*{
-  margin: 0;
-}
 body {
   box-sizing: border-box;
-  
+  /* Apply box-sizing to all elements in the body */
 }
->>>>>>> fa4b34b948b3866cfb4cb977e5467e6b78915dfa

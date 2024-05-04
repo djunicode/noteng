@@ -53,25 +53,25 @@ const Sidebar = () => {
 
             </div>
             <div className='flex items-center justify-around h-16 ml-auto mr-3'>
-              <div className='flex w-10 h-10 bg-custom-white justify-center items-center rounded-l-lg rounded-r-lg'>
+              <div className='flex w-10 h-10 bg-custom-white justify-center items-center rounded-l-lg rounded-r-lg cursor-pointer'>
                 <PersonOutlineIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={loginNavigate}/>
               </div>
             </div>
           </div>
           <div className='flex items-center bg-white rounded-l-lg rounded-r-lg mx-4 my-4 '>
             <input type='text' placeholder='Search for posts, notes...' className='w-full outline-none border-none rounded-l-lg' />
-            <div className='w-8 h-8 bg-custom-blue flex justify-center items-center rounded-md mr-4'>
-              <SearchIcon style={{ color: 'white' }} />
+            <div className='w-8 h-8 bg-custom-blue flex justify-center items-center rounded-md mr-4 cursor-pointer'>
+              <SearchIcon style={{ color: 'white'  }} />
             </div>
           </div>
-          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1' onClick={handleHomeClick}>
+          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 cursor-pointer' onClick={handleHomeClick}>
             <div className='pl-2'>
               <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} />
             </div>
             <p className='flex items-center font-bold text-custom-blue font-poppins mx-auto'>Home</p>
           </div>
-          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1'>
-            <div className='pl-2'>
+          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 '>
+            <div className='pl-2 cursor-pointer'>
               <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} />
             </div>
             <p className='flex items-center text-center font-bold text-custom-blue font-poppins ml-auto mr-auto'>Discover</p>
@@ -79,25 +79,25 @@ const Sidebar = () => {
           <div className='flex flex-col justify-center items-center max-w-auto my-3'>
             <div className='flex flex-col gap-2 mt-8'>
               <div className='flex gap-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createJob}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createJob}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Add Job Opportunity</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createPost}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createPost}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Create New Post</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg' onClick={createNote}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createNote}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Upload Notes</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer'>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Share Video</p>

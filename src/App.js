@@ -1,10 +1,7 @@
-import './App.css'
-import Home from './Pages/Home'
-<<<<<<< HEAD
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-=======
-import { BrowserRouter, Route, Routes} from 'react-router-dom'
->>>>>>> fa4b34b948b3866cfb4cb977e5467e6b78915dfa
+import './App.css';
+import Home from './Pages/Home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Choose one of the conflicting import statements
+
 import PostJob from './Pages/PostJob';
 import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';

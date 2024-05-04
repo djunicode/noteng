@@ -60,7 +60,7 @@ function LatestPosts() {
           </div>
         })}
       </div>
-      <p className='flex justify-end mr-12 text-custom-blue font-bold '>See more</p>
+    
     </div>
   )
 }
