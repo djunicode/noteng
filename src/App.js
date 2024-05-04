@@ -11,6 +11,7 @@ import Profile from './Pages/profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
 import UploadVideo from './Pages/UploadVideo';
+import DiscoverPage from './Pages/DiscoverPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/profile' element={< Profile />} />
         <Route path='/createnote' element={< NewNotes />} />
         <Route path='/uploadvideo' element={< UploadVideo />} />
+        <Route path='/DiscoverPage' element={<DiscoverPage/>}/>
       </Routes>
     </BrowserRouter>
   );

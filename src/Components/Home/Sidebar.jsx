@@ -32,6 +32,9 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
     document.body.style.overflowY = isOpen ? 'auto' : 'hidden';
   }
+  function Discover(){
+    navigate('/DiscoverPage');
+  }
 
   return (
     <div className='flex '>
@@ -72,7 +75,7 @@ const Sidebar = () => {
           </div>
           <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 '>
             <div className='pl-2 cursor-pointer'>
-              <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} />
+              <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={Discover}/>
             </div>
             <p className='flex items-center text-center font-bold text-custom-blue font-poppins ml-auto mr-auto'>Discover</p>
           </div>
