@@ -16,6 +16,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import AuthenticationFailed
 from cloudinary.uploader import upload
 from django.http import JsonResponse
+import cloudinary
+from django.core.exceptions import ObjectDoesNotExist
+import os
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 class CustomJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
@@ -58,8 +62,28 @@ class NotesListCreateAPIView(generics.ListCreateAPIView):
 class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NotesModel.objects.all()
     serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]  
+    authentication_classes = [CustomJWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        
+        # Get the document associated with the note
+        document = instance.document
+
+        try:
+            # Delete the document using the custom Cloudinary storage
+            storage = RawMediaCloudinaryStorage()
+            storage.delete(document.name)
+
+            # Delete the note instance
+            instance.delete()
+
+            return Response({"message": "Note and associated document deleted successfully."}, status=status.HTTP_200_OK)
+
+        except ObjectDoesNotExist:
+            return Response({"error": "Note not found."}, status=status.HTTP_404_NOT_FOUND)
+
 
   
 class CalendarListView(generics.ListCreateAPIView):
@@ -108,28 +132,6 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
         else:
             return Response({"error": "Post not found."}, status=status.HTTP_404_NOT_FOUND)
 
-
-class NotesListCreateAPIView(generics.ListCreateAPIView):
-    queryset = NotesModel.objects.all()
-    serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]  
-    permission_classes = [IsAuthenticated]
-
-class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = NotesModel.objects.all()
-    serializer_class = NotesSerializer
-    authentication_classes = [CustomJWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-       
-        note = NotesModel.objects.filter(user=instance.user).first()
-        if note:
-            note.delete()
-            return Response({"message": "Note deleted successfully."}, status=status.HTTP_200_OK)
-        else:
-            return Response({"error": "Note not found."}, status=status.HTTP_404_NOT_FOUND)
 
     
 class VideolinksAPIView(generics.ListCreateAPIView):
