@@ -11,9 +11,19 @@ class VideolinksModel(models.Model):
 
 class PostModel(models.Model):
     post_id = models.AutoField(primary_key=True)
-    POST_TYPES = [
-        ('Job', 'job_board'),
-        ('Event', 'event')
+    # POST_TYPES = [
+    #     ('Job', 'job_board'),
+    #     ('Event', 'event')
+    # ]
+    ORGANIZERS = [
+        ('college', 'college'),
+        ('commitee', 'commitee')
+    ]
+    EVENT_TYPES = [
+        ('hackathon', 'hackathon'),
+        ('cultural', 'cultural'),
+        ('datathon', 'datathon'),
+        ('startup', 'startup')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.TextField()
@@ -21,7 +31,9 @@ class PostModel(models.Model):
     post_url = models.URLField()
     description = models.TextField()
     likes = models.PositiveIntegerField()
-    type = models.CharField(max_length=10, choices=POST_TYPES)
+    organised_by = models.CharField(max_length=50, choices=ORGANIZERS, default = ('college', 'college'))
+    subtype = models.CharField(max_length=20, choices=EVENT_TYPES, default = ('hackathon', 'hackathon'))
+    # type = models.CharField(max_length=10, choices=POST_TYPES)
     is_interested = models.BooleanField(default=False)
     date_updated = models.DateField(auto_now=True)
     date_uploaded = models.DateField(auto_now_add=True)
@@ -47,6 +59,8 @@ class JobBoardModel(models.Model):
         ('Project Manager', 'Project Manager'),
         ('Business Analyst', 'Business Analyst'),
         ('Backend Developer', 'Backend Developer'),
+        ('Frontend Developer', 'Frontend Developer'),
+        ('Fullstack Developer', 'Fullstack Developer'),
         ('Machine Learning Engineer', 'Machine Learning Engineer'),
     ]
     job_title = models.CharField(max_length=50, choices=JOB_TITLES)
@@ -56,21 +70,21 @@ class JobBoardModel(models.Model):
     contact_no = models.CharField(max_length=10)
     requirements = models.TextField()
 
-class EventModel(models.Model):
-    event_id = models.AutoField(primary_key=True)
-    ORGANIZERS = [
-        ('college', 'college'),
-        ('commitee', 'commitee')
-    ]
-    EVENT_TYPES = [
-        ('hackathon', 'hackathon'),
-        ('cultural', 'cultural'),
-        ('datathon', 'datathon'),
-        ('startup', 'startup')
-    ]
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    organised_by = models.CharField(max_length=50, choices=ORGANIZERS)
-    subtype = models.CharField(max_length=20, choices=EVENT_TYPES)
+# class EventModel(models.Model):
+#     event_id = models.AutoField(primary_key=True)
+#     ORGANIZERS = [
+#         ('college', 'college'),
+#         ('commitee', 'commitee')
+#     ]
+#     EVENT_TYPES = [
+#         ('hackathon', 'hackathon'),
+#         ('cultural', 'cultural'),
+#         ('datathon', 'datathon'),
+#         ('startup', 'startup')
+#     ]
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     organised_by = models.CharField(max_length=50, choices=ORGANIZERS)
+#     subtype = models.CharField(max_length=20, choices=EVENT_TYPES)
 
 class NotesModel(models.Model):
     note_id = models.AutoField(primary_key=True)
@@ -103,3 +117,9 @@ class MentorshipModel(models.Model):
     mentee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentee')
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
+    expertise = models.CharField(max_length=50, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # If this is a new MentorshipModel instance
+            self.expertise = self.mentor.expertise
+        super().save(*args, **kwargs)
