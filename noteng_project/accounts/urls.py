@@ -11,6 +11,7 @@ urlpatterns = [
     path('posts/<int:pk>', PostDetailView.as_view(), name='post-detail'),
     path('notes/', NotesListCreateAPIView.as_view(), name='notes-list'),
     path('notes/<int:pk>/', NotesDetailAPIView.as_view(), name='notes-detail'),
+    path('notes/<int:pk>/ratings/', NoteRatingCreateAPIView.as_view(), name='note-rating-create'),
     path('videolinks/', VideolinksAPIView.as_view(), name='videolinks-list-create'),
     path('videolinks/<int:pk>/', VideolinksDetailAPIView.as_view(), name='videolinks-detail'),
     # path('events/', EventListAPIView.as_view(), name='events-list'),

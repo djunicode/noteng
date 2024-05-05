@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel, MentorshipModel#, EventModel
+from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel,NoteRating, MentorshipModel#, EventModel
 from authentication.models import User
 from authentication.serializers import UserSerializer
 from django.core.exceptions import ValidationError
@@ -19,15 +19,34 @@ class PostSerializer(serializers.ModelSerializer):
                 raise ValidationError("Only images (JPEG, PNG) files are allowed.")
             return value
 
+class NoteRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NoteRating
+        fields = ('user', 'rating')
+
 class NotesSerializer(serializers.ModelSerializer):
+    ratings = NoteRatingSerializer(many=True, read_only=True)
+    average_rating = serializers.SerializerMethodField()
+    
     class Meta:
         model = NotesModel
         fields = '__all__'
+
+    def get_average_rating(self, obj):
+        ratings = obj.ratings.all()
+        if ratings.exists():
+            total_ratings = ratings.count()
+            sum_ratings = sum(rating.rating for rating in ratings)
+            return sum_ratings / total_ratings
+        else:
+            return 0
 
     def validate_document(self, value):
         if not (value.name.lower().endswith(('.jpg', '.jpeg', '.png', '.pdf'))):
             raise ValidationError("Only images (JPEG, PNG) and PDF files are allowed.")
         return value
+
+
 class JobBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobBoardModel

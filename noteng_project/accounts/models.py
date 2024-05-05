@@ -100,8 +100,16 @@ class NotesModel(models.Model):
     note_description = models.TextField()
     subject = models.TextField()
     department = models.CharField(max_length=100)
-    rating = models.IntegerField(choices=RATING_CHOICES)
+    # rating = models.IntegerField(choices=RATING_CHOICES)
     document = models.FileField(upload_to='raw/',  storage=RawMediaCloudinaryStorage())
+
+class NoteRating(models.Model):
+    note = models.ForeignKey(NotesModel, related_name='ratings', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=NotesModel.RATING_CHOICES)
+
+    class Meta:
+        unique_together = ('note', 'user')
 
 class CalendarModel(models.Model):
     calendar_id = models.AutoField(primary_key=True)

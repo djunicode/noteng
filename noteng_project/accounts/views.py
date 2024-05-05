@@ -20,6 +20,7 @@ import cloudinary
 from django.core.exceptions import ObjectDoesNotExist
 import os
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
+from django.shortcuts import get_object_or_404
 
 class CustomJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
@@ -84,8 +85,36 @@ class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         except ObjectDoesNotExist:
             return Response({"error": "Note not found."}, status=status.HTTP_404_NOT_FOUND)
 
+class NoteRatingCreateAPIView(generics.CreateAPIView, generics.UpdateAPIView):
+    queryset = NoteRating.objects.all()
+    serializer_class = NoteRatingSerializer
+    permission_classes = [IsAuthenticated]
 
-  
+    def perform_create(self, serializer):
+        note_id = self.kwargs['pk']
+        note = get_object_or_404(NotesModel, pk=note_id)
+        
+        # Check if the user has already rated the note
+        existing_rating = note.ratings.filter(user=self.request.user).first()
+        if existing_rating:
+            raise serializers.ValidationError("You have already rated this note.")
+        
+        # Save the new rating
+        serializer.save(note=note, user=self.request.user)
+        
+    def perform_update(self, serializer):
+        note_id = self.kwargs['pk']
+        note = get_object_or_404(NotesModel, pk=note_id)
+        
+        # Retrieve the existing rating
+        existing_rating = note.ratings.filter(user=self.request.user).first()
+        if not existing_rating:
+            raise serializers.ValidationError("You have not rated this note yet.")
+        
+        # Update the existing rating
+        serializer.instance = existing_rating
+        serializer.save()
+
 class CalendarListView(generics.ListCreateAPIView):
     queryset = CalendarModel.objects.all()
     serializer_class = CalendarSerializer

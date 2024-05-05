@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import VideolinksModel, PostModel, JobBoardModel,  CalendarModel, NotesModel, MentorshipModel#, EventModel
+from .models import VideolinksModel, PostModel, JobBoardModel,  CalendarModel, NotesModel, MentorshipModel,NoteRating #, EventModel
 
 class VideolinksModelAdmin(admin.ModelAdmin):
     list_display = ('video_id', 'user', 'subject', 'sem', 'topics')
@@ -16,6 +16,11 @@ class JobBoardModelAdmin(admin.ModelAdmin):
 # class EventModelAdmin(admin.ModelAdmin):
 #     list_display = ('event_id', 'user', 'organised_by', 'subtype')
 #     search_fields = ('user__email', 'organised_by')
+
+class NoteRatingAdmin(admin.ModelAdmin):
+    list_display = ('note', 'user', 'rating')
+    search_fields = ('note__note_title', 'user__email')
+    list_filter = ('rating',)
 
 class NotesModelAdmin(admin.ModelAdmin):
     list_display = ('note_id', 'user', 'note_title', 'subject', 'department')
@@ -36,3 +41,4 @@ admin.site.register(JobBoardModel, JobBoardModelAdmin)
 admin.site.register(CalendarModel, CalendarModelAdmin)
 admin.site.register(NotesModel, NotesModelAdmin)
 admin.site.register(MentorshipModel, MentorshipModelAdmin)
+admin.site.register(NoteRating, NoteRatingAdmin)
