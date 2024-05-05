@@ -168,13 +168,13 @@ class JobBoardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
 
-# class MentorshipListView(generics.ListCreateAPIView):
-#     queryset = MentorshipModel.objects.all()
-#     serializer_class = MentorshipSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class MentorshipListView(generics.ListCreateAPIView):
+    queryset = MentorshipModel.objects.all()
+    serializer_class = MentorshipSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
-# class MentorshipDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = MentorshipModel.objects.all()
-#     serializer_class = MentorshipSerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class MentorshipDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MentorshipModel.objects.all()
+    serializer_class = MentorshipSerializer
+    permission_classes = [permissions.IsAuthenticated]

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel, EventModel, MentorshipModel
 from authentication.models import User
+from authentication.serializers import UserSerializer
 from django.core.exceptions import ValidationError
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,15 +42,11 @@ class EventSerializer(serializers.ModelSerializer):
         model = EventModel
         fields = '__all__'
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ['sapid', 'username', 'email', 'fname', 'lname', 'contact_number','expertise']
 
-# class MentorshipSerializer(serializers.ModelSerializer):
-#     mentor = UserSerializer()
-#     mentee = UserSerializer()
+class MentorshipSerializer(serializers.ModelSerializer):
+    mentor = UserSerializer()
+    mentee = UserSerializer()
 
-#     class Meta:
-#         model = MentorshipModel
-#         fields = ['mentorship_id', 'mentor', 'mentee', 'start_date', 'end_date']
+    class Meta:
+        model = MentorshipModel
+        fields = ['mentorship_id', 'mentor', 'mentee', 'start_date', 'end_date']

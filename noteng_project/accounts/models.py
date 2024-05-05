@@ -84,6 +84,7 @@ class CalendarModel(models.Model):
     note = models.TextField()
 
 class MentorshipModel(models.Model):
+    mentorship_id = models.AutoField(primary_key=True)
     mentor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentor')
     mentee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentee')
     start_date = models.DateField()
