@@ -39,8 +39,22 @@ class JobBoardModel(models.Model):
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.CharField(max_length=50)
+    JOB_TITLES = [
+        ('Software Engineer', 'Software Engineer'),
+        ('Data Analyst', 'Data Analyst'),
+        ('Web Developer', 'Web Developer'),
+        ('UI/UX Designer', 'UI/UX Designer'),
+        ('Project Manager', 'Project Manager'),
+        ('Business Analyst', 'Business Analyst'),
+        ('Backend Developer', 'Backend Developer'),
+        ('Machine Learning Engineer', 'Machine Learning Engineer'),
+    ]
+    job_title = models.CharField(max_length=50, choices=JOB_TITLES)
     subtype = models.CharField(max_length=10, choices=JOB_SUBTYPES)
     mode = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    location = models.CharField(max_length=50,default='Remote')
+    contact_no = models.CharField(max_length=10)
+    requirements = models.TextField()
 
 class EventModel(models.Model):
     event_id = models.AutoField(primary_key=True)
@@ -88,5 +102,4 @@ class MentorshipModel(models.Model):
     mentor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentor')
     mentee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mentorships_mentee')
     start_date = models.DateField()
-    end_date = models.DateField(null=True, blank=True) 
-
+    end_date = models.DateField(null=True, blank=True)
