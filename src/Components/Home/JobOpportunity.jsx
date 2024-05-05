@@ -45,11 +45,11 @@ const cardData = [
 function JobOpportunity() {
   return (
     <div className='flex flex-col'>
-      <p className=' md:ml-6 md:justify-start mt-10 flex justify-center items-center'>
-        <span className='font-bold'>Explore Latest Job Opportunities</span>
+      <p className=' md:ml-6 md:justify-start mt-5 flex justify-center items-center'>
+        <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
       </p>
       <div className='ml-6  border-b-2'></div>
-      <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row md:ml-1 mt-4 md:justify-evenly'>
+      <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row md:ml-10 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 ' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
