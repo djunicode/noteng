@@ -6,19 +6,22 @@ import PostJob from './Pages/PostJob';
 import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
-import LoginPage from './Pages/LoginPage';
+import SignUp from './Pages/SignUp';
 import Profile from './Pages/profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
 import UploadVideo from './Pages/UploadVideo';
 import DiscoverPage from './Pages/DiscoverPage';
-
+import Splash from './Pages/Splash';
+import LoginPage from './Pages/LoginPage';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/Splash' element={<Splash />} />
         <Route path='/LoginPage' element={<LoginPage />} />
+        <Route path='/SignUp' element={<SignUp />} />
         <Route path='/createpost' element={<NewPost />} />
         <Route path='/createjob' element={<PostJob />} />
         <Route path='/viewjob' element={<ViewJob />} />
