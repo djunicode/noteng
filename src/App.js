@@ -14,6 +14,7 @@ import UploadVideo from './Pages/UploadVideo';
 import DiscoverPage from './Pages/DiscoverPage';
 import Splash from './Pages/Splash';
 import LoginPage from './Pages/LoginPage';
+import PostDetails from './Pages/PostDetails';
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
         <Route path='/viewjob' element={<ViewJob />} />
         <Route path='/viewnote' element={<ViewNote />} />
         <Route path='/UploadNewPosts' element={<UploadNewPosts />} />
+        <Route path='/PostDetails' element={<PostDetails />} />
         <Route path='/profile' element={< Profile />} />
         <Route path='/createnote' element={< NewNotes />} />
         <Route path='/uploadvideo' element={< UploadVideo />} />
