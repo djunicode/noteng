@@ -99,12 +99,10 @@ class _NotesDetailsState extends State<NotesDetails> {
                   ),
 
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Posted by:\nMeet Chavan"),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 140),
-                      child: Text("24th March 2024\n15:18"),
-                    ),
+                    Text("24th March 2024\n15:18"),
                   ],
                 ),
 
@@ -113,10 +111,20 @@ class _NotesDetailsState extends State<NotesDetails> {
                 Row(
                   children: [
                     Text("Rate the Notes: "),
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: Icon(Icons.star_border_outlined)
-                      )
+                    Row(
+                      
+                      children: 
+                        List.generate(
+                          5,
+                        (index) => IconButton(
+                            onPressed: (){
+                                
+                            }, 
+                            icon: Icon(Icons.star_border_outlined)
+                            ),
+                        ),
+                      
+                    )
                   ],
                 ),
 

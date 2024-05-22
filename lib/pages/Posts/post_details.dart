@@ -39,7 +39,7 @@ class _PostDetailsState extends State<PostDetails> {
                 const Padding(
                   padding: EdgeInsets.only(right: 200),
                   child: Text("Post Description",style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600
                   ),),
                 ),
@@ -62,12 +62,10 @@ class _PostDetailsState extends State<PostDetails> {
                 ),
 
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Posted by:\n Meet Chavan"),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 150),
-                      child: Text("24th March 2024\n15:18"),
-                    ),
+                    Text("24th March 2024\n15:18"),
                   ],
                 ),
                 SizedBox(height: 10,),
