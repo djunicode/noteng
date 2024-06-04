@@ -18,7 +18,9 @@ dependencies:
   flutter_svg: ^2.0.10+1
   youtube_player_flutter: ^9.0.0
   url_launcher: ^6.2.5
-
+  permission_handler: ^11.3.1
+  image_picker: ^1.0.8
+  file_picker: ^8.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -31,7 +33,7 @@ flutter:
 
   assets:
     - assets/svg/
-    - assets/img/
+    # - assets/img/
 
 
   fonts:

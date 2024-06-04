@@ -40,7 +40,7 @@ Widget DiscoverTab(selectedIndex) {
                   "Jobs",
                   style: TextStyle(
                       color: selectedIndex == 0 ? Colors.white : secondaryColor,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400),
                 )
               ],
@@ -74,7 +74,7 @@ Widget DiscoverTab(selectedIndex) {
                   "Posts",
                   style: TextStyle(
                       color: selectedIndex == 1 ? Colors.white : secondaryColor,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400),
                 )
               ],
@@ -108,7 +108,7 @@ Widget DiscoverTab(selectedIndex) {
                   "Notes",
                   style: TextStyle(
                       color: selectedIndex == 2 ? Colors.white : secondaryColor,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400),
                 )
               ],
@@ -143,7 +143,7 @@ Widget DiscoverTab(selectedIndex) {
                   "Videos ",
                   style: TextStyle(
                       color: selectedIndex == 3 ? Colors.white : secondaryColor,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400),
                 )
               ],

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteng/pages/Home/home_screen.dart';
+import 'package:noteng/pages/Auth/intro_screen.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -16,12 +16,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'NOTENG',
+      // theme: ThemeData(
+      //   fontFamily: 'Poppins',
+      //   colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+      //   useMaterial3: true,
+      // ),
+      home: SplashScreen(),
+      // home: Trial(),
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -41,7 +47,7 @@ class _MainState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     timer = Timer(const Duration(seconds: 3), () {
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => NotengScreen());
     });
   }
 

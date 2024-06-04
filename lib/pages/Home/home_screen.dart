@@ -12,6 +12,7 @@ import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
+import 'package:noteng/pages/profile/profilePage.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
@@ -73,17 +74,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: secondaryAccentColor.withAlpha(150),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(
-                      Icons.person_outline,
-                      color: primaryColor,
-                      size: 30,
+                  GestureDetector(
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: secondaryAccentColor.withAlpha(150),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Icon(
+                        Icons.person_outline,
+                        color: primaryColor,
+                        size: 30,
+                      ),
                     ),
+                    onTap: () {
+                      Get.to(ProfilePage());
+                    },
                   )
                 ],
               ),
