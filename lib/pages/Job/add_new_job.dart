@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/chip_selection_widget.dart';
-import 'package:noteng/Widgets/dropdown_widget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 
 class AddNewJob extends StatefulWidget {

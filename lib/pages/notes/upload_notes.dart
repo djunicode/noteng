@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
+
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 
@@ -14,6 +15,8 @@ class UploadNotes extends StatefulWidget {
 
 class _UploadNotesState extends State<UploadNotes> {
   FilePickerResult? result;
+  String _selectedItem = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +65,53 @@ class _UploadNotesState extends State<UploadNotes> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
-              textFieldWidget(
-                hintText: "Enter department",
-                maxLines: 1,
+              DropdownButtonFormField<String>(
+                hint: const Text('Select'),
+                value: _selectedItem.isNotEmpty ? _selectedItem : null,
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedItem = newValue!;
+                  });
+                  print('Selected item: $newValue');
+                },
+                items: const [
+                  DropdownMenuItem(
+                    value: '',
+                    child: Text('Select'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'CS',
+                    child: Text('CS'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'IT',
+                    child: Text('IT'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'DS',
+                    child: Text('DS'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'AIDS',
+                    child: Text('AIDS'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'AIML',
+                    child: Text('AIML'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'IOT',
+                    child: Text('IOT'),
+                  ), 
+                  DropdownMenuItem(
+                    value: 'EXTC',
+                    child: Text('EXTC'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'MECH',
+                    child: Text('MECH'),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -109,7 +156,8 @@ class _UploadNotesState extends State<UploadNotes> {
                     ElevatedButton(
                       onPressed: () async {
                         try {
-                          result = await FilePicker.platform.pickFiles(allowMultiple: true);
+                          result = await FilePicker.platform
+                              .pickFiles(allowMultiple: true);
                           setState(() {});
                         } catch (e) {
                           // Handle the error
@@ -117,7 +165,6 @@ class _UploadNotesState extends State<UploadNotes> {
                         } finally {
                           // Ensure any resources are cleaned up here, if needed
                         }
-                        
                       },
                       child: Text(
                         "Upload",
@@ -127,7 +174,8 @@ class _UploadNotesState extends State<UploadNotes> {
                           backgroundColor:
                               MaterialStatePropertyAll(primaryColor)),
                     ),
-                    if (result != null) ...result!.files.map((file) => Text(file.name)).toList(),
+                    if (result != null)
+                      ...result!.files.map((file) => Text(file.name)).toList(),
                   ],
                 ),
               ),
