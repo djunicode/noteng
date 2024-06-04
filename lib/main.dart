@@ -1,15 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/app_bar_widget.dart';
-import 'package:noteng/Widgets/button_widget.dart';
-import 'package:noteng/Widgets/chip_selection_widget.dart';
-import 'package:noteng/Widgets/notesListWidget.dart';
-import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/pages/Home/home_screen.dart';
-import 'package:noteng/pages/add_new_job.dart';
-import 'package:noteng/pages/add_new_post.dart';
 import 'constants/colors.dart';
 
 void main() {

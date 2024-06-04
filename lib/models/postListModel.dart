@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class PostListModel {
   final String? pTitle;
   final String? pDate;
