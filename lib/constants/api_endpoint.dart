@@ -10,4 +10,7 @@ class ApiEndpoint {
 
   //Posts
   static const String posts = '$baseUrl/api/posts';
+
+  //Notes
+  static const String notes = '$baseUrl/api/notes';
 }

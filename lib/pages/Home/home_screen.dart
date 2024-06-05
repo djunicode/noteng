@@ -13,6 +13,8 @@ import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
+import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/data/User/userModel.dart';
@@ -462,6 +464,99 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text(
                     "Test Update Post",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () async {
+                    NotesRepo.getAllNotes().then((value) {
+                      print(value[0].toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get All Notes",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    NotesRepo.getSingleNote(2).then((value) {
+                      print(value.toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get Single Note",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    NotesRepo.createNote(
+                        Notes.fromJson({
+                          "note_id": 5,
+                          "ratings": [],
+                          "average_rating": 0,
+                          "note_title": "updated test1",
+                          "note_description":
+                              "This is the updated description of the note1.",
+                          "subject": "Maths4",
+                          "department": "Comps2",
+                          "document":
+                              "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/raw/Screenshot_2024-06-05_at_11.11.36AM_fs0vul.png",
+                          "user": "60004230269"
+                        }),
+                        await pickFile());
+                  },
+                  child: const Text(
+                    "Test Create Note",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    NotesRepo.deleteNote(5);
+                  },
+                  child: const Text(
+                    "Test Delete Note",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    NotesRepo.updateNote(
+                        Notes.fromJson({
+                          "note_id": 6,
+                          "ratings": [],
+                          "average_rating": 0,
+                          "note_title": "updated test1",
+                          "note_description":
+                              "This is the updated description of the note1.",
+                          "subject": "Maths4",
+                          "department": "Comps2",
+                          "user": "60004230269"
+                        }),
+                        await pickFile());
+                  },
+                  child: const Text(
+                    "Test Update Note",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
