@@ -21,6 +21,9 @@ dependencies:
   permission_handler: ^11.3.1
   image_picker: ^1.0.8
   file_picker: ^8.0.3
+  dio: ^5.4.3+1
+  shared_preferences: ^2.2.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

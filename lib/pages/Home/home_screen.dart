@@ -11,6 +11,8 @@ import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/User/userModel.dart';
+import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
 
@@ -281,6 +283,84 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                InkWell(
+                  onTap: () async {
+                    UserRepo.registerUser(User.fromJson({
+                      "sapid": "60004230269",
+                      "password": "pass@123",
+                      "fname": "Meet",
+                      "lname": "Chavan",
+                      "email": "meetchavan24@gmail.com",
+                      "contact_number": "8169264512"
+                    }));
+                  },
+                  child: const Text(
+                    "Test Signup User",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    UserRepo.loginUser(User.fromJson({
+                      "sapid": "60004230269",
+                      "password": "pass@123",
+                    }));
+                  },
+                  child: const Text(
+                    "Test Login User",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    UserRepo.refreshToken();
+                  },
+                  child: const Text(
+                    "Test Refresh Token",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    UserRepo.getUserDetails();
+                  },
+                  child: const Text(
+                    "Test Get User Details",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    UserRepo.editUserDetails(User.fromJson({
+                      "fname": "Meet",
+                      "lname": "Chavan",
+                      "email": "meetchavan24@gmail.com",
+                      "contact_number": "8169264511"
+                    }));
+                  },
+                  child: const Text(
+                    "Test Update User Details",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 const Text(
                   "Explore Latest Job Opportunities",
                   style: TextStyle(
