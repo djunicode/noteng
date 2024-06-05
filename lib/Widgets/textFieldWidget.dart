@@ -38,6 +38,9 @@ class textFieldWidget extends StatelessWidget {
         color: Colors.black,
       ),
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        labelText: hintText,
+        floatingLabelStyle: TextStyle(color: primaryColor),
         contentPadding: EdgeInsets.all(14.0),
         filled: true,
         fillColor: secondaryAccentColor,

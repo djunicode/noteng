@@ -143,8 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     // Perform signup logic here
                     print('User Type: $_userType');
                     print('Department: $_department');
-                    Get.offAll(UserRegistration(),
-                        transition: Transition.fadeIn);
+                    Get.to(UserRegistration(), transition: Transition.fadeIn);
                   }
                 },
                 child: const Text(
