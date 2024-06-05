@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:noteng/constants/api_endpoint.dart';
 import 'package:noteng/data/User/userModel.dart';
@@ -101,7 +99,7 @@ class UserRepo {
   }
 
   //Method to Get User Details
-  static Future<void> getUserDetails() async {
+  static Future<User> getUserDetails() async {
     final dio = Dio();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var access_token = await prefs.getString('access');
@@ -130,17 +128,21 @@ class UserRepo {
         await prefs.setString("expertise", user.expertise ?? '');
 
         print('User Data fetched successfully: ${response.data}');
+
+        return user;
       } else {
         print(
             'Failed to fetch user data: ${response.data} ${response.statusCode}');
+        return User();
       }
     } catch (e) {
       print('Error occurred: $e');
+      return User();
     }
   }
 
   //Method to Edit User Details
-  static Future<void> editUserDetails(User user) async {
+  static Future<User> editUserDetails(User user) async {
     final dio = Dio();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var access_token = await prefs.getString('access');
@@ -170,12 +172,15 @@ class UserRepo {
         await prefs.setString("expertise", user.expertise ?? '');
 
         print('User Data updated successfully: ${response.data}');
+        return user;
       } else {
         print(
             'Failed to update user data: ${response.data} ${response.statusCode}');
+        return User();
       }
     } catch (e) {
       print('Error occurred: $e');
+      return User();
     }
   }
 }

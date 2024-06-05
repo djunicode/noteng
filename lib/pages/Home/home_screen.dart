@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -11,6 +13,8 @@ import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Posts/postModel.dart';
+import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/data/User/userModel.dart';
 import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
@@ -35,6 +39,18 @@ class _HomeScreenState extends State<HomeScreen> {
   var videoSelected = false;
 
   var userName = "User Name";
+
+  Future<File> pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      return File(result.files.single.path!);
+    } else {
+      // User canceled the picker
+      return File('');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -352,6 +368,100 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text(
                     "Test Update User Details",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () async {
+                    PostsRepo.getAllPosts().then((value) {
+                      print(value[0].toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get All Posts",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    PostsRepo.getSinglePost(2).then((value) {
+                      print(value.toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get Single Post",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    PostsRepo.createPost(
+                        Posts.fromJson({
+                          "title": "ABC",
+                          "deadline": "2024-04-06T17:58:57Z",
+                          "post_url": "http://abc.com",
+                          "description": "ABCD",
+                          "likes": 1,
+                          "organised_by": "college",
+                          "subtype": "hackathon",
+                          "is_interested": true,
+                          "date_updated": "2024-06-05",
+                          "date_uploaded": "2024-06-05",
+                          "image":
+                              "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/images/Screenshot_2024-06-05_at_11.11.36AM_eeu4on.png",
+                          "user": "60004230269"
+                        }),
+                        await pickFile());
+                  },
+                  child: const Text(
+                    "Test Create Post",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    PostsRepo.deletePost(9);
+                  },
+                  child: const Text(
+                    "Test Delete Post",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    PostsRepo.updatePost(
+                        Posts.fromJson({
+                          "post_id": 3,
+                          "title": "ABC",
+                          "post_url": "http://abc.com",
+                          "description": "ABCD",
+                          "likes": 1,
+                          "organised_by": "college",
+                          "subtype": "hackathon",
+                          "is_interested": true,
+                        }),
+                        await pickFile());
+                  },
+                  child: const Text(
+                    "Test Update Post",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,

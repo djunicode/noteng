@@ -7,4 +7,7 @@ class ApiEndpoint {
   static const String refreshAccessToken = '$baseUrl/auth/token/refresh';
   static const String getUserDetails = '$baseUrl/auth/user';
   static const String editUserDetails = '$baseUrl/auth/user/';
+
+  //Posts
+  static const String posts = '$baseUrl/api/posts';
 }
