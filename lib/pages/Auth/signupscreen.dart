@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
-
-import '../Home/home_screen.dart';
+import 'package:noteng/pages/Auth/user_registration.dart';
 
 class SignupApp extends StatelessWidget {
   @override
@@ -144,7 +143,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     // Perform signup logic here
                     print('User Type: $_userType');
                     print('Department: $_department');
-                    Get.offAll(HomeScreen(), transition: Transition.fadeIn);
+                    Get.offAll(UserRegistration(),
+                        transition: Transition.fadeIn);
                   }
                 },
                 child: const Text(

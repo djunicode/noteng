@@ -6,6 +6,7 @@ class textFieldWidget extends StatelessWidget {
   const textFieldWidget(
       {super.key,
       this.controller,
+      this.numberOnly = false,
       this.maxLines = 1,
       this.hintText = "Your Name:",
       this.readOnly,
@@ -22,6 +23,7 @@ class textFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLines;
   final String? hintText;
+  final bool? numberOnly;
   final bool? readOnly;
   final bool? suffixIcon;
   final Widget? icon;
@@ -31,6 +33,7 @@ class textFieldWidget extends StatelessWidget {
       readOnly: readOnly ?? false,
       controller: controller,
       maxLines: maxLines,
+      keyboardType: numberOnly! ? TextInputType.number : TextInputType.text,
       style: const TextStyle(
         color: Colors.black,
       ),
