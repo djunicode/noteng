@@ -95,28 +95,29 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                        User user = User(
-                          sapid: sapIdController.text,
-                          password: passwordController.text,
-                         
-                        );
-
-                        bool registrationSuccess = await UserRepo.loginUser(user);
-
-                        if (registrationSuccess) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Login successful')),
-                          );
-                         Future.delayed(Duration(seconds: 2), () {
-                            Get.offAll(HomeScreen(), transition: Transition.fadeIn);
-                          });
-                        } else {
-                          // Handle registration failure (e.g., show an error message)
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Login failed')),
-                          );
-                        }
-                      }
+                    User user = User(
+                      sapid: sapIdController.text,
+                      password: passwordController.text,
+                    );
+            
+                    bool registrationSuccess =
+                        await UserRepo.loginUser(user);
+            
+                    if (registrationSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Login successful')),
+                      );
+                      Future.delayed(Duration(seconds: 2), () {
+                        Get.offAll(HomeScreen(),
+                            transition: Transition.fadeIn);
+                      });
+                    } else {
+                      // Handle registration failure (e.g., show an error message)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Login failed')),
+                      );
+                    }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,

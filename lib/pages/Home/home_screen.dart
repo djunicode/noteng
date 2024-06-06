@@ -94,22 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: secondaryAccentColor.withAlpha(150),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Icon(
-                        Icons.person_outline,
-                        color: primaryColor,
-                        size: 30,
-                      ),
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        color: secondaryAccentColor.withAlpha(150),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: const Icon(
+                      Icons.person_outline,
+                      color: primaryColor,
+                      size: 30,
                     ),
-                    onTap: () {
-                      Get.to(ProfilePage());
-                    },
                   )
                 ],
               ),
