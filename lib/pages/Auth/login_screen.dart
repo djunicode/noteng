@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/User/userModel.dart';
+import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/pages/Auth/forgot_password.dart';
 import 'package:noteng/pages/Home/home_screen.dart';
 
@@ -14,7 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _sapId = '';
   String _password = '';
-
+  TextEditingController sapIdController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                   return null;
                 },
+                controller: sapIdController,
               ),
               const Spacer(),
               const Text(
@@ -85,16 +89,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
                   return null;
                 },
+                controller: passwordController,
               ),
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    // Perform login logic here
-                    print('SAP ID: $_sapId');
-                    print('Password: $_password');
-                    Get.offAll(HomeScreen(), transition: Transition.fadeIn);
-                  }
+                        User user = User(
+                          sapid: sapIdController.text,
+                          password: passwordController.text,
+                         
+                        );
+
+                        bool registrationSuccess = await UserRepo.loginUser(user);
+
+                        if (registrationSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Login successful')),
+                          );
+                         Future.delayed(Duration(seconds: 2), () {
+                            Get.offAll(HomeScreen(), transition: Transition.fadeIn);
+                          });
+                        } else {
+                          // Handle registration failure (e.g., show an error message)
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Login failed')),
+                          );
+                        }
+                      }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,

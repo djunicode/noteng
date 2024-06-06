@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepo {
   //Method to Register User
-  static Future<void> registerUser(User user) async {
+  static Future<bool> registerUser(User user) async {
     final dio = Dio();
 
     try {
@@ -28,13 +28,15 @@ class UserRepo {
         print(
             'Failed to register user: ${response.data} ${response.statusCode}');
       }
+      return true;
     } catch (e) {
       print('Error occurred: $e');
+      return false;
     }
   }
 
   //Method to Login User
-  static Future<void> loginUser(User user) async {
+  static Future<bool> loginUser(User user) async {
     final dio = Dio();
 
     try {
@@ -60,8 +62,10 @@ class UserRepo {
       } else {
         print('Failed to login user: ${response.data} ${response.statusCode}');
       }
+      return true;
     } catch (e) {
       print('Error occurred: $e');
+      return false;
     }
   }
 

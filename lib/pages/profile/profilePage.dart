@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
+import 'package:noteng/Widgets/jobListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/pages/Home/sample_data.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -324,22 +326,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(8)),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Edit Profile",style: TextStyle(
+                              Text(
+                                "Edit Profile",
+                                style: TextStyle(
+                                    color: backgroundColor,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Icon(
+                                Icons.edit_outlined,
                                 color: backgroundColor,
-                                fontWeight: FontWeight.w700
-                              ),),
-                              Icon(Icons.edit_outlined,color: backgroundColor,)
-                          
+                              )
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 15,),
+                    SizedBox(
+                      width: 15,
+                    ),
                     GestureDetector(
                       child: Container(
                         height: h * 0.05,
@@ -348,23 +356,63 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: secondaryAccentColor,
                             borderRadius: BorderRadius.circular(8)),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10,right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                            Text("Logout",style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700
-                            ),),
-                            Icon(Icons.logout_outlined,color: Colors.black,)
-                          ],),
+                              Text(
+                                "Logout",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Icon(
+                                Icons.logout_outlined,
+                                color: Colors.black,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "My Post Job Opportunities",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                    Divider(
+                      thickness: 0.4,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                  height: 140,
+                  child: PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: SampleJobList.length,
+                    itemBuilder: (context, index) {
+                      return JobListWidget(
+                        SampleJobList[index],
+                        );
+                      },
+                    ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
