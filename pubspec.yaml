@@ -23,7 +23,8 @@ dependencies:
   file_picker: ^8.0.3
   dio: ^5.4.3+1
   shared_preferences: ^2.2.3
-  
+  flutter_neat_and_clean_calendar: ^0.3.19+41
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
