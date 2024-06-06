@@ -18,139 +18,138 @@ class _LoginScreenState extends State<LoginScreen> {
   String _password = '';
   TextEditingController sapIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Spacer(
-                flex: 5,
-              ),
-              SvgPicture.asset('assets/svg/login_woman.svg'),
-              const Spacer(),
-              const Text(
-                textAlign: TextAlign.center,
-                'Login',
-                style: TextStyle(
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                  fontFamily: 'Poppins',
-                ),
-              ),
-              const Spacer(),
-              const Text(
-                'Enter your SAP ID',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Enter SAP ID',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                onChanged: (value) {
-                  _sapId = value;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your SAP ID lol';
-                  }
-                  return null;
-                },
-                controller: sapIdController,
-              ),
-              const Spacer(),
-              const Text(
-                'Enter your password',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Enter password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                obscureText: true,
-                onChanged: (value) {
-                  _password = value;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                controller: passwordController,
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    User user = User(
-                      sapid: sapIdController.text,
-                      password: passwordController.text,
-                    );
-            
-                    bool registrationSuccess =
-                        await UserRepo.loginUser(user);
-            
-                    if (registrationSuccess) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login successful')),
-                      );
-                      Future.delayed(Duration(seconds: 2), () {
-                        Get.offAll(HomeScreen(),
-                            transition: Transition.fadeIn);
-                      });
-                    } else {
-                      // Handle registration failure (e.g., show an error message)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login failed')),
-                      );
-                    }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  foregroundColor: backgroundColor,
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                child: const Text(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 50.0),
+                SvgPicture.asset('assets/svg/login_woman.svg'),
+                const SizedBox(height: 30.0),
+                const Text(
+                  textAlign: TextAlign.center,
                   'Login',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 35.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontFamily: 'Poppins',
                   ),
                 ),
-              ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OTPScreen()),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: primaryColor,
+                const SizedBox(height: 30.0),
+                const Text(
+                  'Enter your SAP ID',
+                  style: TextStyle(fontSize: 18.0),
                 ),
-                child: const Text('Forgot your password?'),
-              ),
-              const Spacer(
-                flex: 7,
-              )
-            ],
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: 'Enter SAP ID',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onChanged: (value) {
+                    _sapId = value;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your SAP ID';
+                    }
+                    return null;
+                  },
+                  controller: sapIdController,
+                ),
+                const SizedBox(height: 20.0),
+                const Text(
+                  'Enter your password',
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  obscureText: true,
+                  onChanged: (value) {
+                    _password = value;
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  controller: passwordController,
+                ),
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      User user = User(
+                        sapid: sapIdController.text,
+                        password: passwordController.text,
+                      );
+
+                      bool registrationSuccess = await UserRepo.loginUser(user);
+
+                      if (registrationSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login successful')),
+                        );
+                        Future.delayed(Duration(seconds: 2), () {
+                          Get.offAll(HomeScreen(),
+                              transition: Transition.fadeIn);
+                        });
+                      } else {
+                        // Handle registration failure
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login failed')),
+                        );
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: backgroundColor,
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OTPScreen()),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: primaryColor,
+                  ),
+                  child: const Text('Forgot your password?'),
+                ),
+                const SizedBox(height: 50.0),
+              ],
+            ),
           ),
         ),
       ),

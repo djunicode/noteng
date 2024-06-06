@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neat_and_clean_calendar/neat_and_clean_calendar_event.dart';
-import 'package:intl/intl.dart';
 import 'package:noteng/constants/api_endpoint.dart';
-import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/CalendarEvents/calendarModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
