@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:noteng/constants/colors.dart';
-import 'package:noteng/models/notesListModel.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
 
 class DiscoverNotesListWidget extends StatelessWidget {
   const DiscoverNotesListWidget(
@@ -10,7 +10,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
     super.key,
   });
 
-  final NotesListModel? nLM;
+  final Notes? nLM;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  nLM!.title!,
+                  nLM!.noteTitle!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -46,7 +46,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
                     color: Colors.amber,
                   ),
                   Text(
-                    nLM!.rating!,
+                    nLM!.averageRating!.toString(),
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
@@ -62,7 +62,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
             thickness: 0.5,
           ),
           Text(
-            nLM!.description!,
+            nLM!.noteDescription!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

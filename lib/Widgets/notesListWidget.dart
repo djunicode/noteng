@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
-import 'package:noteng/models/notesListModel.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/pages/notes/notes_detail.dart';
 
 class NotesListWidget extends StatelessWidget {
@@ -12,14 +12,14 @@ class NotesListWidget extends StatelessWidget {
     super.key,
   });
 
-  final NotesListModel? nLM;
+  final Notes? nLM;
   final double? width = 161;
   final double? height = 156;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Get.to(() => NotesDetails());
       },
       child: Container(
@@ -39,7 +39,7 @@ class NotesListWidget extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    nLM!.title!,
+                    nLM!.noteTitle!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -57,7 +57,7 @@ class NotesListWidget extends StatelessWidget {
                       color: Colors.amber,
                     ),
                     Text(
-                      nLM!.rating!,
+                      nLM!.averageRating!.toString(),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -73,7 +73,7 @@ class NotesListWidget extends StatelessWidget {
               thickness: 0.5,
             ),
             Text(
-              nLM!.description!,
+              nLM!.noteDescription!,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

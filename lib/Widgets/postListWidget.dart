@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/constants/colors.dart';
-import 'package:noteng/models/postListModel.dart';
+import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/pages/Posts/post_details.dart';
 
 class PostListWidget extends StatelessWidget {
@@ -15,7 +15,7 @@ class PostListWidget extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
-  final PostListModel? pLM;
+  final Posts? pLM;
 
   final VoidCallback? onPressed;
 
@@ -45,7 +45,7 @@ class PostListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  pLM!.pTitle!,
+                  pLM!.title!,
                   maxLines: 1,
                   style: const TextStyle(
                     color: Colors.black,
@@ -56,7 +56,7 @@ class PostListWidget extends StatelessWidget {
                 Flexible(
                   child: Text(
                     DateFormat('dd MMMM yyyy, HH:mm')
-                        .format(DateTime.parse(pLM!.pDate!)),
+                        .format(DateTime.parse(pLM!.dateUpdated!)),
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                       color: secondaryColor,
@@ -76,7 +76,7 @@ class PostListWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    pLM!.pDesc!,
+                    pLM!.description!,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -86,7 +86,7 @@ class PostListWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (pLM!.pImg != null)
+                if (pLM!.image != null)
                   Container(
                     margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                     height: 90,
@@ -94,7 +94,7 @@ class PostListWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         image: DecorationImage(
-                          image: NetworkImage(pLM!.pImg!),
+                          image: NetworkImage(pLM!.image!),
                           fit: BoxFit.cover,
                         )),
                   ),
@@ -119,14 +119,15 @@ class PostListWidget extends StatelessWidget {
                     InkWell(
                       onTap: () => onPressed ?? null,
                       child: Icon(
-                        pLM!.isLiked ? Icons.favorite : Icons.favorite_outline,
-                        color: pLM!.isLiked ? Colors.red : secondaryColor,
+                        // pLM!.isLiked ? Icons.favorite : Icons.favorite_outline,
+                        // color: pLM!.isLiked ? Colors.red : secondaryColor,
+                        Icons.favorite,
                         size: 16,
                       ),
                     ),
                     const SizedBox(width: 8.0),
                     Text(
-                      "${pLM!.pLikes!} Likes",
+                      "${pLM!.likes!} Likes",
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 12,
@@ -136,7 +137,7 @@ class PostListWidget extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  pLM!.pCategory!,
+                  pLM!.subtype!,
                   style: const TextStyle(
                     color: secondaryColor,
                     fontSize: 12,
