@@ -47,7 +47,9 @@ class JobBoardModel(models.Model):
     ]
     STATUS_CHOICES = [
         ('Offline', 'offline'),
-        ('Online', 'online')
+        ('Online', 'online'),
+        ('Hybrid', 'hybrid'),
+        ('Remote', 'remote')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.CharField(max_length=50)
@@ -69,6 +71,10 @@ class JobBoardModel(models.Model):
     location = models.CharField(max_length=50,default='Remote')
     contact_no = models.CharField(max_length=10)
     requirements = models.TextField()
+    duration_in_months = models.IntegerField()  # new field
+    description = models.TextField()  # new field
+    upload_time = models.DateTimeField(auto_now_add=True)
+
 
 # class EventModel(models.Model):
 #     event_id = models.AutoField(primary_key=True)
