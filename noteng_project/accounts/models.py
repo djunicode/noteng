@@ -72,7 +72,7 @@ class JobBoardModel(models.Model):
     contact_no = models.CharField(max_length=10)
     requirements = models.TextField()
     duration_in_months = models.IntegerField()  # new field
-    description = models.TextField()  # new field
+    description = models.TextField(default='')  # new field
     upload_time = models.DateTimeField(auto_now_add=True)
 
 
