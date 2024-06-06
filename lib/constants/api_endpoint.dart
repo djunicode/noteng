@@ -13,4 +13,7 @@ class ApiEndpoint {
 
   //Notes
   static const String notes = '$baseUrl/api/notes';
+
+  //Calendar
+  static const String calendar = '$baseUrl/api/calendar';
 }

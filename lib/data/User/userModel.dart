@@ -12,6 +12,7 @@ class User {
 
   User(
       {this.sapid,
+      this.password,
       this.fname,
       this.lname,
       this.email,

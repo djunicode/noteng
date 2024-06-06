@@ -16,7 +16,9 @@ class UploadNotes extends StatefulWidget {
 class _UploadNotesState extends State<UploadNotes> {
   FilePickerResult? result;
   String _selectedItem = '';
-
+  TextEditingController notesTitle = TextEditingController();
+  TextEditingController notesSubject = TextEditingController();
+  TextEditingController notesDescription = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +42,7 @@ class _UploadNotesState extends State<UploadNotes> {
               textFieldWidget(
                 hintText: "Enter Notes Title",
                 maxLines: 1,
+                controller: notesTitle,
               ),
               SizedBox(
                 height: 10,
@@ -54,6 +57,7 @@ class _UploadNotesState extends State<UploadNotes> {
               textFieldWidget(
                 hintText: "Enter subject",
                 maxLines: 1,
+                controller: notesSubject,
               ),
               SizedBox(
                 height: 10,
@@ -102,7 +106,7 @@ class _UploadNotesState extends State<UploadNotes> {
                   DropdownMenuItem(
                     value: 'IOT',
                     child: Text('IOT'),
-                  ), 
+                  ),
                   DropdownMenuItem(
                     value: 'EXTC',
                     child: Text('EXTC'),
@@ -126,6 +130,7 @@ class _UploadNotesState extends State<UploadNotes> {
               textFieldWidget(
                 hintText: "Enter Description",
                 maxLines: 5,
+                controller: notesDescription,
               ),
               SizedBox(
                 height: 10,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteng/pages/Calendar/calendar_events.dart';
 import 'package:noteng/pages/Discover/discover_job.dart';
 import 'package:noteng/pages/Home/home_screen.dart';
+import 'package:noteng/pages/profile/profilePage.dart';
 import '../../constants/colors.dart';
 
 class Bottomnavbar extends StatefulWidget {
@@ -44,6 +46,24 @@ class _BottomnavbarState extends State<Bottomnavbar> {
               Icons.trending_up_rounded,
             ),
             label: 'Discover'),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home_outlined,
+            color: Colors.transparent,
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.calendar_month_outlined,
+          ),
+          label: 'Events',
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_2_outlined,
+            ),
+            label: 'Profile'),
       ],
       onTap: (value) {
         if (value == 0 && widget.currentIndex != 0) {
@@ -51,6 +71,13 @@ class _BottomnavbarState extends State<Bottomnavbar> {
         }
         if (value == 1 && widget.currentIndex != 1) {
           Get.offAll(() => const DiscoverJob(), transition: Transition.fadeIn);
+        }
+        if (value == 3 && widget.currentIndex != 3) {
+          Get.offAll(() => const CalendarEvents(),
+              transition: Transition.fadeIn);
+        }
+        if (value == 4 && widget.currentIndex != 4) {
+          Get.offAll(() => const ProfilePage(), transition: Transition.fadeIn);
         }
       },
     );

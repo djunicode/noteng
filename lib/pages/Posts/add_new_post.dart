@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
@@ -17,7 +19,10 @@ class AddNewPostPage extends StatefulWidget {
 class _AddNewPostPageState extends State<AddNewPostPage> {
   File? _image;
   final picker = ImagePicker();
-
+  TextEditingController postTitle = TextEditingController();
+  TextEditingController postDescription = TextEditingController();
+  TextEditingController postLink = TextEditingController();
+  TextEditingController postOrganization = TextEditingController();
   Future getImage() async {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
@@ -52,9 +57,10 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               textFieldWidget(
                 hintText: "Enter Post Title",
                 maxLines: 1,
+                controller: postTitle,
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -66,12 +72,39 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               textFieldWidget(
                 hintText: "Enter Post Category",
                 maxLines: 1,
-                icon: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.arrow_drop_down)),
-                suffixIcon: true,
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Post Link",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+              ),
+              textFieldWidget(
+                hintText: "Enter Post Link",
+                maxLines: 1,
+                controller: postLink,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Organization Name",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
+              ),
+              textFieldWidget(
+                hintText: "Enter the organization name",
+                maxLines: 1,
+                controller: postOrganization,
+              ),
+              const SizedBox(
+                height: 10,
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
@@ -83,6 +116,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               textFieldWidget(
                 hintText: "Enter Post Description",
                 maxLines: 5,
+                controller: postDescription,
               ),
               const SizedBox(
                 height: 20,
@@ -125,13 +159,12 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                   ],
                 ),
               ),
-
-              
             ],
           ),
         ),
       ),
-      bottomNavigationBar: ButtonWidget(name: "Create New Post", onPressed: (){}),
+      bottomNavigationBar:
+          ButtonWidget(name: "Create New Post", onPressed: () {}),
     );
   }
 }
