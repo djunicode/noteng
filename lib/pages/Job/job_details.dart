@@ -87,7 +87,7 @@ class JobDetails extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Text(
-                      tenure,
+                      tenure + " Months",
                       style: TextStyle(color: Colors.white),
                     ),
                     decoration: BoxDecoration(
