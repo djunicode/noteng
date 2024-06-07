@@ -24,7 +24,9 @@ class UserRepo {
       );
       if (response.statusCode == 201) {
         print('User registered successfully: ${response.data}');
-        UserRepo.getUserDetails();
+        await UserRepo.loginUser(
+            User(sapid: user.sapid, password: user.password));
+
         return true;
       } else {
         print(

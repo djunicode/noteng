@@ -16,6 +16,7 @@ import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
+import 'package:noteng/main.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
   var phone = "";
   var sapid = "";
   var expertise = "";
+  var role = "Student";
   var job_posted = 0;
   var post_created = 0;
   var notes_shared = 0;
@@ -48,6 +50,20 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Posts> posts = [];
   List<Notes> notes = [];
   List<Video> videos = [];
+
+  Future signout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('refresh');
+    await prefs.remove('access');
+    await prefs.remove("sapid");
+    await prefs.remove("email");
+    await prefs.remove("fname");
+    await prefs.remove("lname");
+    await prefs.remove("contactNumber");
+    await prefs.remove("expertise");
+
+    Get.offAll(SplashScreen());
+  }
 
   Future fetchData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -77,7 +93,8 @@ class _ProfilePageState extends State<ProfilePage> {
     sapid = sap_sp!;
     email = email_sp!;
     phone = contact_sp!;
-    expertise = expertise_sp!;
+    role = expertise_sp!.split("@").first;
+    expertise = expertise_sp!.split("@").last;
     userName = "$fname $lname";
     setState(() {});
     fetchData();
@@ -147,10 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 decoration: BoxDecoration(
                                     color: backgroundColor,
                                     borderRadius: BorderRadius.circular(8)),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
-                                    "Student",
-                                    style: TextStyle(
+                                    role,
+                                    style: const TextStyle(
                                         color: primaryColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
@@ -164,7 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 10,
                       ),
-                      const Padding(
+                      Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -465,6 +482,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 15,
                     ),
                     GestureDetector(
+                      onTap: () {
+                        signout();
+                      },
                       child: Container(
                         height: h * 0.05,
                         width: w * 0.46,
@@ -497,38 +517,38 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "My Post Job Opportunities",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    Divider(
-                      thickness: 0.4,
-                      color: Colors.black,
-                    ),
-                    //   SizedBox(
-                    // height: 140,
-                    // child: PageView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: SampleJobList.length,
-                    //   itemBuilder: (context, index) {
-                    //     return JobListWidget(
-                    //       SampleJobList[index],
-                    //       );
-                    //     },
-                    //   ),
-                    //   ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 10, right: 20),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         "My Post Job Opportunities",
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 17,
+              //         ),
+              //       ),
+              //       Divider(
+              //         thickness: 0.4,
+              //         color: Colors.black,
+              //       ),
+              //       //   SizedBox(
+              //       // height: 140,
+              //       // child: PageView.builder(
+              //       //   scrollDirection: Axis.horizontal,
+              //       //   itemCount: SampleJobList.length,
+              //       //   itemBuilder: (context, index) {
+              //       //     return JobListWidget(
+              //       //       SampleJobList[index],
+              //       //       );
+              //       //     },
+              //       //   ),
+              //       //   ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

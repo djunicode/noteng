@@ -53,7 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var fname = await prefs.getString("fname");
     var lname = await prefs.getString("lname");
-    userName = "$fname $lname";
+    if (fname == null && lname == null) {
+      userName = "User";
+    } else if (fname != null && lname != null) {
+      userName = "$fname $lname";
+    } else {
+      userName = "$fname";
+    }
+
     setState(() {});
   }
 

@@ -10,6 +10,7 @@ class textFieldWidget extends StatelessWidget {
       this.hintText = "Your Name:",
       this.readOnly = false,
       this.suffixIcon = false,
+      this.obsecureText = false,
       this.icon,
       this.validator});
 
@@ -20,11 +21,13 @@ class textFieldWidget extends StatelessWidget {
   final bool readOnly;
   final bool suffixIcon;
   final Widget? icon;
+  final bool obsecureText;
   final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obsecureText,
       readOnly: readOnly,
       controller: controller,
       maxLines: maxLines,
@@ -33,7 +36,7 @@ class textFieldWidget extends StatelessWidget {
         color: Colors.black,
       ),
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: hintText,
         floatingLabelStyle: TextStyle(color: primaryColor),
         contentPadding: EdgeInsets.all(14.0),
