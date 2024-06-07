@@ -152,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 10,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -172,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -188,149 +188,152 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: secondaryAccentColor,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 5, top: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Icon(
-                                Icons.work_outline,
-                                size: 30,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 5, top: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Icon(
+                                  Icons.work_outline,
+                                  size: 30,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "12",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Jobs Posted",
-                              style: TextStyle(fontSize: 11),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Icon(
-                                Icons.add_photo_alternate_outlined,
-                                size: 30,
+                              SizedBox(
+                                height: 5,
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "09",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Posts Created",
-                              style: TextStyle(fontSize: 11),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 20,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Icon(
-                                Icons.upload_file,
-                                size: 30,
+                              Text(
+                                "12",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25),
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "34",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Notes Shared",
-                              style: TextStyle(fontSize: 11),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      VerticalDivider(
-                        thickness: 0.5,
-                        color: Colors.black,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, right: 4),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: Icon(
-                                Icons.videocam_outlined,
-                                size: 28,
+                              SizedBox(
+                                height: 5,
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "23",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Videos Shared",
-                              style: TextStyle(fontSize: 10),
-                            ),
-                          ],
+                              Text(
+                                "Jobs Posted",
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 5,
+                        ),
+                        VerticalDivider(
+                          thickness: 0.5,
+                          color: Colors.black,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Icon(
+                                  Icons.add_photo_alternate_outlined,
+                                  size: 30,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "09",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Posts Created",
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        VerticalDivider(
+                          thickness: 0.5,
+                          color: Colors.black,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Icon(
+                                  Icons.upload_file,
+                                  size: 30,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "34",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Notes Shared",
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        VerticalDivider(
+                          thickness: 0.5,
+                          color: Colors.black,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, right: 4),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Icon(
+                                  Icons.videocam_outlined,
+                                  size: 28,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "23",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 25),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Videos Shared",
+                                style: TextStyle(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -348,8 +351,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         decoration: BoxDecoration(
                             color: primaryColor,
                             borderRadius: BorderRadius.circular(8)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -422,16 +425,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.black,
                     ),
                     SizedBox(
-                  height: 140,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return JobListWidget(
-                        SampleJobList[index],
-                        );
-                      },
-                    ),
+                      height: 140,
+                      child: PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: SampleJobList.length,
+                        itemBuilder: (context, index) {
+                          return JobListWidget(
+                            SampleJobList[index],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
