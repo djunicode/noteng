@@ -18,8 +18,11 @@ import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/data/User/userModel.dart';
 import 'package:noteng/data/User/userRepo.dart';
+import 'package:noteng/data/Video/videoModel.dart';
+import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
@@ -40,11 +43,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var userName = "User Name";
   List<Job> jobs = [];
+  List<Posts> posts = [];
   List<Notes> notes = [];
+  List<Video> videos = [];
+
+  Future fetchUserName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var fname = await prefs.getString("fname");
+    var lname = await prefs.getString("lname");
+    userName = "$fname $lname";
+    setState(() {});
+  }
 
   Future fetchData() async {
     jobs = await JobRepo.getAllJobs();
+    posts = await PostsRepo.getAllPosts();
     notes = await NotesRepo.getAllNotes();
+    videos = await VideoRepo.getAllVideos();
     setState(() {});
   }
 
@@ -63,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    fetchUserName();
     fetchData();
   }
 
@@ -681,15 +697,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 140,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: jobs.length,
-                    itemBuilder: (context, index) {
-                      return JobListWidget(
-                        jobs[index],
-                      );
-                    },
-                  ),
+                  child: jobs.length > 0
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: jobs.length,
+                          itemBuilder: (context, index) {
+                            return JobListWidget(
+                              jobs[index],
+                            );
+                          },
+                        )
+                      : Center(child: CircularProgressIndicator()),
                 ),
                 const SizedBox(
                   height: 20,
@@ -707,15 +725,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 170,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return PostListWidget(
-                        SamplePostList[index],
-                      );
-                    },
-                  ),
+                  child: posts.length > 0
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: posts.length,
+                          itemBuilder: (context, index) {
+                            return PostListWidget(
+                              posts[index],
+                            );
+                          },
+                        )
+                      : Center(child: CircularProgressIndicator()),
                 ),
               ],
             ),
@@ -744,15 +764,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 156,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: notes.length,
-                    itemBuilder: (context, index) {
-                      return NotesListWidget(
-                        notes[index],
-                      );
-                    },
-                  ),
+                  child: notes.length > 0
+                      ? ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: notes.length,
+                          itemBuilder: (context, index) {
+                            return NotesListWidget(
+                              notes[index],
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(
+                          color: Colors.white,
+                        )),
                 ),
               ],
             ),
@@ -775,16 +800,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 246,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return VideoListWidget(
-                        vLink: SampleVideoList[index]["vLink"],
-                        vTitle: SampleVideoList[index]["vTitle"],
-                      );
-                    },
-                  ),
+                  child: videos.length > 0
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: videos.length,
+                          itemBuilder: (context, index) {
+                            return VideoListWidget(
+                              vLink: SampleVideoList[index]["vLink"],
+                              vTitle: SampleVideoList[index]["vTitle"],
+                            );
+                          },
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        ),
                 ),
               ],
             ),

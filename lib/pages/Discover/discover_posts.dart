@@ -135,18 +135,20 @@ class _DiscoverPostState extends State<DiscoverPost> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-            child: PostListWidget(
-              posts[index],
-            ),
-          );
-        },
-      ),
+      body: posts.length > 0
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: PostListWidget(
+                    posts[index],
+                  ),
+                );
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 

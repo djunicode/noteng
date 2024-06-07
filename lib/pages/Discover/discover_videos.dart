@@ -8,6 +8,8 @@ import 'package:noteng/Widgets/discover_tab.dart';
 
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Video/videoModel.dart';
+import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
@@ -23,6 +25,19 @@ class DiscoverVideos extends StatefulWidget {
 class _DiscoverVideosState extends State<DiscoverVideos> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
+  List<Video> videos = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  Future fetchData() async {
+    videos = await VideoRepo.getAllVideos();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,18 +137,20 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: SampleVideoList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-              padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-              child: VideoListWidget(
-                vLink: SampleVideoList[index]["vLink"],
-                vTitle: SampleVideoList[index]["vTitle"],
-              ));
-        },
-      ),
+      body: videos.length > 0
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: videos.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: VideoListWidget(
+                      vLink: SampleVideoList[index]["vLink"],
+                      vTitle: SampleVideoList[index]["vTitle"],
+                    ));
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 

@@ -137,20 +137,22 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-        child: GridView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: notes.length,
-          itemBuilder: (context, index) {
-            return DiscoverNotesListWidget(
-              notes[index],
-            );
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.1),
-        ),
+        child: notes.length > 0
+            ? GridView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: notes.length,
+                itemBuilder: (context, index) {
+                  return DiscoverNotesListWidget(
+                    notes[index],
+                  );
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1.1),
+              )
+            : Center(child: CircularProgressIndicator()),
       ),
     );
   }

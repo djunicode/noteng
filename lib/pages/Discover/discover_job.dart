@@ -135,18 +135,20 @@ class _DiscoverJobState extends State<DiscoverJob> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: jobs.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-            child: JobListWidget(
-              jobs[index],
-            ),
-          );
-        },
-      ),
+      body: jobs.length > 0
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: jobs.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: JobListWidget(
+                    jobs[index],
+                  ),
+                );
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 
