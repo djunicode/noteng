@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:noteng/Widgets/discover_tab.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Posts/postModel.dart';
+import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
@@ -21,6 +23,19 @@ class DiscoverPost extends StatefulWidget {
 class _DiscoverPostState extends State<DiscoverPost> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
+  List<Posts> posts = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  Future fetchData() async {
+    posts = await PostsRepo.getAllPosts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,18 +135,20 @@ class _DiscoverPostState extends State<DiscoverPost> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: SamplePostList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-            child: PostListWidget(
-              SamplePostList[index],
-            ),
-          );
-        },
-      ),
+      body: posts.length > 0
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: posts.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: PostListWidget(
+                    posts[index],
+                  ),
+                );
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
     );
   }
 

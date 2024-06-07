@@ -6,13 +6,16 @@ import 'package:get/get.dart';
 import 'package:noteng/Widgets/discoverNotesListWidget.dart';
 import 'package:noteng/Widgets/discover_tab.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
+import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
 
 class DiscoverNotes extends StatefulWidget {
-  const DiscoverNotes({Key? key}) : super(key: key);
+  final String? initial_search_query;
+  DiscoverNotes({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverNotesState createState() => _DiscoverNotesState();
@@ -21,6 +24,22 @@ class DiscoverNotes extends StatefulWidget {
 class _DiscoverNotesState extends State<DiscoverNotes> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
+  List<Notes> notes = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
+  }
+
+  Future fetchData() async {
+    notes = await NotesRepo.getAllNotes();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +81,9 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         controller: SearchController,
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
@@ -122,20 +144,29 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-        child: GridView.builder(
-          scrollDirection: Axis.vertical,
-          itemCount: SampleNoteList.length,
-          itemBuilder: (context, index) {
-            return DiscoverNotesListWidget(
-              SampleNoteList[index],
-            );
-          },
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1.1),
-        ),
+        child: notes.length > 0
+            ? GridView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: notes.length,
+                itemBuilder: (context, index) {
+                  if (notes[index]
+                      .noteTitle!
+                      .toLowerCase()
+                      .contains(SearchController.text.toLowerCase())) {
+                    return DiscoverNotesListWidget(
+                      notes[index],
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1.1),
+              )
+            : Center(child: CircularProgressIndicator()),
       ),
     );
   }

@@ -1,63 +1,46 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Job/jobModel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetails extends StatelessWidget {
-  final String companyName;
-  final String location;
-  final String jobTitle;
-  final String contact;
-  final String description;
-  final String jobType;
-  final String tenure;
-  final String requirements;
-  final String workType;
-  final String workMode;
-  final String userName;
-  final DateTime dateTime;
+  final Job job;
 
   const JobDetails({
-    required this.companyName,
-    required this.location,
-    required this.jobTitle,
-    required this.contact,
-    required this.description,
-    required this.jobType,
-    required this.tenure,
-    required this.requirements,
-    required this.workType,
-    required this.workMode,
-    required this.userName,
-    required this.dateTime,
+    required this.job,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = DateFormat('dd-MMM-yyyy').format(dateTime);
-    String hour = DateFormat('HH').format(dateTime);
-    String minute = DateFormat('mm').format(dateTime);
+    String formattedDate =
+        DateFormat('dd-MMM-yyyy').format(DateTime.parse(job.uploadTime!));
+    String hour = DateFormat('HH').format(DateTime.parse(job.uploadTime!));
+    String minute = DateFormat('mm').format(DateTime.parse(job.uploadTime!));
 
     return Scaffold(
       appBar: const AppBarWidget(title: "Job Opportunity"),
       body: Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                jobTitle,
+                job.jobTitle!,
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                 ),
               ),
               Text(
-                companyName,
+                job.company!,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -65,66 +48,95 @@ class JobDetails extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  location,
-                  style: TextStyle(
+                  job.location!,
+                  style: const TextStyle(
                       color: secondaryColor, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      jobType,
-                      style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.calendar_month_outlined,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Duration:\n${job.durationInMonths} Months",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(10)),
                   ),
-                  Spacer(),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      tenure + " M",
-                      style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 5, right: 5),
+                      padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.work_outline,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Type:\n${job.subtype}",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(8)),
                   ),
-                  Spacer(),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      workType,
-                      style: TextStyle(color: Colors.white),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.laptop,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Mode:\n${job.mode}",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(8)),
                   ),
-                  Spacer(),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                      workMode,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                  Spacer()
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Divider(),
-              SizedBox(
-                height: 5,
+              const Divider(),
+              const SizedBox(
+                height: 15,
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -137,14 +149,17 @@ class JobDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: secondaryAccentColor,
                           borderRadius: BorderRadius.circular(8)),
-                      child: Text(description),
+                      child: Text(job.description!),
                     )
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 15,
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -157,61 +172,70 @@ class JobDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: secondaryAccentColor,
                           borderRadius: BorderRadius.circular(8)),
-                      child: Text(requirements),
+                      child: Text(job.requirements!),
                     )
                   ],
                 ),
               ),
-              Divider(),
+              SizedBox(
+                height: 15,
+              ),
+              const Divider(),
               Row(
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Posted by:",
                         style: TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        userName,
-                        style: TextStyle(
+                        job.user!,
+                        style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         formattedDate,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "$hour:$minute",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.bold),
                       ),
                     ],
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: ButtonWidget(name: "Apply", onPressed: () {}),
+      bottomNavigationBar: job.contactNo != null
+          ? ButtonWidget(
+              name: "Contact Now",
+              onPressed: () {
+                launchUrl(Uri.parse('tel:${job.contactNo}'));
+              })
+          : SizedBox(),
     );
   }
 }
