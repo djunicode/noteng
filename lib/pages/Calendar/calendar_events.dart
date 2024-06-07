@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/Widgets/bottom_nav_bar.dart';
 import 'package:noteng/Widgets/modalbottom.dart';
 import 'package:noteng/data/CalendarEvents/calendarRepo.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../constants/colors.dart';
 
@@ -72,65 +74,79 @@ class _CalendarEventsState extends State<CalendarEvents> {
         eventListBuilder:
             (BuildContext context, List<NeatCleanCalendarEvent> events) {
           return Expanded(
-            child: ListView(
-              children: events.map((event) {
-                return Container(
-                  margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
-                  height: 90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: secondaryColor.withOpacity(0.2),
-                      width: 1.0,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 90,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomLeft: Radius.circular(10)),
-                          color: primaryColor,
-                          border: Border.all(
-                            color: secondaryColor.withOpacity(0.2),
-                            width: 1.0,
+              child: events.length > 0
+                  ? ListView(
+                      children: events.map((event) {
+                        return Container(
+                          margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+                          height: 90,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: secondaryColor.withOpacity(0.2),
+                              width: 1.0,
+                            ),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
                             children: [
-                              Text(
-                                event.summary,
-                                style: TextStyle(fontWeight: FontWeight.w700),
+                              Container(
+                                height: 90,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10)),
+                                  color: primaryColor,
+                                  border: Border.all(
+                                    color: secondaryColor.withOpacity(0.2),
+                                    width: 1.0,
+                                  ),
+                                ),
                               ),
-                              Divider(
-                                height: 5,
+                              Expanded(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        event.summary,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Divider(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        event.description,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
-                              Text(
-                                event.description,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 11),
-                              )
                             ],
                           ),
+                        );
+                      }).toList(),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "No Events for the day!",
+                          style: TextStyle(fontSize: 16),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          );
+                        Lottie.asset("assets/svg/events.json")
+                      ],
+                    ));
         },
       ),
     );
