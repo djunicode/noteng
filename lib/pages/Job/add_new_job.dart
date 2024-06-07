@@ -121,8 +121,8 @@ class _AddNewJobState extends State<AddNewJob> {
                     textFieldWidget(
                       hintText: "Enter Job Description",
                       controller: _description,
+                    
                       maxLines: 4,
-                      readOnly: true,
                     ),
                   ],
                 ),
@@ -194,7 +194,6 @@ class _AddNewJobState extends State<AddNewJob> {
                     textFieldWidget(
                       hintText: "Enter Job Requirements",
                       maxLines: 4,
-                      readOnly: true,
                       controller: _requirements,
                     ),
                   ],

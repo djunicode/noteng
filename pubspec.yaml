@@ -1,11 +1,11 @@
 name: noteng
 description: "2024 - DJUnicode - NOTENG"
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: ">=3.3.1 <4.0.0"
 
 dependencies:
   flutter:
@@ -32,7 +32,6 @@ dev_dependencies:
 
   flutter_lints: ^3.0.0
 
-
 flutter:
   uses-material-design: true
 
@@ -40,10 +39,7 @@ flutter:
     - assets/svg/
     # - assets/img/
 
-
   fonts:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
-
-  
