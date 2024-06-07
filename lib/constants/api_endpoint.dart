@@ -19,4 +19,7 @@ class ApiEndpoint {
 
   //Job
   static const String job = '$baseUrl/api/jobboard';
+
+  //Video
+  static const String video = '$baseUrl/api/videolinks';
 }

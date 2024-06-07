@@ -1,13 +1,10 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:noteng/constants/api_endpoint.dart';
 import 'package:noteng/data/Job/jobModel.dart';
-import 'package:noteng/data/User/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JobRepo {
-  //Method to Get All Notes
+  //Method to Get All Jobs
   static Future<List<Job>> getAllJobs() async {
     final dio = Dio();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
