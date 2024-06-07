@@ -18,6 +18,7 @@ import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/main.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
+import 'package:noteng/pages/profile/editProfile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -452,6 +453,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Row(
                   children: [
                     GestureDetector(
+                      onTap: () {
+                        Get.to(() => EditProfile());
+                      },
                       child: Container(
                         height: h * 0.05,
                         width: w * 0.46,
