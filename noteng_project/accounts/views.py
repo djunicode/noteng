@@ -21,6 +21,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import os
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
 
 class CustomJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
@@ -166,14 +167,25 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
 class VideolinksAPIView(generics.ListCreateAPIView):
     queryset = VideolinksModel.objects.all()
     serializer_class = VideolinksSerializer
-    authentication_classes = [CustomJWTAuthentication]  
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomJWTAuthentication]
+
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [permissions.IsAdminUser]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super(VideolinksAPIView, self).get_permissions()
 
 class VideolinksDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = VideolinksModel.objects.all()
     serializer_class = VideolinksSerializer
-    permission_classes = [permissions.IsAdminUser]
 
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            self.permission_classes = [permissions.IsAdminUser]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super(VideolinksDetailAPIView, self).get_permissions()
 
 # class EventDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = EventModel.objects.all()
