@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
@@ -7,6 +9,7 @@ import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadNotes extends StatefulWidget {
   const UploadNotes({super.key});
@@ -21,6 +24,50 @@ class _UploadNotesState extends State<UploadNotes> {
   TextEditingController notesTitle = TextEditingController();
   TextEditingController notesSubject = TextEditingController();
   TextEditingController notesDescription = TextEditingController();
+
+  Future<void> _uploadNotes() async {
+    if (notesTitle.text.isEmpty || 
+        notesSubject.text.isEmpty || 
+        _selectedItem.isEmpty || 
+        notesDescription.text.isEmpty || 
+        result == null || 
+        result!.files.isEmpty) {
+      // Handle validation error
+      print("Please fill all fields and select at least one file");
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+          String? sapid = prefs.getString('sapid');
+          if (sapid == null) {
+            print("User not found in SharedPreferences");
+            return;
+          }
+
+    File file = File(result!.files.first.path!);
+
+    Notes note = Notes(
+      noteTitle: notesTitle.text,
+      noteDescription: notesDescription.text,
+      subject: notesSubject.text,
+      department: _selectedItem,
+      user: sapid,
+      document: file.path.split('/').last,
+    );
+
+    try {
+      Notes createdNote = await NotesRepo.createNote(note, file);
+      // Handle success
+     if (createdNote.noteId != null) {
+              print("Upload successful: ${createdNote.noteTitle}");
+            } else {
+              print("Failed to create note.");
+            }
+    } catch (e) {
+      // Handle error
+      print("Upload failed: $e");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,9 +239,8 @@ class _UploadNotesState extends State<UploadNotes> {
       ),
       bottomNavigationBar: ButtonWidget(
           name: "Upload Notes",
-          onPressed: () {
-           
-          }),
+          onPressed: _uploadNotes,
+          ),
     );
   }
 }
