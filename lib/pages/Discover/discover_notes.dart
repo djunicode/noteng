@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:noteng/Widgets/discoverNotesListWidget.dart';
 import 'package:noteng/Widgets/discover_tab.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
+import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
@@ -21,6 +23,19 @@ class DiscoverNotes extends StatefulWidget {
 class _DiscoverNotesState extends State<DiscoverNotes> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
+  List<Notes> notes = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  Future fetchData() async {
+    notes = await NotesRepo.getAllNotes();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,10 +139,10 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: GridView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: SampleNoteList.length,
+          itemCount: notes.length,
           itemBuilder: (context, index) {
             return DiscoverNotesListWidget(
-              SampleNoteList[index],
+              notes[index],
             );
           },
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

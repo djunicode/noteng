@@ -40,9 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var userName = "User Name";
   List<Job> jobs = [];
+  List<Notes> notes = [];
 
   Future fetchData() async {
     jobs = await JobRepo.getAllJobs();
+    notes = await NotesRepo.getAllNotes();
     setState(() {});
   }
 
@@ -744,10 +746,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 156,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
+                    itemCount: notes.length,
                     itemBuilder: (context, index) {
                       return NotesListWidget(
-                        SampleNoteList[index],
+                        notes[index],
                       );
                     },
                   ),
