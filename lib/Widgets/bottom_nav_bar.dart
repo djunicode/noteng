@@ -70,7 +70,7 @@ class _BottomnavbarState extends State<Bottomnavbar> {
           Get.offAll(() => const HomeScreen(), transition: Transition.fadeIn);
         }
         if (value == 1 && widget.currentIndex != 1) {
-          Get.offAll(() => const DiscoverJob(), transition: Transition.fadeIn);
+          Get.offAll(() => DiscoverJob(), transition: Transition.fadeIn);
         }
         if (value == 3 && widget.currentIndex != 3) {
           Get.offAll(() => const CalendarEvents(),

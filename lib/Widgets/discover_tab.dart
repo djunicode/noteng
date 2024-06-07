@@ -16,8 +16,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverJob(),
-                transition: Transition.noTransition);
+            Get.off(() => DiscoverJob(), transition: Transition.noTransition);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),

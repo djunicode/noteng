@@ -20,6 +20,7 @@ import 'package:noteng/data/User/userModel.dart';
 import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
+import 'package:noteng/pages/Discover/discover_job.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -162,17 +163,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                 EdgeInsets.only(left: 10, right: 10)),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(9.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/search.svg",
+                    InkWell(
+                      onTap: () {
+                        if (jobSelected) {
+                          Get.offAll(DiscoverJob(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: SvgPicture.asset(
+                            "assets/svg/search.svg",
+                          ),
                         ),
                       ),
                     )

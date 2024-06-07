@@ -14,7 +14,8 @@ import '../../Widgets/modalbottom.dart';
 import '../../data/Job/jobModel.dart';
 
 class DiscoverJob extends StatefulWidget {
-  const DiscoverJob({Key? key}) : super(key: key);
+  final String? initial_search_query;
+  DiscoverJob({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverJobState createState() => _DiscoverJobState();
@@ -30,6 +31,9 @@ class _DiscoverJobState extends State<DiscoverJob> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
   }
 
   Future fetchData() async {
@@ -78,6 +82,9 @@ class _DiscoverJobState extends State<DiscoverJob> {
                     Expanded(
                       child: TextField(
                         controller: SearchController,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
                             hintStyle: TextStyle(
@@ -140,12 +147,19 @@ class _DiscoverJobState extends State<DiscoverJob> {
               scrollDirection: Axis.vertical,
               itemCount: jobs.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                  child: JobListWidget(
-                    jobs[index],
-                  ),
-                );
+                if (jobs[index]
+                    .company!
+                    .toLowerCase()
+                    .contains(SearchController.text.toLowerCase())) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: JobListWidget(
+                      jobs[index],
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
               },
             )
           : Center(child: CircularProgressIndicator()),
