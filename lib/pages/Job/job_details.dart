@@ -83,7 +83,7 @@ class JobDetails extends StatelessWidget {
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.only(left: 5, right: 5),
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(8)),
@@ -107,7 +107,6 @@ class JobDetails extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5),
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
