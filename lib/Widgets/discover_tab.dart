@@ -84,8 +84,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverNotes(),
-                transition: Transition.noTransition);
+            Get.off(() => DiscoverNotes(), transition: Transition.noTransition);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),

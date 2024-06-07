@@ -14,7 +14,8 @@ import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
 
 class DiscoverNotes extends StatefulWidget {
-  const DiscoverNotes({Key? key}) : super(key: key);
+  final String? initial_search_query;
+  DiscoverNotes({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverNotesState createState() => _DiscoverNotesState();
@@ -30,6 +31,9 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
   }
 
   Future fetchData() async {
@@ -77,6 +81,9 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         controller: SearchController,
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
@@ -142,9 +149,16 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                 scrollDirection: Axis.vertical,
                 itemCount: notes.length,
                 itemBuilder: (context, index) {
-                  return DiscoverNotesListWidget(
-                    notes[index],
-                  );
+                  if (notes[index]
+                      .noteTitle!
+                      .toLowerCase()
+                      .contains(SearchController.text.toLowerCase())) {
+                    return DiscoverNotesListWidget(
+                      notes[index],
+                    );
+                  } else {
+                    return SizedBox();
+                  }
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
