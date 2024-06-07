@@ -10,31 +10,31 @@ import 'package:noteng/data/Job/jobModel.dart';
 import 'package:noteng/pages/Job/job_details.dart';
 
 class JobListWidget extends StatelessWidget {
-  final Job? jLM;
+  final Job job;
   const JobListWidget(
-    this.jLM, {
+    this.job, {
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(
-        JobDetails(
-          companyName: jLM!.company.toString(),
-          location: "Some Location",
-          jobTitle: jLM!.jobTitle.toString(),
-          contact: "Contact Info",
-          description: jLM!.description.toString(),
-          jobType: jLM!.subtype.toString(),
-          tenure: jLM!.durationInMonths.toString(),
-          requirements: "Requirements",
-          workType: jLM!.subtype.toString(),
-          workMode: jLM!.mode.toString(),
-          userName: "User Name",
-          dateTime: DateTime.parse(jLM!.uploadTime.toString()),
-        ),
-      ),
+      // onTap: () => Get.to(
+      //   // JobDetails(
+      //   //   companyName:job.company.toString(),
+      //   //   location: "Some Location",
+      //   //   jobTitle: jLM!.jobType.toString(),
+      //   //   contact: "Contact Info",
+      //   //   description: jLM!.cDesc.toString(),
+      //   //   jobType: jLM!.jobType.toString(),
+      //   //   tenure: jLM!.duration.toString(),
+      //   //   requirements: "Requirements",
+      //   //   workType: jLM!.jobMode.toString(),
+      //   //   workMode: jLM!.mode.toString(),
+      //   //   userName: "User Name",
+      //   //   dateTime: DateTime.parse(jLM!.dateTime.toString()),
+      //   // ),
+      // ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         height: 140,
@@ -54,7 +54,7 @@ class JobListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  jLM!.subtype!,
+                  job.subtype!,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -63,7 +63,7 @@ class JobListWidget extends StatelessWidget {
                 ),
                 Text(
                   DateFormat('dd MMMM yyyy, HH:mm')
-                      .format(DateTime.parse(jLM!.uploadTime!)),
+                      .format(DateTime.parse(job.uploadTime!)),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     color: secondaryColor,
@@ -74,7 +74,7 @@ class JobListWidget extends StatelessWidget {
               ],
             ),
             Text(
-              jLM!.company!,
+              job.company!,
               style: const TextStyle(
                 color: secondaryColor,
                 fontSize: 16,
@@ -83,7 +83,7 @@ class JobListWidget extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                jLM!.description!,
+                job.description!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -112,7 +112,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      ("${jLM!.durationInMonths!} Months"),
+                      ("${job.durationInMonths!} Months"),
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,
@@ -132,7 +132,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      jLM!.mode!,
+                      job.mode!,
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,
@@ -152,7 +152,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      jLM!.mode!,
+                      job.location!,
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,

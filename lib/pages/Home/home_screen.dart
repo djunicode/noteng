@@ -39,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
   var videoSelected = false;
 
   var userName = "User Name";
+  List<Job> jobs = [];
+
+  Future fetchData() async {
+    jobs = await JobRepo.getAllJobs();
+    setState(() {});
+  }
 
   Future<File> pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -49,6 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
       // User canceled the picker
       return File('');
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
   }
 
   @override
@@ -668,10 +681,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 140,
                   child: PageView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
+                    itemCount: jobs.length,
                     itemBuilder: (context, index) {
                       return JobListWidget(
-                        SampleJobList[index],
+                        jobs[index],
                       );
                     },
                   ),

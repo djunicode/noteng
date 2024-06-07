@@ -421,18 +421,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       thickness: 0.4,
                       color: Colors.black,
                     ),
-                    SizedBox(
-                  height: 140,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return JobListWidget(
-                        SampleJobList[index],
-                        );
-                      },
-                    ),
-                    ),
+                    //   SizedBox(
+                    // height: 140,
+                    // child: PageView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemCount: SampleJobList.length,
+                    //   itemBuilder: (context, index) {
+                    //     return JobListWidget(
+                    //       SampleJobList[index],
+                    //       );
+                    //     },
+                    //   ),
+                    //   ),
                   ],
                 ),
               ),
