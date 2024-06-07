@@ -166,7 +166,8 @@ class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
 class VideolinksAPIView(generics.ListCreateAPIView):
     queryset = VideolinksModel.objects.all()
     serializer_class = VideolinksSerializer
-    permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [CustomJWTAuthentication]  
+    permission_classes = [IsAuthenticated]
 
 class VideolinksDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = VideolinksModel.objects.all()
