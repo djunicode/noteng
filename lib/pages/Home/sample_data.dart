@@ -1,49 +1,49 @@
+import 'package:noteng/data/Job/jobModel.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Posts/postModel.dart';
 
-import '../../models/jobListModel.dart';
-
-List<JobListModel> SampleJobList = [
-  JobListModel(
-      jobType: "Internship",
-      cName: "Google",
-      cDesc: "Software Development Internship focused on web technologies.",
-      duration: "12",
-      jobMode: "Online",
+List<Job> SampleJobList = [
+  Job(
+      subtype: "Internship",
+      company: "Google",
+      description:
+          "Software Development Internship focused on web technologies.",
+      durationInMonths: 12,
+      // jobMode: "Online",
       mode: "Full-time",
-      dateTime: DateTime.now().toString()),
-  JobListModel(
-      jobType: "Full-time",
-      cName: "Apple",
-      cDesc: "Marketing Specialist role focused on brand promotion.",
-      duration: "24",
-      jobMode: "Online",
+      uploadTime: DateTime.now().toString()),
+  Job(
+      subtype: "Full-time",
+      company: "Apple",
+      description: "Marketing Specialist role focused on brand promotion.",
+      durationInMonths: 24,
+      // jobMode: "Online",
       mode: "Remote",
-      dateTime: DateTime.now().toString()),
-  JobListModel(
-      jobType: "Part-time",
-      cName: "Microsoft",
-      cDesc: "Customer Support Representative for cloud services.",
-      duration: "20",
-      jobMode: "Online",
+      uploadTime: DateTime.now().toString()),
+  Job(
+      subtype: "Part-time",
+      company: "Microsoft",
+      description: "Customer Support Representative for cloud services.",
+      durationInMonths: 20,
+      // jobMode: "Online",
       mode: "On-site",
-      dateTime: DateTime.now().toString()),
-  JobListModel(
-      jobType: "Contract",
-      cName: "Amazon",
-      cDesc: "Project Manager for e-commerce initiatives.",
-      duration: "6",
-      jobMode: "Online",
+      uploadTime: DateTime.now().toString()),
+  Job(
+      subtype: "Contract",
+      company: "Amazon",
+      description: "Project Manager for e-commerce initiatives.",
+      durationInMonths: 6,
+      // jobMode: "Online",
       mode: "Hybrid",
-      dateTime: DateTime.now().toString()),
-  JobListModel(
-      jobType: "Temporary",
-      cName: "Netflix",
-      cDesc: "Event Coordinator for global marketing events.",
-      duration: "3",
-      jobMode: "Online",
+      uploadTime: DateTime.now().toString()),
+  Job(
+      subtype: "Temporary",
+      company: "Netflix",
+      description: "Event Coordinator for global marketing events.",
+      durationInMonths: 3,
+      // jobMode: "Online",
       mode: "Part-time",
-      dateTime: DateTime.now().toString())
+      uploadTime: DateTime.now().toString())
 ];
 
 List<Posts> SamplePostList = [

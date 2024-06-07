@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/jobListWidget.dart';
 import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
@@ -26,7 +23,6 @@ import 'package:noteng/pages/profile/profilePage.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
-import '../../models/jobListModel.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
