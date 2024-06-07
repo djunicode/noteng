@@ -19,22 +19,11 @@ class JobListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () => Get.to(
-      //   // JobDetails(
-      //   //   companyName:job.company.toString(),
-      //   //   location: "Some Location",
-      //   //   jobTitle: jLM!.jobType.toString(),
-      //   //   contact: "Contact Info",
-      //   //   description: jLM!.cDesc.toString(),
-      //   //   jobType: jLM!.jobType.toString(),
-      //   //   tenure: jLM!.duration.toString(),
-      //   //   requirements: "Requirements",
-      //   //   workType: jLM!.jobMode.toString(),
-      //   //   workMode: jLM!.mode.toString(),
-      //   //   userName: "User Name",
-      //   //   dateTime: DateTime.parse(jLM!.dateTime.toString()),
-      //   // ),
-      // ),
+      onTap: () => Get.to(
+        JobDetails(
+          job: job,
+        ),
+      ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
         height: 140,
