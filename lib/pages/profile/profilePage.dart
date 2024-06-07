@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 decoration: BoxDecoration(
                                     color: backgroundColor,
                                     borderRadius: BorderRadius.circular(8)),
-                                child: Center(
+                                child:const Center(
                                   child: Text(
                                     "Student",
                                     style: TextStyle(
@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 10,
                       ),
-                      Padding(
+                     const Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,

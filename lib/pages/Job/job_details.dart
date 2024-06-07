@@ -58,6 +58,7 @@ class JobDetails extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
+                      width: double.infinity,
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
@@ -70,7 +71,7 @@ class JobDetails extends StatelessWidget {
                             color: Colors.white,
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 2,
                           ),
                           Text(
                             "Duration:\n${job.durationInMonths} Months",
