@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import Sidebarresponsive from './Sidebarresponsive';
 import CloseIcon from '@mui/icons-material/Close';
+import ExploreIcon from '@mui/icons-material/Explore';
 // import LoginPage from '../../Pages/LoginPage';
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const Sidebar = () => {
           </div>
           <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 '>
             <div className='pl-2 cursor-pointer'>
-              <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={Discover}/>
+              < ExploreIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={Discover}/>
             </div>
             <p className='flex items-center text-center font-bold text-custom-blue font-poppins ml-auto mr-auto'>Discover</p>
           </div>
