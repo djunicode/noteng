@@ -8,7 +8,16 @@ import 'package:noteng/Widgets/bottom_nav_bar.dart';
 import 'package:noteng/Widgets/jobListWidget.dart';
 import 'package:noteng/Widgets/modalbottom.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Job/jobModel.dart';
+import 'package:noteng/data/Job/jobRepo.dart';
+import 'package:noteng/data/Notes/notesModel.dart';
+import 'package:noteng/data/Notes/notesRepo.dart';
+import 'package:noteng/data/Posts/postModel.dart';
+import 'package:noteng/data/Posts/postRepo.dart';
+import 'package:noteng/data/Video/videoModel.dart';
+import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,6 +28,61 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   var userName = "User Name";
+  var email = "";
+  var phone = "";
+  var sapid = "";
+  var expertise = "";
+  var job_posted = 0;
+  var post_created = 0;
+  var notes_shared = 0;
+  var videos_shared = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchUserData();
+  }
+
+  List<Job> jobs = [];
+  List<Posts> posts = [];
+  List<Notes> notes = [];
+  List<Video> videos = [];
+
+  Future fetchData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var sap_sp = await prefs.getString("sapid");
+
+    jobs = await JobRepo.getAllJobs();
+    posts = await PostsRepo.getAllPosts();
+    notes = await NotesRepo.getAllNotes();
+    videos = await VideoRepo.getAllVideos();
+
+    job_posted = jobs.where((job) => job.user == sap_sp!).length;
+    post_created = posts.where((post) => post.user == sap_sp!).length;
+    notes_shared = notes.where((note) => note.user == sap_sp!).length;
+    videos_shared = videos.where((video) => video.user == sap_sp!).length;
+
+    setState(() {});
+  }
+
+  Future fetchUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var fname = await prefs.getString("fname");
+    var lname = await prefs.getString("lname");
+    var sap_sp = await prefs.getString("sapid");
+    var email_sp = await prefs.getString("email");
+    var contact_sp = await prefs.getString("contactNumber");
+    var expertise_sp = await prefs.getString("expertise");
+    sapid = sap_sp!;
+    email = email_sp!;
+    phone = contact_sp!;
+    expertise = expertise_sp!;
+    userName = "$fname $lname";
+    setState(() {});
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -106,6 +170,32 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
+                              Icons.numbers,
+                              color: backgroundColor,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              sapid,
+                              style: TextStyle(
+                                color: backgroundColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
                               Icons.email_outlined,
                               color: backgroundColor,
                             ),
@@ -113,7 +203,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 10,
                             ),
                             Text(
-                              "shahrishi501@gmail.com",
+                              email,
                               style: TextStyle(
                                 color: backgroundColor,
                                 fontWeight: FontWeight.bold,
@@ -139,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 10,
                             ),
                             Text(
-                              "9876956781",
+                              phone,
                               style: TextStyle(
                                   color: backgroundColor,
                                   fontWeight: FontWeight.bold,
@@ -164,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 10,
                             ),
                             Text(
-                              "Computer Engineering - 2026",
+                              expertise,
                               style: TextStyle(
                                   color: backgroundColor,
                                   fontWeight: FontWeight.bold,
@@ -190,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Padding(
@@ -208,7 +298,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 5,
                               ),
                               Text(
-                                "12",
+                                job_posted.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
@@ -244,7 +334,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 5,
                               ),
                               Text(
-                                "09",
+                                post_created.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
@@ -282,7 +372,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 5,
                               ),
                               Text(
-                                "34",
+                                notes_shared.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
@@ -318,7 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 height: 5,
                               ),
                               Text(
-                                "23",
+                                videos_shared.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25),
                               ),
