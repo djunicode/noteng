@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/pages/Auth/intro_screen.dart';
+import 'package:noteng/pages/Home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/colors.dart';
 
 void main() {
@@ -45,9 +48,21 @@ class _MainState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    checkLogin();
     super.initState();
+  }
+
+  checkLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var access_token_exists = await prefs.containsKey("access");
+
     timer = Timer(const Duration(seconds: 3), () {
-      Get.offAll(() => NotengScreen());
+      if (access_token_exists) {
+        UserRepo.refreshToken();
+        Get.offAll(() => HomeScreen());
+      } else {
+        Get.offAll(() => NotengScreen());
+      }
     });
   }
 

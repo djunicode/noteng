@@ -13,6 +13,8 @@ import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/Widgets/postListWidget.dart';
 import 'package:noteng/Widgets/videoListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Job/jobModel.dart';
+import 'package:noteng/data/Job/jobRepo.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/data/Posts/postModel.dart';
@@ -552,6 +554,100 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text(
                     "Test Update Note",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () async {
+                    JobRepo.getAllJobs().then((value) {
+                      print(value[0].toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get All Jobs",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    JobRepo.getSingleJob(2).then((value) {
+                      print(value.toJson());
+                    });
+                  },
+                  child: const Text(
+                    "Test Get Single Job",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    JobRepo.createJob(Job.fromJson({
+                      "company": "AMEX_TEST",
+                      "job_title": "Software Engineer",
+                      "subtype": "Job",
+                      "mode": "Offline",
+                      "location": "Remote",
+                      "contact_no": "9082228928",
+                      "requirements":
+                          "No Backlogss till now - 8.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                      "duration_in_months": 3,
+                      "description":
+                          "We are seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                      "upload_time": "2024-06-06T15:40:23.466223Z",
+                      "user": "60004230269"
+                    }));
+                  },
+                  child: const Text(
+                    "Test Create Job",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    JobRepo.deleteJob(9);
+                  },
+                  child: const Text(
+                    "Test Delete Job",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    JobRepo.updateJob(Job.fromJson({
+                      "job_id": 10,
+                      "company": "AMEX_TEST 2",
+                      "subtype": "Job",
+                      "mode": "Offline",
+                      "location": "Remote",
+                      "contact_no": "9082228008",
+                      "requirements":
+                          "No Backlogss till now - 7.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                      "duration_in_months": 3,
+                      "description":
+                          "We are not seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                      "upload_time": "2024-06-06T15:40:23.466223Z",
+                    }));
+                  },
+                  child: const Text(
+                    "Test Update Job",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,

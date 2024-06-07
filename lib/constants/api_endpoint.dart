@@ -16,4 +16,7 @@ class ApiEndpoint {
 
   //Calendar
   static const String calendar = '$baseUrl/api/calendar';
+
+  //Job
+  static const String job = '$baseUrl/api/jobboard';
 }
