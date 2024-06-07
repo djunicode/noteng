@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
+import 'package:noteng/Widgets/bottom_nav_bar.dart';
 import 'package:noteng/Widgets/jobListWidget.dart';
+import 'package:noteng/Widgets/modalbottom.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
@@ -20,7 +24,26 @@ class _ProfilePageState extends State<ProfilePage> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBarWidget(title: "My Profile"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.bottomSheet(const Modalbottom(), persistent: false);
+        },
+        backgroundColor: primaryColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: Bottomnavbar(4),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: const Text(
+          "My Profile",
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 30),
@@ -28,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Center(
                 child: Container(
-                  height: h * 0.22,
+                  height: h * 0.23,
                   width: w * 0.95,
                   decoration: BoxDecoration(
                       color: primaryColor,
@@ -75,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20),
@@ -159,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Center(
                 child: Container(
-                  height: h * 0.15,
+                  height: h * 0.17,
                   width: w * 0.95,
                   decoration: BoxDecoration(
                     color: secondaryAccentColor,

@@ -24,11 +24,12 @@ class UserRepo {
       );
       if (response.statusCode == 201) {
         print('User registered successfully: ${response.data}');
+        return true;
       } else {
         print(
             'Failed to register user: ${response.data} ${response.statusCode}');
+        return false;
       }
-      return true;
     } catch (e) {
       print('Error occurred: $e');
       return false;
@@ -59,10 +60,11 @@ class UserRepo {
         await prefs.setString('access', response.data['access']);
 
         print('User logged in successfully: ${response.data}');
+        return true;
       } else {
         print('Failed to login user: ${response.data} ${response.statusCode}');
+        return false;
       }
-      return true;
     } catch (e) {
       print('Error occurred: $e');
       return false;
