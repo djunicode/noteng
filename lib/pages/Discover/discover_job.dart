@@ -38,7 +38,9 @@ class _DiscoverJobState extends State<DiscoverJob> {
 
   Future fetchData() async {
     jobs = await JobRepo.getAllJobs();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

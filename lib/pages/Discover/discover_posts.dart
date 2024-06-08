@@ -38,7 +38,9 @@ class _DiscoverPostState extends State<DiscoverPost> {
 
   Future fetchData() async {
     posts = await PostsRepo.getAllPosts();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

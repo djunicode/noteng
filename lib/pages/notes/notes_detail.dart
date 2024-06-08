@@ -178,7 +178,13 @@ class _NotesDetailsState extends State<NotesDetails> {
                         ),
                         onRatingUpdate: (rating) {
                           NotesRatingRepo.setRating(
-                              widget.note.noteId!, rating.round());
+                                  widget.note.noteId!, rating.round())
+                              .then((value) {
+                            setState(() {
+                              already_rated = true;
+                              widget.note.averageRating = rating;
+                            });
+                          });
                         },
                       )
                     ],

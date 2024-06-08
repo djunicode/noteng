@@ -40,7 +40,9 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
 
   Future fetchData() async {
     videos = await VideoRepo.getAllVideos();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

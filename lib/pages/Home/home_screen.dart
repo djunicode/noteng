@@ -71,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
     posts = await PostsRepo.getAllPosts();
     notes = await NotesRepo.getAllNotes();
     videos = await VideoRepo.getAllVideos();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<File> pickFile() async {

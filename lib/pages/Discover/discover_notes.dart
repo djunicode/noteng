@@ -39,7 +39,9 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
 
   Future fetchData() async {
     notes = await NotesRepo.getAllNotes();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
