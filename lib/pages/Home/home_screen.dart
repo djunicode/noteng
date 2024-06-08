@@ -753,7 +753,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 170,
+                  height: 180,
                   child: posts.length > 0
                       ? PageView.builder(
                           scrollDirection: Axis.horizontal,

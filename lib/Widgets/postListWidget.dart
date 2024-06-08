@@ -27,7 +27,7 @@ class PostListWidget extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
-        height: 170,
+        height: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: secondaryAccentColor.withAlpha(100),
