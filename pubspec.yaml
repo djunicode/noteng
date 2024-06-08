@@ -26,6 +26,8 @@ dependencies:
   flutter_neat_and_clean_calendar: ^0.3.19+41
   lottie: ^3.1.2
   shimmer: ^3.0.0
+  syncfusion_flutter_pdfviewer: ^24.2.8
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

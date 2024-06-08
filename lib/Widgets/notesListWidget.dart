@@ -21,7 +21,7 @@ class NotesListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => NotesDetails());
+        Get.to(() => NotesDetails(nLM!));
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -59,7 +59,7 @@ class NotesListWidget extends StatelessWidget {
                       color: Colors.amber,
                     ),
                     Text(
-                      nLM!.averageRating!.toString(),
+                      nLM!.averageRating!.toStringAsFixed(2),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
@@ -140,9 +140,7 @@ class NotesListWidget_Shimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => NotesDetails());
-      },
+      onTap: () {},
       child: Container(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         margin: EdgeInsets.only(right: 10),
