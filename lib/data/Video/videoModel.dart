@@ -2,7 +2,7 @@ class Video {
   int? video_id;
   String? subject;
   String? topics;
-  String? sem;
+  int? sem;
   String? links;
   String? user;
 

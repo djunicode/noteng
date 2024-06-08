@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Video/videoModel.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoListWidget extends StatefulWidget {
   VideoListWidget({
     Key? key,
-    this.vLink,
-    this.vThumbnail,
-    this.vTitle,
+    required this.video,
   }) : super(key: key);
 
-  final String? vTitle;
-  final String? vThumbnail;
-  final String? vLink;
+  final Video video;
 
   @override
   _VideoListWidgetState createState() => _VideoListWidgetState();
@@ -30,7 +27,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
     super.initState();
     // Replace with your YouTube video ID
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(widget.vLink!)!,
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.video.links!)!,
       flags: YoutubePlayerFlags(
           autoPlay: false, mute: false, showLiveFullscreenButton: false),
     );
@@ -63,7 +60,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
             children: [
               Expanded(
                 child: Text(
-                  widget.vTitle!,
+                  widget.video.topics!,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 13.0,
@@ -73,7 +70,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
               ),
               InkWell(
                 onTap: () {
-                  launchUrlString(widget.vLink!,
+                  launchUrlString(widget.video.links!,
                       mode: LaunchMode.externalApplication);
                 },
                 child: FaIcon(
@@ -86,7 +83,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
           Row(
             children: [
               Text(
-                "SUBJECT NAME | SEM 5",
+                "${widget.video.subject!} | SEM ${widget.video.sem!}",
                 style: TextStyle(
                   color: secondaryColor,
                   fontSize: 11.0,

@@ -7,7 +7,7 @@ import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShareVideo extends StatefulWidget {
- const ShareVideo({super.key});
+  const ShareVideo({super.key});
 
   @override
   State<ShareVideo> createState() => _ShareVideoState();
@@ -29,15 +29,15 @@ class _ShareVideoState extends State<ShareVideo> {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-          String? sapid = prefs.getString('sapid');
-          if (sapid == null) {
-            print("User not found in SharedPreferences");
-            return;
-          }
+    String? sapid = prefs.getString('sapid');
+    if (sapid == null) {
+      print("User not found in SharedPreferences");
+      return;
+    }
 
     Video video = Video(
       links: _videoLink.text,
-      sem: _videoSemester.text,
+      sem: int.parse(_videoSemester.text),
       subject: _videoSubject.text,
       topics: _videoTopic.text,
     );
@@ -48,7 +48,8 @@ class _ShareVideoState extends State<ShareVideo> {
     } else {
       print("Failed to upload video");
     }
-   }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +126,6 @@ class _ShareVideoState extends State<ShareVideo> {
                 ],
               ),
             ),
-
           ],
         ),
       ),

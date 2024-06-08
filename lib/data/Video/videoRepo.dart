@@ -27,18 +27,17 @@ class VideoRepo {
         ),
       );
       if (response.statusCode == 200) {
+        print('All Videos fetched successfully: ${response.data}');
         List<dynamic> responseData = response.data;
         jobs =
             responseData.map((videoJson) => Video.fromJson(videoJson)).toList();
-
-        print('All Videos fetched successfully: ${response.data}');
       } else {
         print(
             'Failed to fetch all Videos: ${response.data} ${response.statusCode}');
       }
       return jobs;
     } catch (e) {
-      print('Error occurred: $e');
+      print('Error occurred in video: $e');
       return [];
     }
   }

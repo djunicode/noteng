@@ -117,7 +117,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverVideos(),
+            Get.off(() => DiscoverVideos(),
                 transition: Transition.noTransition);
           },
           child: Container(

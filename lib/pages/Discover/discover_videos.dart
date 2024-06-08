@@ -16,7 +16,8 @@ import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
 
 class DiscoverVideos extends StatefulWidget {
-  const DiscoverVideos({Key? key}) : super(key: key);
+  String? initial_search_query;
+  DiscoverVideos({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverVideosState createState() => _DiscoverVideosState();
@@ -32,6 +33,9 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
   }
 
   Future fetchData() async {
@@ -79,6 +83,9 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         controller: SearchController,
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
@@ -142,12 +149,18 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
               scrollDirection: Axis.vertical,
               itemCount: videos.length,
               itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                    child: VideoListWidget(
-                      vLink: SampleVideoList[index]["vLink"],
-                      vTitle: SampleVideoList[index]["vTitle"],
-                    ));
+                if (videos[index]
+                    .topics!
+                    .toLowerCase()
+                    .contains(SearchController.text.toLowerCase())) {
+                  return Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                      child: VideoListWidget(
+                        video: videos[index],
+                      ));
+                } else {
+                  return SizedBox();
+                }
               },
             )
           : Center(child: CircularProgressIndicator()),
