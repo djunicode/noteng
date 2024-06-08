@@ -162,7 +162,14 @@ class _DiscoverPostState extends State<DiscoverPost> {
                 }
               },
             )
-          : Center(child: CircularProgressIndicator()),
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: PostListWidget_Shimmer(),
+                );
+              },
+            ),
     );
   }
 

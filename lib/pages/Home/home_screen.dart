@@ -798,22 +798,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 156,
-                  child: notes.length > 0
-                      ? ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: notes.length,
-                          itemBuilder: (context, index) {
-                            return NotesListWidget(
-                              notes[index],
-                            );
-                          },
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(
-                          color: Colors.white,
-                        )),
-                ),
+                    height: 156,
+                    child: notes.length > 0
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: notes.length,
+                            itemBuilder: (context, index) {
+                              return NotesListWidget(
+                                notes[index],
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return NotesListWidget_Shimmer();
+                            },
+                          )),
               ],
             ),
           ),

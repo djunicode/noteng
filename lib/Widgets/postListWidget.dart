@@ -56,7 +56,7 @@ class PostListWidget extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    DateFormat('dd MMMM yyyy, HH:mm')
+                    DateFormat('dd MMMM yyyy')
                         .format(DateTime.parse(pLM!.dateUpdated!)),
                     textAlign: TextAlign.right,
                     style: const TextStyle(

@@ -162,7 +162,14 @@ class _DiscoverJobState extends State<DiscoverJob> {
                 }
               },
             )
-          : Center(child: CircularProgressIndicator()),
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: JobListWidget_Shimmer(),
+                );
+              },
+            ),
     );
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/Widgets/discoverNotesListWidget.dart';
 import 'package:noteng/Widgets/discover_tab.dart';
+import 'package:noteng/Widgets/notesListWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
@@ -166,7 +167,17 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                     mainAxisSpacing: 10,
                     childAspectRatio: 1.1),
               )
-            : Center(child: CircularProgressIndicator()),
+            : GridView.builder(
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return DiscoverNotesListWidget_Shimmer();
+                },
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1.1),
+              ),
       ),
     );
   }
