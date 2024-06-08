@@ -23,8 +23,11 @@ class _ShareVideoState extends State<ShareVideo> {
   TextEditingController _videoSemester = TextEditingController();
 
   Future<void> _uploadVideo() async {
-    if (_videoTopic.text.isEmpty || _videoLink.text.isEmpty) {
-      print("Please fill all fields and select at least one file");
+    if (_videoTopic.text.isEmpty ||
+        _videoLink.text.isEmpty ||
+        _videoSubject.text.isEmpty ||
+        _videoSemester.text.isEmpty) {
+      print("Please fill all fields");
       return;
     }
 
@@ -120,6 +123,7 @@ class _ShareVideoState extends State<ShareVideo> {
                   ),
                   SizedBox(height: 5),
                   textFieldWidget(
+                    numberOnly: true,
                     hintText: "Enter which semester",
                     controller: _videoSemester,
                   ),
@@ -129,7 +133,11 @@ class _ShareVideoState extends State<ShareVideo> {
           ],
         ),
       ),
-      bottomNavigationBar: ButtonWidget(name: "Share", onPressed: () {}),
+      bottomNavigationBar: ButtonWidget(
+          name: "Share",
+          onPressed: () {
+            _uploadVideo();
+          }),
     );
   }
 }

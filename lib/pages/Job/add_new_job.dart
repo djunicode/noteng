@@ -39,8 +39,8 @@ class _AddNewJobState extends State<AddNewJob> {
         _description.text.isEmpty) {
       // Handle validation error
       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Fields are empty')),
-                        );
+        SnackBar(content: Text('Fields are empty')),
+      );
       print("Please fill all fields and select at least one file");
       return;
     }
@@ -53,23 +53,23 @@ class _AddNewJobState extends State<AddNewJob> {
     }
 
     Job job = Job(
-      company: _companyName.text,
-      contactNo: _contact.text,
-      description: _description.text,
-      durationInMonths: _tenure.hashCode,
-      jobTitle: _jobTitle.text,
-      location: _location.text,
-      mode: _selectedWorkMode,
-      requirements: _requirements.text,
-      subtype: _selectedJobType,
-      user: sapid
-    );
+        company: _companyName.text,
+        contactNo: _contact.text,
+        description: _description.text,
+        durationInMonths: _tenure.hashCode,
+        jobTitle: _jobTitle.text,
+        location: _location.text,
+        mode: _selectedWorkMode,
+        requirements: _requirements.text,
+        subtype: _selectedJobType,
+        user: sapid);
 
     try {
       Job addNewJob = await JobRepo.createJob(job);
       // Handle success
-       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Job created successfully: ${addNewJob.jobTitle}')),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Job created successfully: ${addNewJob.jobTitle}')),
       );
       print("Job created successfully: ${addNewJob.jobTitle}");
     } catch (e) {
@@ -158,7 +158,8 @@ class _AddNewJobState extends State<AddNewJob> {
                     ),
                     SizedBox(height: 5),
                     textFieldWidget(
-                      hintText: "Enter Company Phone/Email/url",
+                      numberOnly: true,
+                      hintText: "Enter Company Phone",
                       controller: _contact,
                     ),
                   ],

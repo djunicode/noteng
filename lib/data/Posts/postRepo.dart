@@ -117,6 +117,7 @@ class PostsRepo {
     var access_token = await prefs.getString('access');
 
     var data = post.toJson();
+
     FormData formData = FormData.fromMap({
       ...data,
       'image': await MultipartFile.fromFile(file.path,

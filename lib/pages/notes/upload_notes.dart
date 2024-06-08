@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 
@@ -26,11 +27,11 @@ class _UploadNotesState extends State<UploadNotes> {
   TextEditingController notesDescription = TextEditingController();
 
   Future<void> _uploadNotes() async {
-    if (notesTitle.text.isEmpty || 
-        notesSubject.text.isEmpty || 
-        _selectedItem.isEmpty || 
-        notesDescription.text.isEmpty || 
-        result == null || 
+    if (notesTitle.text.isEmpty ||
+        notesSubject.text.isEmpty ||
+        _selectedItem.isEmpty ||
+        notesDescription.text.isEmpty ||
+        result == null ||
         result!.files.isEmpty) {
       // Handle validation error
       print("Please fill all fields and select at least one file");
@@ -38,11 +39,11 @@ class _UploadNotesState extends State<UploadNotes> {
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-          String? sapid = prefs.getString('sapid');
-          if (sapid == null) {
-            print("User not found in SharedPreferences");
-            return;
-          }
+    String? sapid = prefs.getString('sapid');
+    if (sapid == null) {
+      print("User not found in SharedPreferences");
+      return;
+    }
 
     File file = File(result!.files.first.path!);
 
@@ -58,16 +59,22 @@ class _UploadNotesState extends State<UploadNotes> {
     try {
       Notes createdNote = await NotesRepo.createNote(note, file);
       // Handle success
-     if (createdNote.noteId != null) {
-              print("Upload successful: ${createdNote.noteTitle}");
-            } else {
-              print("Failed to create note.");
-            }
+      if (createdNote.noteId != null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Notes added successfully!")));
+        print("Upload successful: ${createdNote.noteTitle}");
+        Get.back();
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Failed to upload Note!")));
+        print("Failed to create note.");
+      }
     } catch (e) {
       // Handle error
       print("Upload failed: $e");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,53 +125,56 @@ class _UploadNotesState extends State<UploadNotes> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
-              DropdownButtonFormField<String>(
-                hint: const Text('Select'),
-                value: _selectedItem.isNotEmpty ? _selectedItem : null,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedItem = newValue!;
-                  });
-                  print('Selected item: $newValue');
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: '',
-                    child: Text('Select'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'CS',
-                    child: Text('CS'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'IT',
-                    child: Text('IT'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'DS',
-                    child: Text('DS'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'AIDS',
-                    child: Text('AIDS'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'AIML',
-                    child: Text('AIML'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'IOT',
-                    child: Text('IOT'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'EXTC',
-                    child: Text('EXTC'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'MECH',
-                    child: Text('MECH'),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonFormField<String>(
+                  hint: const Text('Select'),
+                  value: _selectedItem.isNotEmpty ? _selectedItem : null,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedItem = newValue!;
+                    });
+                    print('Selected item: $newValue');
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: '',
+                      child: Text('Select'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'CS',
+                      child: Text('CS'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'IT',
+                      child: Text('IT'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'DS',
+                      child: Text('DS'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'AIDS',
+                      child: Text('AIDS'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'AIML',
+                      child: Text('AIML'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'IOT',
+                      child: Text('IOT'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'EXTC',
+                      child: Text('EXTC'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'MECH',
+                      child: Text('MECH'),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -238,9 +248,9 @@ class _UploadNotesState extends State<UploadNotes> {
         ),
       ),
       bottomNavigationBar: ButtonWidget(
-          name: "Upload Notes",
-          onPressed: _uploadNotes,
-          ),
+        name: "Upload Notes",
+        onPressed: _uploadNotes,
+      ),
     );
   }
 }

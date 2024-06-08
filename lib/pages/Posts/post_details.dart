@@ -66,7 +66,9 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text("${widget.post.likes! - 1}+ Likes"),
+                    child: widget.post.likes! > 0
+                        ? Text("${widget.post.likes! - 1}+ Likes")
+                        : Text("No Likes"),
                   )
                 ],
               ),
