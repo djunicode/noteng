@@ -30,7 +30,7 @@ function UploadNotes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Form data:', formData); // Log all form data to the console
+    console.log('Form data:', formData); 
 
     const endpoint = 'https://monilmeh.pythonanywhere.com/api/notes/';
     const form = new FormData();
