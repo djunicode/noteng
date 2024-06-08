@@ -24,7 +24,7 @@ class PostListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => PostDetails());
+        Get.to(() => PostDetails(pLM!));
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
@@ -162,9 +162,6 @@ class PostListWidget_Shimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.to(() => PostDetails());
-      },
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
         height: 180,
