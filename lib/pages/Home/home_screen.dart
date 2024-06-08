@@ -835,21 +835,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 246,
-                  child: videos.length > 0
-                      ? PageView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: videos.length,
-                          itemBuilder: (context, index) {
-                            return VideoListWidget(
-                              video: videos[index],
-                            );
-                          },
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                ),
+                    height: 246,
+                    child: videos.length > 0
+                        ? PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: videos.length,
+                            itemBuilder: (context, index) {
+                              return VideoListWidget(
+                                video: videos[index],
+                              );
+                            },
+                          )
+                        : VideoListWidget_Shimmer()),
               ],
             ),
           ),

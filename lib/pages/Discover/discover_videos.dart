@@ -163,7 +163,15 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
                 }
               },
             )
-          : Center(child: CircularProgressIndicator()),
+          : ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: SizedBox(
+                        height: 246, child: VideoListWidget_Shimmer()));
+              },
+            ),
     );
   }
 
