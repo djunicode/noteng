@@ -134,16 +134,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: secondaryAccentColor.withAlpha(150),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(
-                      Icons.person_outline,
-                      color: primaryColor,
-                      size: 30,
+                  InkWell(
+                    onTap: () {
+                      Get.offAll(ProfilePage(), transition: Transition.fade);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: secondaryAccentColor.withAlpha(150),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Icon(
+                        Icons.person_outline,
+                        color: primaryColor,
+                        size: 30,
+                      ),
                     ),
                   )
                 ],
