@@ -25,6 +25,9 @@ const Sidebar = () => {
   function createNote() {
     navigate('/createnote');
   }
+  function uploadVideo() {
+    navigate('/uploadvideo');
+  }
 
   function loginNavigate() {
     navigate('/LoginPage');
@@ -101,7 +104,7 @@ const Sidebar = () => {
                 <p className='font-bold text-white'>Upload Notes</p>
               </div>
               <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer'>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={uploadVideo}>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Share Video</p>

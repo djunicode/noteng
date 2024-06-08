@@ -15,6 +15,7 @@ import DiscoverPage from './Pages/DiscoverPage';
 import Splash from './Pages/Splash';
 import LoginPage from './Pages/LoginPage';
 import PostDetails from './Pages/PostDetails';
+
 function App() {
   return (
     <BrowserRouter>
@@ -25,8 +26,8 @@ function App() {
         <Route path='/SignUp' element={<SignUp />} />
         <Route path='/createpost' element={<NewPost />} />
         <Route path='/createjob' element={<PostJob />} />
-        <Route path='/viewjob' element={<ViewJob />} />
-        <Route path='/viewnote' element={<ViewNote />} />
+        <Route path='/viewjob/:jobId' element={<ViewJob/>} />
+        <Route path='/viewnote/:noteId' element={<ViewNote />} />
         <Route path='/UploadNewPosts' element={<UploadNewPosts />} />
         <Route path='/PostDetails' element={<PostDetails />} />
         <Route path='/profile' element={< Profile />} />

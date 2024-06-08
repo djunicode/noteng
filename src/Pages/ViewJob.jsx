@@ -1,12 +1,34 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../Components/Home/Sidebar';
 import BackButton from '../assets/BackButton.png';
 import { Button } from '@mui/material';
+import axios from 'axios'; // Import Axios
 import '../styles/ViewJob.css';
 
 const ViewJob = () => {
   const navigate = useNavigate();
+  const { jobId } = useParams();
+  const [jobDetails, setJobDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchJobDetails = async () => {
+      try {
+        const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
+          headers: {
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3NzA5NTEwLCJpYXQiOjE3MTc2ODc5MTAsImp0aSI6IjdhZmY0OWY4OGU2ZTQ4NzNhY2ExNDc5MGFmM2VlMzU3IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.2qEts4v2MSFYoVfC1Ge2Tv5xJyhI8cMB5UoesbsDz-0' 
+          }
+        });
+        setJobDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching job details:', error);
+      }
+    };
+
+    if (jobId) {
+      fetchJobDetails();
+    }
+  }, [jobId]);
 
   const handleGoBack = (event) => {
     event.preventDefault();
@@ -17,75 +39,71 @@ const ViewJob = () => {
     <div className='flex flex-row'>
       <Sidebar/>
       <>
-      <div className='flex flex-col maincontent'>
-        <div className='flex flex-row'>
+        <div className='flex flex-col maincontent'>
+          <div className='flex flex-row'>
             <Button className='backButton' onClick={handleGoBack}>
-                <img src={BackButton} alt='Back'/>
+              <img src={BackButton} alt='Back'/>
             </Button>
-          <p className='ml-6 mt-10 flex items-center'>
-            <span className='font-bold heading custom-heading'>Post Job Opportunities</span>
-          </p>
-        </div>
-      <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
-      <div>
-      <h3 className='company-name'>Company Name</h3>
-      <p className='company-location'>U, 15, Bhaktivedanta Swami Rd, opp. Cooper Hospital, 
-      Navpada, JVPD Scheme, Vile Parle, Mumbai, 
-      Maharashtra 400056</p>
+            <p className='ml-6 mt-10 flex items-center'>
+              <span className='font-bold heading custom-heading'>Post Job Opportunities</span>
+            </p>
+          </div>
+          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
+          {jobDetails && (
             <div>
-                <button type="button" class="badges1 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Internship
+              <h3 className='company-name'>{jobDetails.company}</h3>
+              <p className='company-location'>{jobDetails.location}</p>
+              <div>
+                <button type="button" className="badges1 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {jobDetails.subtype}
                 </button>
-                <button type="button" class="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                3 Months
+                <button type="button" className="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {jobDetails.duration_in_months} Months
                 </button>
-                <button type="button" class="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Part Time
+                <button type="button" className="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {jobDetails.mode}
                 </button>
-                <button type="button" class="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Online
+                <button type="button" className="badges inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {jobDetails.location}
                 </button>
+              </div>
             </div>
+          )}
+          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
+          {jobDetails && (
+            <div>
+              <h3 className='company-name'>Job Description</h3>
+              <p className='job-descrip'>{jobDetails.description}</p>
+              <h3 className='company-name'>Job Requirements</h3>
+              <p className='job-descrip'>
+                <ul>
+                  {jobDetails.requirements.split(' - ').map((requirement, index) => (
+                    <li key={index}>{requirement}</li>
+                  ))}
+                </ul>
+              </p>
+              <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray'/>
+              <div className='flex flex-row'>
+                <div className='flex flex-col poster-details'>
+                  <p>Posted By:</p>
+                  <p>Monil Mehta</p>
+                </div>
+                <div className='flex flex-col post-datetime'>
+                  <p>{new Date(jobDetails.upload_time).toLocaleDateString()}</p>
+                  <p>{new Date(jobDetails.upload_time).toLocaleTimeString()}</p>
+                </div>
+                <div className='flex flex-grow contactbutton'>
+                  <button type="submit" className="submit-button">
+                    Contact Recruiter
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-        <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
-        <h3 className='company-name'>Job Description</h3>
-        <p className='job-descrip'>We are seeking a highly motivated and enthusiastic Technology Intern to join our dynamic team.
-        As an intern, you will have the opportunity to gain hands-on experience in various aspects of technology, including software development, 
-        data analysis, and IT support. You will work closely with our experienced professionals on real-world projects and contribute to the success of our company.</p>
-
-        <h3 className='company-name'>Job Requirements</h3>
-        <p className='job-descrip'>
-            <ul>
-                <li>Currently enrolled in a Bachelor's or Master's degree program in Computer Science, Information Technology, or related field</li>
-                <li>Strong understanding of programming languages such as Python, Java, or C++</li>
-                <li>Knowledge of database management systems and data analysis tools</li>
-                <li>Excellent problem-solving and analytical skills</li>
-                <li>Ability to work independently and in a team environment</li>
-                <li>Excellent communication and interpersonal skills</li>
-                <li>Must be available to work a minimum of 20 hours per week</li>
-            </ul>
-        </p>
-        <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray'/>
-        <div className='flex flex-row'>
-  <div className='flex flex-col poster-details'>
-    <p>Posted By:</p>
-    <p>Monil Mehta</p>
-  </div>
-  <div className='flex flex-col post-datetime'>
-    <p>24th March 2024</p>
-    <p>15:18</p>
-  </div>
-  <div className='flex flex-grow contactbutton'>
-    <button type="submit" className="submit-button">
-      Contact Recruiter
-    </button>
-  </div>
-</div>
-
-    </div>
       </>
     </div>
-  )
+  );
 }
 
-export default ViewJob
+export default ViewJob;
