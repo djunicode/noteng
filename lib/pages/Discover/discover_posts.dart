@@ -14,7 +14,8 @@ import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
 
 class DiscoverPost extends StatefulWidget {
-  const DiscoverPost({Key? key}) : super(key: key);
+  String? initial_search_query;
+  DiscoverPost({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverPostState createState() => _DiscoverPostState();
@@ -30,6 +31,9 @@ class _DiscoverPostState extends State<DiscoverPost> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
   }
 
   Future fetchData() async {
@@ -77,6 +81,9 @@ class _DiscoverPostState extends State<DiscoverPost> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         controller: SearchController,
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
@@ -140,12 +147,19 @@ class _DiscoverPostState extends State<DiscoverPost> {
               scrollDirection: Axis.vertical,
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                  child: PostListWidget(
-                    posts[index],
-                  ),
-                );
+                if (posts[index]
+                    .title!
+                    .toLowerCase()
+                    .contains(SearchController.text.toLowerCase())) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: PostListWidget(
+                      posts[index],
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
               },
             )
           : Center(child: CircularProgressIndicator()),

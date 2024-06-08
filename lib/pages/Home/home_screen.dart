@@ -22,6 +22,7 @@ import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/pages/Discover/discover_job.dart';
 import 'package:noteng/pages/Discover/discover_notes.dart';
+import 'package:noteng/pages/Discover/discover_posts.dart';
 import 'package:noteng/pages/Discover/discover_videos.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
@@ -186,6 +187,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                         if (videoSelected) {
                           Get.offAll(DiscoverVideos(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                        if (postSelected) {
+                          Get.offAll(DiscoverPost(
                             initial_search_query: SearchController.text,
                           ));
                         }
