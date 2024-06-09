@@ -9,7 +9,7 @@ function ShareNotes() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTMyMjc2LCJpYXQiOjE3MTc5MTA2NzYsImp0aSI6IjFkNjI5MWViOGQzYzQwNjc5OTQyN2U4YWFiYjQ2ODIxIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.bK54XJ1-vnJjzGMhLdubn47FpZnxNgG1x4NZwnu1dsE'; // Replace with the actual token
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTU1NzY5LCJpYXQiOjE3MTc5MzQxNjksImp0aSI6IjBmMzZhMzkzNGY2ZTQzNWZiY2JlNTEwM2VmYWQ4ZmFjIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0._fHqpLGaofy8ZdgRGkH1cshkWOK5gnMNTkKLWlhb9iY'; // Replace with the actual token
         const response = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
           headers: {
             'Authorization': `Bearer ${token}`

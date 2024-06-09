@@ -1,40 +1,36 @@
-import React from 'react'
+import React,{useState,useEffect}from 'react'
 
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import axios from 'axios';
 
 
-const cardData = [
-  {
-    "heading1": 'Post Title',
-    
-    "body": "Hello tech enthusiastics and innovators! Are you ready to show case your skills,collabrate with like-minded individuals,and create ground-breaking solutions for real-world challenges? ",
-    "icon": <FavoriteBorderOutlinedIcon className=" text-custom-blue " style={{width:'20px',height:'20px'}}  />,
-    
-   
-    'timelimit': '100 + Likes',
-  
-  },
-  {
-    "heading1": 'Post Title',
-  
-    "body": "Hello tech enthusiastics and innovators! Are you ready to show case your skills,collabrate with like-minded individuals,and create ground-breaking solutions for real-world challenges?",
-    "icon": <FavoriteBorderOutlinedIcon className=" text-blue-500" style={{width:'20px',height:'20px'}}  />,
-    
-    'timelimit': '100 + Likes',
-  
-  },
-  {
-    "heading1": 'Post Title',
-   
-    "body": "Hello tech enthusiastics and innovators! Are you ready to show case your skills,collabrate with like-minded individuals,and create ground-breaking solutions for real-world challenges?",
-    "icon": <FavoriteBorderOutlinedIcon className=" text-blue-500" style={{width:'20px',height:'20px'}}  />,
-   
-    
-    'timelimit': '100 + Likes',
-   
-  },
-]
 function LatestPosts() {
+  const [cardData,setCardData]=useState([]);
+  useEffect(()=>{
+    const fetchData=async()=>{
+      try{
+        const response=await axios.get('https://monilmeh.pythonanywhere.com//api/posts ',{
+          headers:{
+            'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTU1NzY5LCJpYXQiOjE3MTc5MzQxNjksImp0aSI6IjBmMzZhMzkzNGY2ZTQzNWZiY2JlNTEwM2VmYWQ4ZmFjIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0._fHqpLGaofy8ZdgRGkH1cshkWOK5gnMNTkKLWlhb9iY'
+          }
+        });
+        const data=response.data.map((item)=>({
+          heading1:item.title,
+          body:item.description,
+          icon: <FavoriteBorderOutlinedIcon className=" text-blue-500" style={{width:'20px',height:'20px'}}  />,
+          timelimit:item.likes,
+          category:item.subtype,
+          url:item.post_url,
+          deadlines:item.deadline,
+
+        }));
+        setCardData(data);
+      }catch(error){
+        console.error('Error fetching data:',error);
+      }
+    };
+    fetchData();
+  },[]);
   return (
     <div className='flex flex-col w-full'>
       <p className=' flex items-center justify-center md:justify-start md:ml-6'>
@@ -47,13 +43,17 @@ function LatestPosts() {
             <div className='border p-3 rounded-lg bg-gray-200'>
               <p className='font-bold text-[18px] md:text-[15px] '>{data.heading1}</p>
               
-              <p className=' mt-2 text-sm border-b-[1px] pb-3 border-custom-blue text-[16px]'>{data.body}</p>
+             
+              
+              <p className=' mt-2 text-sm border-b-[1px] pb-3 text-[16px]'>{data.body}</p>
+              <p className='font-bold text-[18px] md:text-[15px] border-custom-blue'>{data.url}</p>
               <div className='flex justify-between'>
                 <div className='flex items-center'>
                   {data.icon }
                   <p className='text-custom-blue font-bold md:font-normal '>{data.timelimit}</p>
                 </div>
-              <p className='text-custom-blue font-bold md:font-normal'>Categories</p>
+              <p className='text-custom-blue font-bold md:font-normal'>{data.category}</p>
+              <p className='text-custom-blue font-bold md:font-normal'>{data.deadlines}</p>
               </div>
             </div>
            
