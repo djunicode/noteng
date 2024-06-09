@@ -8,6 +8,7 @@ function UploadNotes() {
     subject: '',
     department: '',
     notesDescription: '',
+    average_rating: 4,
     document: null,
     user: '60004220207' // Assuming user ID is constant
   });
@@ -30,8 +31,6 @@ function UploadNotes() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Form data:', formData); 
-
     const endpoint = 'https://monilmeh.pythonanywhere.com/api/notes/';
     const form = new FormData();
 
@@ -39,6 +38,7 @@ function UploadNotes() {
     form.append('subject', formData.subject);
     form.append('department', formData.department);
     form.append('note_description', formData.notesDescription);
+    form.append('stars',formData.stars);
     form.append('document', formData.document);
     form.append('user', formData.user);
 
@@ -46,7 +46,7 @@ function UploadNotes() {
       const response = await axios.post(endpoint, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3ODg0ODU0LCJpYXQiOjE3MTc4NjMyNTQsImp0aSI6ImZlMzc5NzEwOWMxMTQ1OGQ4Y2I3YjhlMmQ1YzAyYTc1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.CD-k1uBlf-nypVNQNORWodh8W0vf0t1D0gNdr9Lf0Ac'
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTMyMjc2LCJpYXQiOjE3MTc5MTA2NzYsImp0aSI6IjFkNjI5MWViOGQzYzQwNjc5OTQyN2U4YWFiYjQ2ODIxIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.bK54XJ1-vnJjzGMhLdubn47FpZnxNgG1x4NZwnu1dsE'
         },
       });
 
@@ -57,6 +57,7 @@ function UploadNotes() {
           subject: '',
           department: '',
           notesDescription: '',
+          average_rating:4,
           document: null,
           user: '60004220207'
         });

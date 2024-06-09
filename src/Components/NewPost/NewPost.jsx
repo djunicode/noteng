@@ -39,7 +39,7 @@ function NewPost() {
       const response = await axios.post(endpoint, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3ODg0ODU0LCJpYXQiOjE3MTc4NjMyNTQsImp0aSI6ImZlMzc5NzEwOWMxMTQ1OGQ4Y2I3YjhlMmQ1YzAyYTc1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.CD-k1uBlf-nypVNQNORWodh8W0vf0t1D0gNdr9Lf0Ac'
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTMyMjc2LCJpYXQiOjE3MTc5MTA2NzYsImp0aSI6IjFkNjI5MWViOGQzYzQwNjc5OTQyN2U4YWFiYjQ2ODIxIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.bK54XJ1-vnJjzGMhLdubn47FpZnxNgG1x4NZwnu1dsE'
         },
       });
 
