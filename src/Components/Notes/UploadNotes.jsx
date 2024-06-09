@@ -8,7 +8,7 @@ function UploadNotes() {
     subject: '',
     department: '',
     notesDescription: '',
-    average_rating: 4,
+    rating: 4,
     document: null,
     user: '60004220207' // Assuming user ID is constant
   });
@@ -38,7 +38,7 @@ function UploadNotes() {
     form.append('subject', formData.subject);
     form.append('department', formData.department);
     form.append('note_description', formData.notesDescription);
-    form.append('stars',formData.stars);
+    // form.append('stars',formData.rating);
     form.append('document', formData.document);
     form.append('user', formData.user);
 
@@ -57,7 +57,7 @@ function UploadNotes() {
           subject: '',
           department: '',
           notesDescription: '',
-          average_rating:4,
+          rating:4,
           document: null,
           user: '60004220207'
         });
