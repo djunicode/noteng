@@ -24,6 +24,9 @@ class UserRepo {
       );
       if (response.statusCode == 201) {
         print('User registered successfully: ${response.data}');
+        await UserRepo.loginUser(
+            User(sapid: user.sapid, password: user.password));
+
         return true;
       } else {
         print(
@@ -60,6 +63,7 @@ class UserRepo {
         await prefs.setString('access', response.data['access']);
 
         print('User logged in successfully: ${response.data}');
+        UserRepo.getUserDetails();
         return true;
       } else {
         print('Failed to login user: ${response.data} ${response.statusCode}');

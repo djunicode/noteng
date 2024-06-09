@@ -69,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                   );
                 },
-                items: [
+                items: const [
                   DropdownMenuItem(
                     value: '',
                     child: Text('Select'),
@@ -100,26 +100,46 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                   );
                 },
-                items: [
+                items: const [
                   DropdownMenuItem(
                     value: '',
                     child: Text('Select'),
                   ),
                   DropdownMenuItem(
-                    value: 'FE',
-                    child: Text('First Year'),
+                    value: 'Computer Engineering',
+                    child: Text('Computer Engineering'),
                   ),
                   DropdownMenuItem(
-                    value: 'SE',
-                    child: Text('Second Year'),
+                    value: 'Information Technology',
+                    child: Text('Information Technology'),
                   ),
                   DropdownMenuItem(
-                    value: 'TE',
-                    child: Text('Third Year'),
+                    value: 'Artificial Intelligence & ML',
+                    child: Text('Artificial Intelligence & ML'),
                   ),
                   DropdownMenuItem(
-                    value: 'BE',
-                    child: Text('Final Year'),
+                    value: 'Artificial Intelligence & DS',
+                    child: Text('Artificial Intelligence & DS'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Data Science',
+                    child: Text('Data Science'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Internet of Things',
+                    child: Text('Internet of Things'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Electronics & Telecommunications',
+                    child: Text('Electronics & Telecommunications'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Mechanical Engineering',
+                    child: Text('Mechanical Engineering'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Others',
+                    child: Text('Others'),
                   ),
                 ],
               ),
@@ -143,7 +163,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     // Perform signup logic here
                     print('User Type: $_userType');
                     print('Department: $_department');
-                    Get.to(UserRegistration(), transition: Transition.fadeIn);
+                    Get.to(
+                        UserRegistration(
+                          expertise: _userType + "@" + _department,
+                        ),
+                        transition: Transition.fadeIn);
                   }
                 },
                 child: const Text(

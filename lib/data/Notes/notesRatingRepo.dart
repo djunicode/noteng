@@ -25,7 +25,7 @@ class NotesRatingRepo {
           },
         ),
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Note Rating added successfully: ${response.data}');
         return true;
       } else {

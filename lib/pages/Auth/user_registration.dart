@@ -8,7 +8,8 @@ import 'package:noteng/pages/Home/home_screen.dart';
 import 'package:get/get.dart';
 
 class UserRegistration extends StatefulWidget {
-  const UserRegistration({super.key});
+  final String expertise;
+  const UserRegistration({required this.expertise, super.key});
 
   @override
   State<UserRegistration> createState() => _UserRegistrationState();
@@ -72,6 +73,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                   textFieldWidget(
                     hintText: "Password:",
                     readOnly: false,
+                    obsecureText: true,
                     controller: passwordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -133,7 +135,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                     readOnly: false,
                     numberOnly: true,
                     controller: contactNumberController,
-                     validator: (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter contact number';
                       }
@@ -158,22 +160,27 @@ class _UserRegistrationState extends State<UserRegistration> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         User user = User(
-                          sapid: sapIdController.text,
-                          password: passwordController.text,
-                          fname: firstNameController.text,
-                          lname: lastNameController.text,
-                          email: emailController.text,
-                          contactNumber: contactNumberController.text,
-                        );
+                            sapid: sapIdController.text,
+                            password: passwordController.text,
+                            fname: firstNameController.text,
+                            lname: lastNameController.text,
+                            email: emailController.text,
+                            contactNumber: contactNumberController.text,
+                            expertise: widget.expertise);
 
-                        bool registrationSuccess = await UserRepo.registerUser(user);
+                        bool registrationSuccess =
+                            await UserRepo.registerUser(user);
 
                         if (registrationSuccess) {
+                          await UserRepo.editUserDetails(
+                              User(expertise: widget.expertise));
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Registration successful')),
                           );
-                         Future.delayed(Duration(seconds: 2), () {
-                            Get.offAll(HomeScreen(), transition: Transition.fadeIn);
+
+                          Future.delayed(Duration(seconds: 2), () {
+                            Get.offAll(HomeScreen(),
+                                transition: Transition.fadeIn);
                           });
                         } else {
                           // Handle registration failure (e.g., show an error message)

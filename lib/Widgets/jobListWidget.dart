@@ -8,11 +8,12 @@ import 'package:intl/intl.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Job/jobModel.dart';
 import 'package:noteng/pages/Job/job_details.dart';
+import 'package:shimmer/shimmer.dart';
 
 class JobListWidget extends StatelessWidget {
-  final Job? jLM;
+  final Job job;
   const JobListWidget(
-    this.jLM, {
+    this.job, {
     super.key,
   });
 
@@ -21,18 +22,7 @@ class JobListWidget extends StatelessWidget {
     return InkWell(
       onTap: () => Get.to(
         JobDetails(
-          companyName: jLM!.company.toString(),
-          location: "Some Location",
-          jobTitle: jLM!.jobTitle.toString(),
-          contact: "Contact Info",
-          description: jLM!.description.toString(),
-          jobType: jLM!.subtype.toString(),
-          tenure: jLM!.durationInMonths.toString(),
-          requirements: "Requirements",
-          workType: jLM!.subtype.toString(),
-          workMode: jLM!.mode.toString(),
-          userName: "User Name",
-          dateTime: DateTime.parse(jLM!.uploadTime.toString()),
+          job: job,
         ),
       ),
       child: Container(
@@ -54,7 +44,7 @@ class JobListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  jLM!.subtype!,
+                  job.subtype!,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -63,7 +53,7 @@ class JobListWidget extends StatelessWidget {
                 ),
                 Text(
                   DateFormat('dd MMMM yyyy, HH:mm')
-                      .format(DateTime.parse(jLM!.uploadTime!)),
+                      .format(DateTime.parse(job.uploadTime!)),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     color: secondaryColor,
@@ -74,7 +64,7 @@ class JobListWidget extends StatelessWidget {
               ],
             ),
             Text(
-              jLM!.company!,
+              job.company!,
               style: const TextStyle(
                 color: secondaryColor,
                 fontSize: 16,
@@ -83,7 +73,7 @@ class JobListWidget extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                jLM!.description!,
+                job.description!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -112,7 +102,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      ("${jLM!.durationInMonths!} Months"),
+                      ("${job.durationInMonths!} Months"),
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,
@@ -132,7 +122,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      jLM!.mode!,
+                      job.mode!,
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,
@@ -152,7 +142,7 @@ class JobListWidget extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      jLM!.mode!,
+                      job.location!,
                       style: const TextStyle(
                         color: secondaryColor,
                         fontSize: 13.0,
@@ -165,6 +155,95 @@ class JobListWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class JobListWidget_Shimmer extends StatelessWidget {
+  const JobListWidget_Shimmer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      height: 140,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: secondaryAccentColor.withAlpha(100),
+        // border: Border.all(
+        //   color: secondaryColor.withOpacity(0.3),
+        //   width: 1.0,
+        // ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Shimmer.fromColors(
+                  baseColor: secondaryColor.withAlpha(100),
+                  highlightColor: secondaryAccentColor,
+                  child: Container(
+                    height: 20,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(10)),
+                  )),
+              Shimmer.fromColors(
+                  baseColor: secondaryColor.withAlpha(100),
+                  highlightColor: secondaryAccentColor,
+                  child: Container(
+                    height: 15,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(8)),
+                  )),
+            ],
+          ),
+          Shimmer.fromColors(
+              baseColor: secondaryColor.withAlpha(50),
+              highlightColor: secondaryAccentColor,
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                height: 20,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(8)),
+              )),
+          Shimmer.fromColors(
+              baseColor: secondaryColor.withAlpha(50),
+              highlightColor: secondaryAccentColor,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 5),
+                height: 20,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(8)),
+              )),
+          const Divider(
+            color: secondaryColor,
+            thickness: 0.5,
+          ),
+          Shimmer.fromColors(
+              baseColor: secondaryColor.withAlpha(50),
+              highlightColor: secondaryAccentColor,
+              child: Container(
+                height: 20,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.circular(8)),
+              )),
+        ],
       ),
     );
   }

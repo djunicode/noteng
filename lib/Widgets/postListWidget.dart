@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/pages/Posts/post_details.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PostListWidget extends StatelessWidget {
   const PostListWidget(
@@ -23,11 +24,11 @@ class PostListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => PostDetails());
+        Get.to(() => PostDetails(pLM!));
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
-        height: 170,
+        height: 180,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: secondaryAccentColor.withAlpha(100),
@@ -55,7 +56,7 @@ class PostListWidget extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    DateFormat('dd MMMM yyyy, HH:mm')
+                    DateFormat('dd MMMM yyyy')
                         .format(DateTime.parse(pLM!.dateUpdated!)),
                     textAlign: TextAlign.right,
                     style: const TextStyle(
@@ -146,6 +147,138 @@ class PostListWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PostListWidget_Shimmer extends StatelessWidget {
+  const PostListWidget_Shimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(20, 10, 20, 9),
+        height: 180,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: secondaryAccentColor.withAlpha(100),
+          // border: Border.all(
+          //   color: secondaryColor.withOpacity(0.3),
+          //   width: 1.0,
+          // ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Shimmer.fromColors(
+                    baseColor: secondaryColor.withAlpha(100),
+                    highlightColor: secondaryAccentColor,
+                    child: Container(
+                      height: 20,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade400,
+                          borderRadius: BorderRadius.circular(10)),
+                    )),
+                Shimmer.fromColors(
+                    baseColor: secondaryColor.withAlpha(100),
+                    highlightColor: secondaryAccentColor,
+                    child: Container(
+                      height: 15,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade400,
+                          borderRadius: BorderRadius.circular(8)),
+                    )),
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Shimmer.fromColors(
+                          baseColor: secondaryColor.withAlpha(50),
+                          highlightColor: secondaryAccentColor,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius: BorderRadius.circular(8)),
+                          )),
+                      Shimmer.fromColors(
+                          baseColor: secondaryColor.withAlpha(50),
+                          highlightColor: secondaryAccentColor,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 5),
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius: BorderRadius.circular(8)),
+                          )),
+                      Shimmer.fromColors(
+                          baseColor: secondaryColor.withAlpha(50),
+                          highlightColor: secondaryAccentColor,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 5),
+                            height: 20,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                borderRadius: BorderRadius.circular(8)),
+                          )),
+                    ],
+                  ),
+                ),
+                Shimmer.fromColors(
+                  baseColor: secondaryColor.withAlpha(50),
+                  highlightColor: secondaryAccentColor,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    height: 90,
+                    width: 90,
+                    decoration: BoxDecoration(
+                      color: secondaryColor,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Expanded(
+              child: SizedBox(
+                height: 0,
+              ),
+            ),
+            const Divider(
+              color: secondaryColor,
+              thickness: 0.5,
+            ),
+            Shimmer.fromColors(
+                baseColor: secondaryColor.withAlpha(50),
+                highlightColor: secondaryAccentColor,
+                child: Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade400,
+                      borderRadius: BorderRadius.circular(8)),
+                )),
           ],
         ),
       ),

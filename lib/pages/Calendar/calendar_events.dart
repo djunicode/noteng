@@ -29,7 +29,9 @@ class _CalendarEventsState extends State<CalendarEvents> {
 
   Future fetchCalendar() async {
     list = await CalendarRepo.getFormattedEventList();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

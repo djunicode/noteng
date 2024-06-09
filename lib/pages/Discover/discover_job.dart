@@ -6,13 +6,16 @@ import 'package:get/get.dart';
 import 'package:noteng/Widgets/discover_tab.dart';
 import 'package:noteng/Widgets/jobListWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/Job/jobRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
+import '../../data/Job/jobModel.dart';
 
 class DiscoverJob extends StatefulWidget {
-  const DiscoverJob({Key? key}) : super(key: key);
+  final String? initial_search_query;
+  DiscoverJob({this.initial_search_query, Key? key}) : super(key: key);
 
   @override
   _DiscoverJobState createState() => _DiscoverJobState();
@@ -21,6 +24,24 @@ class DiscoverJob extends StatefulWidget {
 class _DiscoverJobState extends State<DiscoverJob> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
+  List<Job> jobs = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+    if (widget.initial_search_query != null) {
+      SearchController.text = widget.initial_search_query!;
+    }
+  }
+
+  Future fetchData() async {
+    jobs = await JobRepo.getAllJobs();
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +84,9 @@ class _DiscoverJobState extends State<DiscoverJob> {
                     Expanded(
                       child: TextField(
                         controller: SearchController,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         decoration: const InputDecoration(
                             hintText: "Search for posts, notes, etc...",
                             hintStyle: TextStyle(
@@ -120,18 +144,34 @@ class _DiscoverJobState extends State<DiscoverJob> {
           ),
         ),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: SampleJobList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-            child: JobListWidget(
-              SampleJobList[index],
+      body: jobs.length > 0
+          ? ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: jobs.length,
+              itemBuilder: (context, index) {
+                if (jobs[index]
+                    .company!
+                    .toLowerCase()
+                    .contains(SearchController.text.toLowerCase())) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                    child: JobListWidget(
+                      jobs[index],
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                  child: JobListWidget_Shimmer(),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 

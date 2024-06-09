@@ -16,8 +16,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverJob(),
-                transition: Transition.noTransition);
+            Get.off(() => DiscoverJob(), transition: Transition.noTransition);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -51,8 +50,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverPost(),
-                transition: Transition.noTransition);
+            Get.off(() => DiscoverPost(), transition: Transition.noTransition);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -85,8 +83,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverNotes(),
-                transition: Transition.noTransition);
+            Get.off(() => DiscoverNotes(), transition: Transition.noTransition);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
@@ -119,7 +116,7 @@ Widget DiscoverTab(selectedIndex) {
       Expanded(
         child: InkWell(
           onTap: () {
-            Get.off(() => const DiscoverVideos(),
+            Get.off(() => DiscoverVideos(),
                 transition: Transition.noTransition);
           },
           child: Container(

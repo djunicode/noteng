@@ -18,8 +18,15 @@ import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
 import 'package:noteng/data/User/userModel.dart';
 import 'package:noteng/data/User/userRepo.dart';
+import 'package:noteng/data/Video/videoModel.dart';
+import 'package:noteng/data/Video/videoRepo.dart';
+import 'package:noteng/pages/Discover/discover_job.dart';
+import 'package:noteng/pages/Discover/discover_notes.dart';
+import 'package:noteng/pages/Discover/discover_posts.dart';
+import 'package:noteng/pages/Discover/discover_videos.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
@@ -39,6 +46,35 @@ class _HomeScreenState extends State<HomeScreen> {
   var videoSelected = false;
 
   var userName = "User Name";
+  List<Job> jobs = [];
+  List<Posts> posts = [];
+  List<Notes> notes = [];
+  List<Video> videos = [];
+
+  Future fetchUserName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var fname = await prefs.getString("fname");
+    var lname = await prefs.getString("lname");
+    if (fname == null && lname == null) {
+      userName = "User";
+    } else if (fname != null && lname != null) {
+      userName = "$fname $lname";
+    } else {
+      userName = "$fname";
+    }
+
+    setState(() {});
+  }
+
+  Future fetchData() async {
+    jobs = await JobRepo.getAllJobs();
+    posts = await PostsRepo.getAllPosts();
+    notes = await NotesRepo.getAllNotes();
+    videos = await VideoRepo.getAllVideos();
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   Future<File> pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -49,6 +85,14 @@ class _HomeScreenState extends State<HomeScreen> {
       // User canceled the picker
       return File('');
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchUserName();
+    fetchData();
   }
 
   @override
@@ -92,16 +136,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: secondaryAccentColor.withAlpha(150),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: const Icon(
-                      Icons.person_outline,
-                      color: primaryColor,
-                      size: 30,
+                  InkWell(
+                    onTap: () {
+                      Get.offAll(ProfilePage(), transition: Transition.fade);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: secondaryAccentColor.withAlpha(150),
+                          borderRadius: BorderRadius.circular(15)),
+                      child: const Icon(
+                        Icons.person_outline,
+                        color: primaryColor,
+                        size: 30,
+                      ),
                     ),
                   )
                 ],
@@ -131,17 +180,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                 EdgeInsets.only(left: 10, right: 10)),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(9.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/search.svg",
+                    InkWell(
+                      onTap: () {
+                        if (jobSelected) {
+                          Get.offAll(DiscoverJob(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                        if (noteSelected) {
+                          Get.offAll(DiscoverNotes(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                        if (videoSelected) {
+                          Get.offAll(DiscoverVideos(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                        if (postSelected) {
+                          Get.offAll(DiscoverPost(
+                            initial_search_query: SearchController.text,
+                          ));
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: SvgPicture.asset(
+                            "assets/svg/search.svg",
+                          ),
                         ),
                       ),
                     )
@@ -294,365 +367,365 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () async {
-                    UserRepo.registerUser(User.fromJson({
-                      "sapid": "60004230269",
-                      "password": "pass@123",
-                      "fname": "Meet",
-                      "lname": "Chavan",
-                      "email": "meetchavan24@gmail.com",
-                      "contact_number": "8169264512"
-                    }));
-                  },
-                  child: const Text(
-                    "Test Signup User",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    UserRepo.loginUser(User.fromJson({
-                      "sapid": "60004230269",
-                      "password": "pass@123",
-                    }));
-                  },
-                  child: const Text(
-                    "Test Login User",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    UserRepo.refreshToken();
-                  },
-                  child: const Text(
-                    "Test Refresh Token",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    UserRepo.getUserDetails();
-                  },
-                  child: const Text(
-                    "Test Get User Details",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    UserRepo.editUserDetails(User.fromJson({
-                      "fname": "Meet",
-                      "lname": "Chavan",
-                      "email": "meetchavan24@gmail.com",
-                      "contact_number": "8169264511"
-                    }));
-                  },
-                  child: const Text(
-                    "Test Update User Details",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                  onTap: () async {
-                    PostsRepo.getAllPosts().then((value) {
-                      print(value[0].toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get All Posts",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    PostsRepo.getSinglePost(2).then((value) {
-                      print(value.toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get Single Post",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    PostsRepo.createPost(
-                        Posts.fromJson({
-                          "title": "ABC",
-                          "deadline": "2024-04-06T17:58:57Z",
-                          "post_url": "http://abc.com",
-                          "description": "ABCD",
-                          "likes": 1,
-                          "organised_by": "college",
-                          "subtype": "hackathon",
-                          "is_interested": true,
-                          "date_updated": "2024-06-05",
-                          "date_uploaded": "2024-06-05",
-                          "image":
-                              "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/images/Screenshot_2024-06-05_at_11.11.36AM_eeu4on.png",
-                          "user": "60004230269"
-                        }),
-                        await pickFile());
-                  },
-                  child: const Text(
-                    "Test Create Post",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    PostsRepo.deletePost(9);
-                  },
-                  child: const Text(
-                    "Test Delete Post",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    PostsRepo.updatePost(
-                        Posts.fromJson({
-                          "post_id": 3,
-                          "title": "ABC",
-                          "post_url": "http://abc.com",
-                          "description": "ABCD",
-                          "likes": 1,
-                          "organised_by": "college",
-                          "subtype": "hackathon",
-                          "is_interested": true,
-                        }),
-                        await pickFile());
-                  },
-                  child: const Text(
-                    "Test Update Post",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                  onTap: () async {
-                    NotesRepo.getAllNotes().then((value) {
-                      print(value[0].toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get All Notes",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    NotesRepo.getSingleNote(2).then((value) {
-                      print(value.toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get Single Note",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    NotesRepo.createNote(
-                        Notes.fromJson({
-                          "note_id": 5,
-                          "ratings": [],
-                          "average_rating": 0,
-                          "note_title": "updated test1",
-                          "note_description":
-                              "This is the updated description of the note1.",
-                          "subject": "Maths4",
-                          "department": "Comps2",
-                          "document":
-                              "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/raw/Screenshot_2024-06-05_at_11.11.36AM_fs0vul.png",
-                          "user": "60004230269"
-                        }),
-                        await pickFile());
-                  },
-                  child: const Text(
-                    "Test Create Note",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    NotesRepo.deleteNote(5);
-                  },
-                  child: const Text(
-                    "Test Delete Note",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    NotesRepo.updateNote(
-                        Notes.fromJson({
-                          "note_id": 6,
-                          "ratings": [],
-                          "average_rating": 0,
-                          "note_title": "updated test1",
-                          "note_description":
-                              "This is the updated description of the note1.",
-                          "subject": "Maths4",
-                          "department": "Comps2",
-                          "user": "60004230269"
-                        }),
-                        await pickFile());
-                  },
-                  child: const Text(
-                    "Test Update Note",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                InkWell(
-                  onTap: () async {
-                    JobRepo.getAllJobs().then((value) {
-                      print(value[0].toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get All Jobs",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    JobRepo.getSingleJob(2).then((value) {
-                      print(value.toJson());
-                    });
-                  },
-                  child: const Text(
-                    "Test Get Single Job",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    JobRepo.createJob(Job.fromJson({
-                      "company": "AMEX_TEST",
-                      "job_title": "Software Engineer",
-                      "subtype": "Job",
-                      "mode": "Offline",
-                      "location": "Remote",
-                      "contact_no": "9082228928",
-                      "requirements":
-                          "No Backlogss till now - 8.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
-                      "duration_in_months": 3,
-                      "description":
-                          "We are seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
-                      "upload_time": "2024-06-06T15:40:23.466223Z",
-                      "user": "60004230269"
-                    }));
-                  },
-                  child: const Text(
-                    "Test Create Job",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    JobRepo.deleteJob(9);
-                  },
-                  child: const Text(
-                    "Test Delete Job",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    JobRepo.updateJob(Job.fromJson({
-                      "job_id": 10,
-                      "company": "AMEX_TEST 2",
-                      "subtype": "Job",
-                      "mode": "Offline",
-                      "location": "Remote",
-                      "contact_no": "9082228008",
-                      "requirements":
-                          "No Backlogss till now - 7.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
-                      "duration_in_months": 3,
-                      "description":
-                          "We are not seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
-                      "upload_time": "2024-06-06T15:40:23.466223Z",
-                    }));
-                  },
-                  child: const Text(
-                    "Test Update Job",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                // InkWell(
+                //   onTap: () async {
+                //     UserRepo.registerUser(User.fromJson({
+                //       "sapid": "60004230269",
+                //       "password": "pass@123",
+                //       "fname": "Meet",
+                //       "lname": "Chavan",
+                //       "email": "meetchavan24@gmail.com",
+                //       "contact_number": "8169264512"
+                //     }));
+                //   },
+                //   child: const Text(
+                //     "Test Signup User",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     UserRepo.loginUser(User.fromJson({
+                //       "sapid": "60004230269",
+                //       "password": "pass@123",
+                //     }));
+                //   },
+                //   child: const Text(
+                //     "Test Login User",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     UserRepo.refreshToken();
+                //   },
+                //   child: const Text(
+                //     "Test Refresh Token",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     UserRepo.getUserDetails();
+                //   },
+                //   child: const Text(
+                //     "Test Get User Details",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     UserRepo.editUserDetails(User.fromJson({
+                //       "fname": "Meet",
+                //       "lname": "Chavan",
+                //       "email": "meetchavan24@gmail.com",
+                //       "contact_number": "8169264511"
+                //     }));
+                //   },
+                //   child: const Text(
+                //     "Test Update User Details",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     PostsRepo.getAllPosts().then((value) {
+                //       print(value[0].toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get All Posts",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     PostsRepo.getSinglePost(2).then((value) {
+                //       print(value.toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get Single Post",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     PostsRepo.createPost(
+                //         Posts.fromJson({
+                //           "title": "ABC",
+                //           "deadline": "2024-04-06T17:58:57Z",
+                //           "post_url": "http://abc.com",
+                //           "description": "ABCD",
+                //           "likes": 1,
+                //           "organised_by": "college",
+                //           "subtype": "hackathon",
+                //           "is_interested": true,
+                //           "date_updated": "2024-06-05",
+                //           "date_uploaded": "2024-06-05",
+                //           "image":
+                //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/images/Screenshot_2024-06-05_at_11.11.36AM_eeu4on.png",
+                //           "user": "60004230269"
+                //         }),
+                //         await pickFile());
+                //   },
+                //   child: const Text(
+                //     "Test Create Post",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     PostsRepo.deletePost(9);
+                //   },
+                //   child: const Text(
+                //     "Test Delete Post",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     PostsRepo.updatePost(
+                //         Posts.fromJson({
+                //           "post_id": 3,
+                //           "title": "ABC",
+                //           "post_url": "http://abc.com",
+                //           "description": "ABCD",
+                //           "likes": 1,
+                //           "organised_by": "college",
+                //           "subtype": "hackathon",
+                //           "is_interested": true,
+                //         }),
+                //         await pickFile());
+                //   },
+                //   child: const Text(
+                //     "Test Update Post",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     NotesRepo.getAllNotes().then((value) {
+                //       print(value[0].toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get All Notes",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     NotesRepo.getSingleNote(2).then((value) {
+                //       print(value.toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get Single Note",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     NotesRepo.createNote(
+                //         Notes.fromJson({
+                //           "note_id": 5,
+                //           "ratings": [],
+                //           "average_rating": 0,
+                //           "note_title": "updated test1",
+                //           "note_description":
+                //               "This is the updated description of the note1.",
+                //           "subject": "Maths4",
+                //           "department": "Comps2",
+                //           "document":
+                //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/raw/Screenshot_2024-06-05_at_11.11.36AM_fs0vul.png",
+                //           "user": "60004230269"
+                //         }),
+                //         await pickFile());
+                //   },
+                //   child: const Text(
+                //     "Test Create Note",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     NotesRepo.deleteNote(5);
+                //   },
+                //   child: const Text(
+                //     "Test Delete Note",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     NotesRepo.updateNote(
+                //         Notes.fromJson({
+                //           "note_id": 6,
+                //           "ratings": [],
+                //           "average_rating": 0,
+                //           "note_title": "updated test1",
+                //           "note_description":
+                //               "This is the updated description of the note1.",
+                //           "subject": "Maths4",
+                //           "department": "Comps2",
+                //           "user": "60004230269"
+                //         }),
+                //         await pickFile());
+                //   },
+                //   child: const Text(
+                //     "Test Update Note",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     JobRepo.getAllJobs().then((value) {
+                //       print(value[0].toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get All Jobs",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     JobRepo.getSingleJob(2).then((value) {
+                //       print(value.toJson());
+                //     });
+                //   },
+                //   child: const Text(
+                //     "Test Get Single Job",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     JobRepo.createJob(Job.fromJson({
+                //       "company": "AMEX_TEST",
+                //       "job_title": "Software Engineer",
+                //       "subtype": "Job",
+                //       "mode": "Offline",
+                //       "location": "Remote",
+                //       "contact_no": "9082228928",
+                //       "requirements":
+                //           "No Backlogss till now - 8.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                //       "duration_in_months": 3,
+                //       "description":
+                //           "We are seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                //       "upload_time": "2024-06-06T15:40:23.466223Z",
+                //       "user": "60004230269"
+                //     }));
+                //   },
+                //   child: const Text(
+                //     "Test Create Job",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     JobRepo.deleteJob(9);
+                //   },
+                //   child: const Text(
+                //     "Test Delete Job",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // InkWell(
+                //   onTap: () async {
+                //     JobRepo.updateJob(Job.fromJson({
+                //       "job_id": 10,
+                //       "company": "AMEX_TEST 2",
+                //       "subtype": "Job",
+                //       "mode": "Offline",
+                //       "location": "Remote",
+                //       "contact_no": "9082228008",
+                //       "requirements":
+                //           "No Backlogss till now - 7.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                //       "duration_in_months": 3,
+                //       "description":
+                //           "We are not seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                //       "upload_time": "2024-06-06T15:40:23.466223Z",
+                //     }));
+                //   },
+                //   child: const Text(
+                //     "Test Update Job",
+                //     style: TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w700),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
                 const Text(
                   "Explore Latest Job Opportunities",
                   style: TextStyle(
@@ -666,15 +739,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(
                   height: 140,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return JobListWidget(
-                        SampleJobList[index],
-                      );
-                    },
-                  ),
+                  child: jobs.length > 0
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: jobs.length,
+                          itemBuilder: (context, index) {
+                            return JobListWidget(
+                              jobs[index],
+                            );
+                          },
+                        )
+                      : JobListWidget_Shimmer(),
                 ),
                 const SizedBox(
                   height: 20,
@@ -691,16 +766,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 170,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return PostListWidget(
-                        SamplePostList[index],
-                      );
-                    },
-                  ),
+                  height: 180,
+                  child: posts.length > 0
+                      ? PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: posts.length,
+                          itemBuilder: (context, index) {
+                            return PostListWidget(
+                              posts[index],
+                            );
+                          },
+                        )
+                      : PostListWidget_Shimmer(),
                 ),
               ],
             ),
@@ -728,17 +805,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 156,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return NotesListWidget(
-                        SampleNoteList[index],
-                      );
-                    },
-                  ),
-                ),
+                    height: 156,
+                    child: notes.length > 0
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: notes.length,
+                            itemBuilder: (context, index) {
+                              return NotesListWidget(
+                                notes[index],
+                              );
+                            },
+                          )
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return NotesListWidget_Shimmer();
+                            },
+                          )),
               ],
             ),
           ),
@@ -759,18 +842,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   thickness: 0.5,
                 ),
                 SizedBox(
-                  height: 246,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: SampleJobList.length,
-                    itemBuilder: (context, index) {
-                      return VideoListWidget(
-                        vLink: SampleVideoList[index]["vLink"],
-                        vTitle: SampleVideoList[index]["vTitle"],
-                      );
-                    },
-                  ),
-                ),
+                    height: 246,
+                    child: videos.length > 0
+                        ? PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: videos.length,
+                            itemBuilder: (context, index) {
+                              return VideoListWidget(
+                                video: videos[index],
+                              );
+                            },
+                          )
+                        : VideoListWidget_Shimmer()),
               ],
             ),
           ),

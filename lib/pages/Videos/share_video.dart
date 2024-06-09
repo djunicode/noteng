@@ -2,11 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
+import 'package:noteng/data/Video/videoModel.dart';
+import 'package:noteng/data/Video/videoRepo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ShareVideo extends StatelessWidget {
-  ShareVideo({super.key});
+class ShareVideo extends StatefulWidget {
+  const ShareVideo({super.key});
+
+  @override
+  State<ShareVideo> createState() => _ShareVideoState();
+}
+
+class _ShareVideoState extends State<ShareVideo> {
   TextEditingController _videoTopic = TextEditingController();
+
   TextEditingController _videoLink = TextEditingController();
+
+  TextEditingController _videoSubject = TextEditingController();
+
+  TextEditingController _videoSemester = TextEditingController();
+
+  Future<void> _uploadVideo() async {
+    if (_videoTopic.text.isEmpty ||
+        _videoLink.text.isEmpty ||
+        _videoSubject.text.isEmpty ||
+        _videoSemester.text.isEmpty) {
+      print("Please fill all fields");
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? sapid = prefs.getString('sapid');
+    if (sapid == null) {
+      print("User not found in SharedPreferences");
+      return;
+    }
+
+    Video video = Video(
+      links: _videoLink.text,
+      sem: int.parse(_videoSemester.text),
+      subject: _videoSubject.text,
+      topics: _videoTopic.text,
+    );
+
+    Video createdVideo = await VideoRepo.createVideo(video);
+    if (createdVideo != null && createdVideo.links != null) {
+      print("Video successfully uploaded");
+    } else {
+      print("Failed to upload video");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +90,42 @@ class ShareVideo extends StatelessWidget {
                   SizedBox(height: 5),
                   textFieldWidget(
                     hintText: "Enter Video Link",
-                    controller: _videoTopic,
+                    controller: _videoLink,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Subject",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 5),
+                  textFieldWidget(
+                    hintText: "Enter Subject",
+                    controller: _videoSubject,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Semester",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 5),
+                  textFieldWidget(
+                    numberOnly: true,
+                    hintText: "Enter which semester",
+                    controller: _videoSemester,
                   ),
                 ],
               ),
@@ -53,7 +133,11 @@ class ShareVideo extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: ButtonWidget(name: "Share", onPressed: () {}),
+      bottomNavigationBar: ButtonWidget(
+          name: "Share",
+          onPressed: () {
+            _uploadVideo();
+          }),
     );
   }
 }
