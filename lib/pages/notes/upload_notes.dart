@@ -190,11 +190,7 @@ class _UploadNotesState extends State<UploadNotes> {
           ),
         ),
       ),
-      bottomNavigationBar: ButtonWidget(
-          name: "Upload Notes",
-          onPressed: () {
-           
-          }),
+      bottomNavigationBar: ButtonWidget(name: "Upload Notes", onPressed: () {}),
     );
   }
 }
