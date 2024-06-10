@@ -16,7 +16,7 @@ const Profile=() => {
 
   const handleGoBack = (event) => {
     event.preventDefault();
-    navigate.goBack();
+    navigate('/Home');
   };
 
   

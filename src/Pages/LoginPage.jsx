@@ -28,6 +28,7 @@ const LoginPage = ({ onLoginChange }) => {
                 const data = await response.json();
                 console.log('Login successful:', data);
                 onLoginChange(true); // Call the onLoginChange callback with true to indicate user is logged in
+                localStorage.setItem('isLoggedIn', 'true'); // Persist login state in local storage
                 navigate('/Home'); // Redirect to homepage after successful login
             } else {
                 console.error('Login failed:', response.statusText);
