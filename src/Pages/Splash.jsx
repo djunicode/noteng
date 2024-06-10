@@ -6,7 +6,7 @@ const Splash = () => {
     const navigate = useNavigate();
 
     function loginClick() {
-        navigate('/');
+        navigate('/LoginPage');
     }
 
     function signupClick() {

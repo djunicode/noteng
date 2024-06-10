@@ -30,7 +30,7 @@ const Sidebar = () => {
   }
 
   function loginNavigate() {
-    navigate('/LoginPage');
+    navigate('/profile');
   }
   function toggleSidebar() {
     setIsOpen(!isOpen);
