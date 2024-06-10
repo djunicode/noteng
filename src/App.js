@@ -7,7 +7,7 @@ import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
 import SignUp from './Pages/SignUp';
-import Profile from './Pages/profile';
+import Profile from './Pages/Profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
 import UploadVideo from './Pages/UploadVideo';
@@ -50,7 +50,7 @@ function App() {
         <Route path='/viewnote/:noteId' element={isLoggedIn ? <ViewNote /> : <Navigate to="/LoginPage" />} />
         <Route path='/UploadNewPosts' element={isLoggedIn ? <UploadNewPosts /> : <Navigate to="/LoginPage" />} />
         <Route path='/PostDetails' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
-        <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to="/LoginPage" />} />
+        <Route path='/Profile' element={isLoggedIn ? <Profile /> : <Navigate to="/LoginPage" />} />
         <Route path='/createnote' element={isLoggedIn ? <NewNotes /> : <Navigate to="/LoginPage" />} />
         <Route path='/uploadvideo' element={isLoggedIn ? <UploadVideo /> : <Navigate to="/LoginPage" />} />
         <Route path='/DiscoverPage' element={isLoggedIn ? <DiscoverPage /> : <Navigate to="/LoginPage" />} />
