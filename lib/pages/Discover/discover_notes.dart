@@ -27,22 +27,31 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
   final TextEditingController SearchController = TextEditingController();
   var branchSelected = "All";
   List<Notes> notes = [];
+  List<Notes> filteredNotes = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchData();
     if (widget.initial_search_query != null) {
       SearchController.text = widget.initial_search_query!;
+      filterNotes();
     }
   }
 
   Future fetchData() async {
     notes = await NotesRepo.getAllNotes();
-    if (mounted) {
-      setState(() {});
-    }
+    filterNotes();
+  }
+
+  void filterNotes() {
+    setState(() {
+      filteredNotes = notes.where((note) {
+        return note.noteTitle!
+            .toLowerCase()
+            .contains(SearchController.text.toLowerCase());
+      }).toList();
+    });
   }
 
   @override
@@ -69,8 +78,7 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
             children: [
               const Text(
                 "Discover",
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
               ),
               const SizedBox(
                 height: 20,
@@ -86,7 +94,7 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                     Expanded(
                       child: TextField(
                         onChanged: (value) {
-                          setState(() {});
+                          filterNotes();
                         },
                         controller: SearchController,
                         decoration: const InputDecoration(
@@ -148,28 +156,24 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-        child: notes.length > 0
+        child: filteredNotes.isNotEmpty
             ? GridView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: notes.length,
+                itemCount: filteredNotes.length,
                 itemBuilder: (context, index) {
-                  if (notes[index]
-                      .noteTitle!
-                      .toLowerCase()
-                      .contains(SearchController.text.toLowerCase())) {
-                    return InkWell(
-                      onTap: () {
-                        Get.to(() => NotesDetails(notes[index]))!.then((value) {
-                          setState(() {});
+                  return InkWell(
+                    onTap: () async {
+                      await Get.to(() => NotesDetails(filteredNotes[index]))!
+                          .then((value) {
+                        setState(() {
+                          fetchData();
                         });
-                      },
-                      child: DiscoverNotesListWidget(
-                        notes[index],
-                      ),
-                    );
-                  } else {
-                    return SizedBox();
-                  }
+                      });
+                    },
+                    child: DiscoverNotesListWidget(
+                      filteredNotes[index],
+                    ),
+                  );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,

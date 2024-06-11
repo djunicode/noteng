@@ -164,7 +164,7 @@ class _NotesDetailsState extends State<NotesDetails> {
             ),
             !already_rated
                 ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text("Rate the Notes: "),
                       RatingBar.builder(
