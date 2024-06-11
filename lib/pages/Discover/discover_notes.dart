@@ -10,6 +10,7 @@ import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
+import 'package:noteng/pages/Notes/notes_detail.dart';
 
 import '../../Widgets/bottom_nav_bar.dart';
 import '../../Widgets/modalbottom.dart';
@@ -156,8 +157,15 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
                       .noteTitle!
                       .toLowerCase()
                       .contains(SearchController.text.toLowerCase())) {
-                    return DiscoverNotesListWidget(
-                      notes[index],
+                    return InkWell(
+                      onTap: () {
+                        Get.to(() => NotesDetails(notes[index]))!.then((value) {
+                          setState(() {});
+                        });
+                      },
+                      child: DiscoverNotesListWidget(
+                        notes[index],
+                      ),
                     );
                   } else {
                     return SizedBox();

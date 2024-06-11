@@ -35,13 +35,21 @@ class Posts {
     postUrl = json['post_url'];
     description = json['description'];
     likes = json['likes'];
-    organisedBy = json['organised_by'];
-    subtype = json['subtype'];
+    organisedBy = _extractFirstValue(json['organised_by']);
+    subtype = _extractFirstValue(json['subtype']);
     isInterested = json['is_interested'];
     dateUpdated = json['date_updated'];
     dateUploaded = json['date_uploaded'];
     image = json['image'];
     user = json['user'];
+  }
+
+  String _extractFirstValue(String tupleString) {
+    if (tupleString == null) return '';
+
+    var parts =
+        tupleString.replaceAll("('", "").replaceAll(")", "").split("',");
+    return parts[0].trim();
   }
 
   Map<String, dynamic> toJson() {

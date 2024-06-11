@@ -25,6 +25,7 @@ import 'package:noteng/pages/Discover/discover_notes.dart';
 import 'package:noteng/pages/Discover/discover_posts.dart';
 import 'package:noteng/pages/Discover/discover_videos.dart';
 import 'package:noteng/pages/Home/sample_data.dart';
+import 'package:noteng/pages/Notes/notes_detail.dart';
 import 'package:noteng/pages/profile/profilePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -811,8 +812,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             scrollDirection: Axis.horizontal,
                             itemCount: notes.length,
                             itemBuilder: (context, index) {
-                              return NotesListWidget(
-                                notes[index],
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(() => NotesDetails(notes[index]))!
+                                      .then((value) => setState(() {}));
+                                },
+                                child: NotesListWidget(
+                                  notes[index],
+                                ),
                               );
                             },
                           )

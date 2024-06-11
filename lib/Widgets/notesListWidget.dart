@@ -19,111 +19,106 @@ class NotesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => NotesDetails(nLM!));
-      },
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-        margin: EdgeInsets.only(right: 10),
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: backgroundColor,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    nLM!.noteTitle!,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      margin: EdgeInsets.only(right: 10),
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: backgroundColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  nLM!.noteTitle!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Column(
+              ),
+              Column(
+                children: [
+                  const Icon(
+                    Icons.star,
+                    size: 16,
+                    color: Colors.amber,
+                  ),
+                  Text(
+                    nLM!.averageRating!.toStringAsFixed(2),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Divider(
+            color: secondaryColor,
+            thickness: 0.5,
+          ),
+          Text(
+            nLM!.noteDescription!,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 10.0,
+              color: secondaryColor,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 5,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
-                      Icons.star,
-                      size: 16,
-                      color: Colors.amber,
+                    Text(
+                      nLM!.subject!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.0,
+                        color: secondaryColor,
+                      ),
                     ),
                     Text(
-                      nLM!.averageRating!.toStringAsFixed(2),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12.0,
+                      nLM!.department!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9.0,
+                        color: secondaryColor,
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-            Divider(
-              color: secondaryColor,
-              thickness: 0.5,
-            ),
-            Text(
-              nLM!.noteDescription!,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 10.0,
+              ),
+              Icon(
+                Icons.file_present_outlined,
                 color: secondaryColor,
-                fontWeight: FontWeight.w500,
+                size: 16,
               ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 5,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        nLM!.subject!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11.0,
-                          color: secondaryColor,
-                        ),
-                      ),
-                      Text(
-                        nLM!.department!,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 9.0,
-                          color: secondaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  Icons.file_present_outlined,
-                  color: secondaryColor,
-                  size: 16,
-                ),
-              ],
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
