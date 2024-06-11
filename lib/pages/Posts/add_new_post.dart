@@ -31,7 +31,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
   TextEditingController postCategory = TextEditingController();
   Future getImage() async {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
+//
     setState(() {
       if (pickedImage != null) {
         _image = File(pickedImage.path);
