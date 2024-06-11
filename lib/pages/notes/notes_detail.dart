@@ -173,7 +173,7 @@ class _NotesDetailsState extends State<NotesDetails> {
                         direction: Axis.horizontal,
                         allowHalfRating: false,
                         itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                        // itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: Colors.amber,
