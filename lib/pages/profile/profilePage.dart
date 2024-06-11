@@ -142,7 +142,6 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Center(
                 child: Container(
-                  height: h * 0.23,
                   width: w * 0.95,
                   decoration: BoxDecoration(
                       color: primaryColor,
@@ -290,6 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
+                      SizedBox(height: 10)
                     ],
                   ),
                 ),

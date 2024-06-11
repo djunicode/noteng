@@ -25,7 +25,6 @@ class _NotesDetailsState extends State<NotesDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     containsUser();
   }
@@ -66,21 +65,25 @@ class _NotesDetailsState extends State<NotesDetails> {
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          widget.note.averageRating!.toStringAsFixed(2),
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            widget.note.averageRating!.toStringAsFixed(2),
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -161,7 +164,7 @@ class _NotesDetailsState extends State<NotesDetails> {
             ),
             !already_rated
                 ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text("Rate the Notes: "),
                       RatingBar.builder(
@@ -174,7 +177,7 @@ class _NotesDetailsState extends State<NotesDetails> {
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
                           color: Colors.amber,
-                          size: 20,
+                          size: 10,
                         ),
                         onRatingUpdate: (rating) {
                           NotesRatingRepo.setRating(

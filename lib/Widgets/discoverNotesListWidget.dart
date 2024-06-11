@@ -40,7 +40,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
                     nLM!.noteTitle!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 13.0,
                       fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class DiscoverNotesListWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+           const Divider(
               color: secondaryColor,
               thickness: 0.5,
             ),
