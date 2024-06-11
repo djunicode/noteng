@@ -26,10 +26,10 @@ class JobDetails extends StatelessWidget {
     return Scaffold(
       appBar: const AppBarWidget(title: "Job Opportunity"),
       body: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -59,7 +59,7 @@ class JobDetails extends StatelessWidget {
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      padding: const EdgeInsets.fromLTRB(4, 5, 10, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(8)),
@@ -84,7 +84,7 @@ class JobDetails extends StatelessWidget {
                   Expanded(
                     child: Container(
                       margin: const EdgeInsets.only(left: 5, right: 5),
-                      padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
+                      padding: const EdgeInsets.fromLTRB(4, 5, 0, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(8)),
@@ -94,9 +94,6 @@ class JobDetails extends StatelessWidget {
                           const Icon(
                             Icons.work_outline,
                             color: Colors.white,
-                          ),
-                          const SizedBox(
-                            width: 10,
                           ),
                           Text(
                             "Type:\n${job.subtype}",
@@ -108,7 +105,7 @@ class JobDetails extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      padding: const EdgeInsets.fromLTRB(4, 5, 0, 5),
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(8)),
@@ -120,7 +117,7 @@ class JobDetails extends StatelessWidget {
                             color: Colors.white,
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
                           Text(
                             "Mode:\n${job.mode}",
