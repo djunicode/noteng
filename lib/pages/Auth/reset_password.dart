@@ -5,17 +5,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/User/userRepo.dart';
-import 'package:noteng/pages/Auth/reset_password.dart';
+import 'package:noteng/pages/Auth/login_screen.dart';
 
-class OTPScreen extends StatefulWidget {
+class OTPScreen2 extends StatefulWidget {
+  final String _email;
+  OTPScreen2(this._email);
+
   @override
   _OTPScreenState createState() => _OTPScreenState();
 }
 
-class _OTPScreenState extends State<OTPScreen> {
+class _OTPScreenState extends State<OTPScreen2> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email = '';
+  String _newpassword = '';
+  String _OTP = '';
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +39,46 @@ class _OTPScreenState extends State<OTPScreen> {
                 height: 10,
               ),
               const Text(
-                'Enter your email',
+                'Choose your password',
                 style: TextStyle(fontSize: 18.0),
               ),
               TextFormField(
+                obscureText: true,
                 decoration: InputDecoration(
-                  hintText: 'Enter registered Email',
+                  hintText: 'Choose new password',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
                 onChanged: (value) {
-                  _email = value;
+                  _newpassword = value;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your registered email';
+                    return 'Please a enter valid password';
                   }
                   return null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Enter OTP received',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              OtpTextField(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                numberOfFields: 6,
+                borderColor: primaryColor,
+                focusedBorderColor: primaryColor,
+                margin: const EdgeInsets.all(8),
+                showFieldAsBox: true,
+                onCodeChanged: (String value) {
+                  _OTP = value;
+                },
+                onSubmit: (String value) {
+                  _OTP = value;
                 },
               ),
               const Spacer(),
@@ -68,18 +94,21 @@ class _OTPScreenState extends State<OTPScreen> {
                   if (_formKey.currentState!.validate()) {
                     // Perform OTP send logic here
 
-                    if (await UserRepo.forgotPassword(_email)) {
+                    if (await UserRepo.verifyOTP(
+                      _OTP,
+                      widget._email,
+                      _newpassword,
+                    )) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('OTP sent successfully'),
+                          content: Text('Password set successfully'),
                         ),
                       );
-
-                      Get.to(OTPScreen2(_email));
+                      Get.offAll(LoginScreen());
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Failed to send OTP'),
+                          content: Text('Failed to set password'),
                         ),
                       );
                     }
@@ -94,7 +123,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   ),
                 ),
                 child: const Text(
-                  'Send OTP',
+                  'Set Password',
                   style: TextStyle(
                     fontSize: 18.0, // Set the text size
                   ),

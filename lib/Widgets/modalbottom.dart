@@ -7,6 +7,8 @@ import 'package:noteng/pages/Posts/add_new_post.dart';
 import 'package:noteng/pages/Videos/share_video.dart';
 import 'package:noteng/pages/notes/upload_notes.dart';
 
+import '../data/User/userRepo.dart';
+
 class Modalbottom extends StatefulWidget {
   const Modalbottom({Key? key}) : super(key: key);
 
@@ -15,6 +17,19 @@ class Modalbottom extends StatefulWidget {
 }
 
 class _ModalbottomState extends State<Modalbottom> {
+  bool isAdmin = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkAdmin();
+  }
+
+  Future<void> checkAdmin() async {
+    isAdmin = await UserRepo.isAdmin();
+    setState(() {});
+  }
+
   final roomCode = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -136,39 +151,44 @@ class _ModalbottomState extends State<Modalbottom> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        Get.off(ShareVideo(),
-                            transition: Transition.circularReveal);
-                      },
-                      child: Container(
-                        height: 140,
-                        decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/share_video.svg',
-                              height: 50,
+                  isAdmin
+                      ? const SizedBox(
+                          width: 20,
+                        )
+                      : SizedBox(),
+                  isAdmin
+                      ? Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Get.off(ShareVideo(),
+                                  transition: Transition.circularReveal);
+                            },
+                            child: Container(
+                              height: 140,
+                              decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/share_video.svg',
+                                    height: 50,
+                                  ),
+                                  const Text(
+                                    'Share\nVideo',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
                             ),
-                            const Text(
-                              'Share\nVideo',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ],

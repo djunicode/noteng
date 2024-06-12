@@ -193,4 +193,102 @@ class UserRepo {
       return User();
     }
   }
+
+  //Method to send Forgot Password email
+  static Future<bool> forgotPassword(String email) async {
+    final dio = Dio();
+
+    try {
+      final response = await dio.post(
+        ApiEndpoint.forgotPassword,
+        data: {'email': email},
+        options: Options(
+          validateStatus: (status) {
+            return true;
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('Forgot Password email sent successfully: ${response.data}');
+        return true;
+      } else {
+        print(
+            'Failed to send Forgot Password email: ${response.data} ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false;
+    }
+  }
+
+  //Method to Verify OTP with new password
+  static Future<bool> verifyOTP(
+      String otp, String email, String password) async {
+    final dio = Dio();
+
+    try {
+      final response = await dio.post(
+        ApiEndpoint.verifyOTP,
+        data: {'otp': otp, 'new_password': password, 'email': email},
+        options: Options(
+          validateStatus: (status) {
+            return true;
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        print('OTP verified successfully: ${response.data}');
+        return true;
+      } else {
+        print('Failed to verify OTP: ${response.data} ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false;
+    }
+  }
+
+  //check if admin
+  static Future<bool> isAdmin() async {
+    final dio = Dio();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var access_token = await prefs.getString('access');
+
+    try {
+      final response = await dio.get(
+        ApiEndpoint.isAdmin,
+        options: Options(
+          validateStatus: (status) {
+            return true;
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $access_token'
+          },
+        ),
+      );
+      if (response.statusCode == 200 && response.data['is_admin'] == true) {
+        print('User is admin: ${response.data}');
+
+        return true;
+      } else {
+        print('User is not admin: ${response.data} ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return false;
+    }
+  }
 }

@@ -15,6 +15,7 @@ import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
 import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
+import 'package:noteng/data/User/userRepo.dart';
 import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
 import 'package:noteng/main.dart';
@@ -88,10 +89,18 @@ class _ProfilePageState extends State<ProfilePage> {
     notes_shared = notes.where((note) => note.user == sap_sp!).length;
     videos_shared = videos.where((video) => video.user == sap_sp!).length;
 
-    jobs = jobs.where((job) => job.user == sap_sp).toList();
-    posts = posts.where((post) => post.user == sap_sp).toList();
-    notes = notes.where((note) => note.user == sap_sp).toList();
-    videos = videos.where((video) => video.user == sap_sp).toList();
+    bool isAdmin = await UserRepo.isAdmin();
+
+    if (isAdmin) {
+      setState(() {
+        role = "Admin";
+      });
+    } else {
+      jobs = jobs.where((job) => job.user == sap_sp).toList();
+      posts = posts.where((post) => post.user == sap_sp).toList();
+      notes = notes.where((note) => note.user == sap_sp).toList();
+      videos = videos.where((video) => video.user == sap_sp).toList();
+    }
 
     if (mounted) {
       setState(() {
@@ -741,7 +750,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Manage My Posted Jobs",
+                              "Manage Posted Jobs",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -828,7 +837,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Manage My Posted Posts",
+                              "Manage Posted Posts",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -915,7 +924,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Manage My Shared Notes",
+                              "Manage Shared Notes",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -1005,7 +1014,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Manage My Shared Videos",
+                              "Manage Shared Videos",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
