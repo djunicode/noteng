@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
@@ -11,6 +12,7 @@ import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Posts/postModel.dart';
 import 'package:noteng/data/Posts/postRepo.dart';
+import 'package:noteng/pages/Home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNewPostPage extends StatefulWidget {
@@ -92,12 +94,20 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
         user: sapid);
     try {
       Posts createdPost = await PostsRepo.createPost(post, _image!);
+      if (createdPost.postId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Upload failed')),
+        );
+        print("Upload failed");
+        return;
+      }
       // Handle success
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Post created successfully: ${createdPost.title}')),
       );
       print("Post created successfully: ${createdPost.title}");
+      Get.back();
     } catch (e) {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
@@ -133,9 +143,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                 maxLines: 1,
                 controller: postTitle,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+
               // const Padding(
               //   padding: EdgeInsets.all(8.0),
               //   child: Text(
@@ -173,76 +181,88 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               //   ),
               // ),
-              const Text(
-                'Organizer',
-                style: TextStyle(fontSize: 18.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Organizer",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
               ),
-              const SizedBox(height: 8.0),
-              DropdownButtonFormField<String>(
-                hint: const Text('Organized By'),
-                value: _organizedBy.isNotEmpty ? _organizedBy : null,
-                onChanged: (value) {
-                  setState(
-                    () {
-                      _organizedBy = value!;
-                    },
-                  );
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: '',
-                    child: Text('Select Organizer'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'college',
-                    child: Text('college'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'commitee',
-                    child: Text('commitee'),
-                  ),
-                ],
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                child: DropdownButtonFormField<String>(
+                  hint: const Text('Organized By'),
+                  value: _organizedBy.isNotEmpty ? _organizedBy : null,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _organizedBy = value!;
+                      },
+                    );
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: '',
+                      child: Text('Select Organizer'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'college',
+                      child: Text('college'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'commitee',
+                      child: Text('commitee'),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                'Event Type',
-                style: TextStyle(fontSize: 18.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Event Type",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                ),
               ),
-              const SizedBox(height: 8.0),
-              DropdownButtonFormField<String>(
-                hint: const Text('Select'),
-                value: _eventType.isNotEmpty ? _eventType : null,
-                onChanged: (value) {
-                  setState(
-                    () {
-                      _eventType = value!;
-                    },
-                  );
-                },
-                items: const [
-                  DropdownMenuItem(
-                    value: '',
-                    child: Text('Select Event Type'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'hackathon',
-                    child: Text('hackathon'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'cultural',
-                    child: Text('cultural'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'datathon',
-                    child: Text('datathon'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'startup',
-                    child: Text('startup'),
-                  ),
-                ],
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                child: DropdownButtonFormField<String>(
+                  hint: const Text('Select'),
+                  value: _eventType.isNotEmpty ? _eventType : null,
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _eventType = value!;
+                      },
+                    );
+                  },
+                  items: const [
+                    DropdownMenuItem(
+                      value: '',
+                      child: Text('Select Event Type'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'hackathon',
+                      child: Text('hackathon'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'cultural',
+                      child: Text('cultural'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'datathon',
+                      child: Text('datathon'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'startup',
+                      child: Text('startup'),
+                    ),
+                  ],
+                ),
               ),
               // textFieldWidget(
               //   hintText: "Enter the organization name",
