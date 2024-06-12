@@ -29,8 +29,11 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
   TextEditingController postOrganization = TextEditingController();
   TextEditingController postDeadline = TextEditingController();
   TextEditingController postCategory = TextEditingController();
+  String _organizedBy = "";
+  String _eventType = "";
   Future getImage() async {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
 //
     setState(() {
       if (pickedImage != null) {
@@ -42,12 +45,21 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
   }
 
   Future<void> _createPost() async {
+    print("Title: ${postTitle.text}");
+    print("Deadline: ${postDeadline.text}");
+    print("Link: ${postLink.text}");
+    print("Description: ${postDescription.text}");
+    print("Organization: $_organizedBy");
+    print("Category: $_eventType");
+    print("Image: $_image");
     if (postTitle.text.isEmpty ||
         postDeadline.text.isEmpty ||
         postLink.text.isEmpty ||
         postDescription.text.isEmpty ||
-        postOrganization.text.isEmpty ||
-        postCategory.text.isEmpty ||
+        _eventType == "" ||
+        _organizedBy == "" ||
+        // postOrganization.text.isEmpty ||
+        // postCategory.text.isEmpty ||
         _image == null) {
       // Handle validation error
       ScaffoldMessenger.of(context).showSnackBar(
@@ -71,8 +83,10 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
         description: postDescription.text,
         image: _image!.path,
         // organisedBy: postOrganization.text,
+        organisedBy: _organizedBy,
         postUrl: postLink.text,
-        subtype: postCategory.text,
+        subtype: _eventType,
+        // subtype: postCategory.text,
         title: postTitle.text,
         likes: 0,
         user: sapid);
@@ -95,6 +109,8 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
 
   @override
   Widget build(BuildContext context) {
+    // String _eventType = "";
+    // String _organizedBy = "";
     return Scaffold(
       appBar: AppBarWidget(title: "Create New Post"),
       backgroundColor: backgroundColor,
@@ -120,18 +136,18 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Post Category",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-                ),
-              ),
-              textFieldWidget(
-                hintText: "Enter Post Category",
-                maxLines: 1,
-                controller: postCategory,
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.all(8.0),
+              //   child: Text(
+              //     "Post Category",
+              //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              //   ),
+              // ),
+              // textFieldWidget(
+              //   hintText: "Enter Post Category",
+              //   maxLines: 1,
+              //   controller: postCategory,
+              // ),
               const SizedBox(
                 height: 10,
               ),
@@ -150,18 +166,89 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Organization Name",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-                ),
+              // const Padding(
+              //   padding: EdgeInsets.all(8.0),
+              //   child: Text(
+              //     "Organization Name",
+              //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              //   ),
+              // ),
+              const Text(
+                'Organizer',
+                style: TextStyle(fontSize: 18.0),
               ),
-              textFieldWidget(
-                hintText: "Enter the organization name",
-                maxLines: 1,
-                controller: postOrganization,
+              const SizedBox(height: 8.0),
+              DropdownButtonFormField<String>(
+                hint: const Text('Organized By'),
+                value: _organizedBy.isNotEmpty ? _organizedBy : null,
+                onChanged: (value) {
+                  setState(
+                    () {
+                      _organizedBy = value!;
+                    },
+                  );
+                },
+                items: const [
+                  DropdownMenuItem(
+                    value: '',
+                    child: Text('Select Organizer'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'college',
+                    child: Text('college'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'commitee',
+                    child: Text('commitee'),
+                  ),
+                ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Event Type',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              const SizedBox(height: 8.0),
+              DropdownButtonFormField<String>(
+                hint: const Text('Select'),
+                value: _eventType.isNotEmpty ? _eventType : null,
+                onChanged: (value) {
+                  setState(
+                    () {
+                      _eventType = value!;
+                    },
+                  );
+                },
+                items: const [
+                  DropdownMenuItem(
+                    value: '',
+                    child: Text('Select Event Type'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'hackathon',
+                    child: Text('hackathon'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'cultural',
+                    child: Text('cultural'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'datathon',
+                    child: Text('datathon'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'startup',
+                    child: Text('startup'),
+                  ),
+                ],
+              ),
+              // textFieldWidget(
+              //   hintText: "Enter the organization name",
+              //   maxLines: 1,
+              //   controller: postOrganization,
+              // ),
               const SizedBox(
                 height: 10,
               ),

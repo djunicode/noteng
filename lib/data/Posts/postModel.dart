@@ -6,6 +6,7 @@ class Posts {
   String? description;
   int? likes;
   String? organisedBy;
+  String? type;
   String? subtype;
   bool? isInterested;
   String? dateUpdated;
@@ -15,6 +16,7 @@ class Posts {
 
   Posts(
       {this.postId,
+      this.type,
       this.title,
       this.deadline,
       this.postUrl,
@@ -32,6 +34,7 @@ class Posts {
     postId = json['post_id'];
     title = json['title'];
     deadline = json['deadline'];
+    type = json['type'];
     postUrl = json['post_url'];
     description = json['description'];
     likes = json['likes'];
@@ -62,6 +65,8 @@ class Posts {
     if (this.likes != null) data['likes'] = this.likes;
     if (this.organisedBy != null) data['organised_by'] = this.organisedBy;
     if (this.subtype != null) data['subtype'] = this.subtype;
+
+    if (this.type != null) data['type'] = this.type;
     if (this.isInterested != null) data['is_interested'] = this.isInterested;
     if (this.dateUpdated != null) data['date_updated'] = this.dateUpdated;
     if (this.dateUploaded != null) data['date_uploaded'] = this.dateUploaded;
