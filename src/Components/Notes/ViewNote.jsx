@@ -10,17 +10,17 @@ const ViewNote = () => {
     const navigate = useNavigate();
     const { noteId } = useParams();
     const [noteDetails, setNoteDetails] = useState(null);
-  
+
     useEffect(() => {
         const fetchNoteDetails = async () => {
             try {
                 const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/notes/${noteId}/`, {
                     headers: {
-                        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3NzA5NTEwLCJpYXQiOjE3MTc2ODc5MTAsImp0aSI6IjdhZmY0OWY4OGU2ZTQ4NzNhY2ExNDc5MGFmM2VlMzU3IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.2qEts4v2MSFYoVfC1Ge2Tv5xJyhI8cMB5UoesbsDz-0' 
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3ODQ4NDcyLCJpYXQiOjE3MTc4MjY4NzIsImp0aSI6IjZmNTI5ZGEzM2QwZjQzNDM4NzZhM2UyNzlhMTEyZjdmIiwidXNlcl9pZCI6IjYwMDA0MjIwMTgzIn0.1IRs_bt9_9KFtwpbwlhDd9YG-3bYFcKrU2H1Nw__HcA' 
                     }
                 });
-                console.log(response.data);
                 setNoteDetails(response.data);
+                console.log(response.data);
             } catch (error) {
                 console.error('Error fetching note details:', error);
             }
@@ -30,7 +30,7 @@ const ViewNote = () => {
             fetchNoteDetails();
         }
     }, [noteId]);
-  
+
     const handleGoBack = (event) => {
         event.preventDefault();
         navigate.goBack();
@@ -54,14 +54,14 @@ const ViewNote = () => {
 
     const renderStars = (rating) => {
         const stars = [];
-        for (let i = 0; i < rating; i++) {
-            stars.push(<span key={i} role='img' aria-label='star'>⭐️</span>);
+        for (let i = 0; i < 5; i++) {
+            stars.push(<span key={i} role='img' aria-label={i < rating ? 'star-filled' : 'star-empty'}>{i < rating ? '⭐️' : '☆'}</span>);
         }
         return stars;
     };
 
     return (
-        <div className='flex flex-row'>
+        <div className='flex flex-col md:flex-row'>
             <Sidebar />
             <div className='flex flex-col maincontent'>
                 <div className='flex flex-row'>
@@ -86,10 +86,18 @@ const ViewNote = () => {
                     {noteDetails && noteDetails.note_description}
                 </p>
                 <div className='noteimg'>
-                    <img src={noteDetails && noteDetails.document} alt='Note Preview' className='note-preview'/>
+                    {noteDetails && noteDetails.document && (
+                        noteDetails.document.endsWith('.pdf') ? (
+                            <object data={noteDetails.document} type="application/pdf" width="100%" height="100%">
+                                <p>Alternative text - include a link <a href={noteDetails.document}>to the PDF!</a></p>
+                            </object>
+                        ) : (
+                            <img src={noteDetails.document} alt='Note Preview' className='note-preview' />
+                        )
+                    )}
                 </div>
                 <div className='flex justify-center'>
-                    <button type="button" className="badges inline-flex items-center px-10 py-5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={downloadNote}>
+                    <button type="button" className="badges inline-flex items-center px-10 py-5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 " onClick={downloadNote} >
                         Download Now!!
                     </button>
                 </div>
@@ -104,17 +112,16 @@ const ViewNote = () => {
                             <p>Rate :</p>
                         </div>
                         <div className='flex flex-row ml-2'>
-                            {noteDetails && renderStars(noteDetails.rating)}
+                            {noteDetails && renderStars(noteDetails.average_rating)}
                         </div>
                     </div>
-                    <button type="button" className="badges1 inline-flex items-center px-10 py-5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg
-                    -blue-700 dark:focus:ring-blue-800">
-                    Contact Note Administrator
-                </button>
+                    <button type="button" className="badges1 inline-flex items-center px-10 py-5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Contact Note Administrator
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default ViewNote;

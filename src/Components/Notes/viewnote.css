@@ -1,4 +1,7 @@
-.subtitle{
+/* viewnote.css */
+
+/* Styles for larger screens */
+.subtitle {
     font-size: 1.9rem;
     font-weight: 600;
     color: #20222E;
@@ -8,31 +11,57 @@
     justify-content: center;
 }
 
-.head3{
+.head3 {
     font-size: 32px;
     color: #8391A1;
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
-.notes-description{
+
+.notes-description {
     margin-top: 20px;
     margin-left: 40px;
     font-size: 24px;
 }
-.noteimg{
+
+.noteimg {
     width: 1058px;
-    height: 302px;
+    min-height: 500px;
+    height: min-content;
     margin-top: 40px;
     margin-left: 67px;
     border: 2px solid black;
     border-radius: 10px;
     margin-bottom: 24px;
 }
-.badges{
+
+.badges {
     width: 200px;
 }
-.badges1{
+
+.badges1 {
     margin-top: 30px;
     width: 200px;
+}
+
+/* Media queries for responsiveness */
+@media only screen and (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .maincontent {
+        padding: 0 20px; /* Add padding to the main content */
+    }
+
+    .noteimg {
+        width: 100%; /* Make the image/document responsive */
+        margin: 20px 0; /* Adjust margins */
+    }
+
+    .head3,
+    .notes-description,
+    .badges,
+    .badges1 {
+        margin-left: 0; /* Reset left margin */
+        text-align: center; /* Center align text */
+    }
 }
