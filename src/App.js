@@ -7,7 +7,7 @@ import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
 import SignUp from './Pages/SignUp';
-import Profile from './Pages/Profile';
+import Profile from './Pages/profile';
 import NewNotes from './Components/Notes/NewNotes';
 import ViewNote from './Components/Notes/ViewNote';
 import UploadVideo from './Pages/UploadVideo';
@@ -15,6 +15,7 @@ import DiscoverPage from './Pages/DiscoverPage';
 import Splash from './Pages/Splash';
 import LoginPage from './Pages/LoginPage';
 import PostDetails from './Pages/PostDetails';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
