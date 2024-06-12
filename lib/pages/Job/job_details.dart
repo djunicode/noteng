@@ -24,6 +24,7 @@ class JobDetails extends StatelessWidget {
     String minute = DateFormat('mm').format(DateTime.parse(job.uploadTime!));
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const AppBarWidget(title: "Job Opportunity"),
       body: Padding(
         padding: const EdgeInsets.all(10),
