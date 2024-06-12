@@ -1,14 +1,22 @@
 from django.contrib import admin
-from .models import VideolinksModel, PostModel, JobBoardModel,  CalendarModel, NotesModel, MentorshipModel,NoteRating #, EventModel
+from .models import Like,VideolinksModel, PostModel, JobBoardModel,  CalendarModel, NotesModel, MentorshipModel,NoteRating #, EventModel
 
 class VideolinksModelAdmin(admin.ModelAdmin):
     list_display = ('video_id', 'user', 'subject', 'sem', 'topics')
     search_fields = ('user__email', 'subject')
 
 class PostModelAdmin(admin.ModelAdmin):
-    list_display = ('post_id', 'user', 'title', 'deadline', 'likes')
+    list_display = ('post_id', 'user', 'title', 'deadline', 'likes_count')
     search_fields = ('user__email', 'title')
-
+    
+    def likes_count(self, obj):
+        return obj.likes.count()
+    likes_count.short_description = 'Likes'
+    
+    def liked_users(self, obj):
+        return ", ".join([like.user.email for like in obj.likes.all()])
+    liked_users.short_description = 'Liked by'
+    
 class JobBoardModelAdmin(admin.ModelAdmin):
     list_display = ('job_id', 'user', 'company', 'subtype', 'mode')
     search_fields = ('user__email', 'company')
@@ -42,3 +50,4 @@ admin.site.register(CalendarModel, CalendarModelAdmin)
 admin.site.register(NotesModel, NotesModelAdmin)
 admin.site.register(MentorshipModel, MentorshipModelAdmin)
 admin.site.register(NoteRating, NoteRatingAdmin)
+admin.site.register(Like)
