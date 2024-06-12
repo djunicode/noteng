@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils import timezone
+import random
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, sapid, password=None, **extra_fields):
@@ -34,6 +36,8 @@ class User(AbstractBaseUser):
     contact_number = models.CharField(max_length=10, unique=True)
     mentors = models.ManyToManyField('self', blank=True)
     expertise = models.CharField(max_length=100, blank=True)
+    otp = models.CharField(max_length=6, blank=True, null=True)
+    otp_created_at = models.DateTimeField(blank=True, null=True)
 
     objects = CustomUserManager()
 
@@ -47,6 +51,11 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.sapid
+
+    def generate_otp(self):
+        self.otp = str(random.randint(100000, 999999))
+        self.otp_created_at = timezone.now()
+        self.save()
     
 class Professor(User):
     department = models.CharField(max_length=100)

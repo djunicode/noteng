@@ -20,7 +20,6 @@ urlpatterns = [
     path('jobboard/<int:pk>/', JobBoardDetailAPIView.as_view(), name='jobboard-detail'),
     path('mentorship/', MentorshipListView.as_view(), name='mentorship-list'),
     path('mentorship/<int:pk>/', MentorshipDetailView.as_view(), name='mentorship-detail'),
+    path('isAdmin/', IsAdminUserView.as_view(), name='is-admin'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

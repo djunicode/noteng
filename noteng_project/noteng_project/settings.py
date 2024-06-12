@@ -5,8 +5,6 @@ from pathlib import Path
 import os #new addition for MEDIA_ROOT
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 from decouple import config
 
 CLOUDINARY_STORAGE = {
@@ -16,8 +14,12 @@ CLOUDINARY_STORAGE = {
 }
 import cloudinary
 cloudinary.config(
-    api_proxy="http://proxy.server:3128"
+    cloud_name = config('CLOUD_NAME'),
+    api_key = config('API_KEY'),
+    api_secret = config('API_SECRET'),
+    api_proxy="http://proxy.server:3128",
 )
+
 import cloudinary.uploader
 import cloudinary.api
 
@@ -139,6 +141,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -155,9 +166,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/home/MonilMeh/noteng/noteng_project/static'
-# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+# STATIC_ROOT = '/home/MonilMeh/noteng/noteng_project/static'
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join('D:/noteng_backend/noteng/noteng_project','/static/')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

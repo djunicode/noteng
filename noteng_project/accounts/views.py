@@ -22,6 +22,12 @@ import os
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
+from rest_framework.views import APIView
+class IsAdminUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({'is_admin': request.user.is_admin}, status=status.HTTP_200_OK)
 
 class CustomJWTAuthentication(JWTAuthentication):
     def get_user(self, validated_token):
@@ -60,7 +66,7 @@ class NotesListCreateAPIView(generics.ListCreateAPIView):
         #     except Exception as e:
         #         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         # return super().post(request, *args, **kwargs)
-    
+
 class NotesDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = NotesModel.objects.all()
     serializer_class = NotesSerializer
@@ -128,14 +134,13 @@ class CalendarDetailView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [CustomJWTAuthentication]  
     permission_classes = [IsAuthenticated]
     def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        # Delete the associated calendar event when the instance is deleted
-        calendar_event = CalendarModel.objects.filter(user=instance.user).first()
-        if calendar_event:
-            calendar_event.delete()
-            return Response({"message": "Calendar event deleted successfully."}, status=status.HTTP_200_OK)
-        else:
+        try:
+            instance = self.get_object()
+        except CalendarModel.DoesNotExist:
             return Response({"error": "Calendar event not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        instance.delete()
+        return Response({"message": "Calendar event deleted successfully."}, status=status.HTTP_200_OK)
 
 class PostListView(generics.ListCreateAPIView):
     queryset = PostModel.objects.all()
