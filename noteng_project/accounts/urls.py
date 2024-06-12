@@ -9,6 +9,9 @@ urlpatterns = [
     path('calendar/<int:pk>', CalendarDetailView.as_view(), name='calendar-detail'),
     path('posts', PostListView.as_view(), name='post-list'),
     path('posts/<int:pk>', PostDetailView.as_view(), name='post-detail'),
+    path('posts/<int:post_id>/like/', LikePostView.as_view(), name='post-like'),
+    path('posts/<int:post_id>/unlike/', UnlikePostView.as_view(), name='post-unlike'),
+    path('posts/<int:post_id>/likes/', PostLikesView.as_view(), name='post-like'),
     path('notes/', NotesListCreateAPIView.as_view(), name='notes-list'),
     path('notes/<int:pk>/', NotesDetailAPIView.as_view(), name='notes-detail'),
     path('notes/<int:pk>/ratings/', NoteRatingCreateAPIView.as_view(), name='note-rating-create'),
@@ -21,5 +24,6 @@ urlpatterns = [
     path('mentorship/', MentorshipListView.as_view(), name='mentorship-list'),
     path('mentorship/<int:pk>/', MentorshipDetailView.as_view(), name='mentorship-detail'),
     path('isAdmin/', IsAdminUserView.as_view(), name='is-admin'),
+    
 ]
 
