@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
+import 'package:noteng/data/User/userModel.dart';
+import 'package:noteng/data/User/userRepo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
@@ -11,6 +14,10 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  TextEditingController firName = TextEditingController();
+  TextEditingController lasName = TextEditingController();
+  TextEditingController mailId = TextEditingController();
+  TextEditingController phone = TextEditingController();
   var firstName = "";
   var lastName = "";
   var emailId = "";
@@ -25,7 +32,61 @@ class _EditProfileState extends State<EditProfile> {
     emailId = email!;
     var contact = await prefs.getString("contactNumber");
     contactNo = contact!;
-    setState(() {});
+    setState(() {
+      firstName = fname;
+      lastName = lname;
+      emailId = email;
+      contactNo = contact;
+
+      firName.text = fname;
+      lasName.text = lname;
+      mailId.text = email;
+      phone.text = contact;
+    });
+  }
+
+  Future<void> _EditUser() async {
+    if (firName.text.isEmpty ||
+        lasName.text.isEmpty ||
+        mailId.text.isEmpty ||
+        phone.text.isEmpty) {
+      // Handle validation error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Fields are empty')),
+      );
+      print("Please fill all fields");
+      return;
+    }
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? sapid = prefs.getString('sapid');
+    if (sapid == null) {
+      print("User not found in SharedPreferences");
+      return;
+    }
+
+    User user = User(
+      sapid: sapid,
+      fname: firName.text,
+      lname: lasName.text,
+      contactNumber: phone.text,
+      email: mailId.text,
+    );
+
+    try {
+      User editUser = await UserRepo.editUserDetails(user);
+      // Handle success
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User Edited successfully: ${editUser.sapid}')),
+      );
+      print("User edited successfully: ${editUser.sapid}");
+    } catch (e) {
+      // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('editing failed: $e')),
+      );
+      print("editing failed: $e");
+    }
   }
 
   @override
@@ -62,6 +123,7 @@ class _EditProfileState extends State<EditProfile> {
               textFieldWidget(
                 maxLines: 1,
                 hintText: firstName,
+                controller: firName,
               ),
               SizedBox(
                 height: 10,
@@ -76,6 +138,7 @@ class _EditProfileState extends State<EditProfile> {
               textFieldWidget(
                 maxLines: 1,
                 hintText: lastName,
+                controller: lasName,
               ),
               SizedBox(
                 height: 10,
@@ -90,6 +153,7 @@ class _EditProfileState extends State<EditProfile> {
               textFieldWidget(
                 maxLines: 1,
                 hintText: emailId,
+                controller: mailId,
               ),
               SizedBox(
                 height: 10,
@@ -105,28 +169,31 @@ class _EditProfileState extends State<EditProfile> {
                 maxLines: 1,
                 numberOnly: true,
                 hintText: contactNo,
+                controller: phone,
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 110.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    onPressed: (){
-                      
-                    },
-                    child: const Text(
-                      'Update Changes',
-                      style: TextStyle(color: secondaryAccentColor),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 110.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                onPressed: () {
+                  _EditUser();
+                },
+                child: const Text(
+                  'Update Changes',
+                  style: TextStyle(color: secondaryAccentColor),
+                ),
+              ),
             ],
           ),
         ),
