@@ -172,6 +172,11 @@ class _CalendarEventsState extends State<CalendarEvents> {
                                   Expanded(
                                     child: InkWell(
                                       onTap: () {
+                                        if (title.text.isEmpty ||
+                                            description.text.isEmpty ||
+                                            event_date.text.isEmpty) {
+                                          return;
+                                        }
                                         CalendarRepo.createEvent(Cal.CalendarEvents(
                                                 date: event_date.text,
                                                 description: description.text,
@@ -213,6 +218,12 @@ class _CalendarEventsState extends State<CalendarEvents> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              Text(
+                                '*The event added will be visible to everyone.',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 10),
                               ),
                             ],
                           ),
