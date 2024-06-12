@@ -157,29 +157,32 @@ class _DiscoverNotesState extends State<DiscoverNotes> {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         child: filteredNotes.isNotEmpty
-            ? GridView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: filteredNotes.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () async {
-                      await Get.to(() => NotesDetails(filteredNotes[index]))!
-                          .then((value) {
-                        setState(() {
-                          fetchData();
+            ? RefreshIndicator(
+                onRefresh: fetchData,
+                child: GridView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: filteredNotes.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () async {
+                        await Get.to(() => NotesDetails(filteredNotes[index]))!
+                            .then((value) {
+                          setState(() {
+                            fetchData();
+                          });
                         });
-                      });
-                    },
-                    child: DiscoverNotesListWidget(
-                      filteredNotes[index],
-                    ),
-                  );
-                },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1.1),
+                      },
+                      child: DiscoverNotesListWidget(
+                        filteredNotes[index],
+                      ),
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.1),
+                ),
               )
             : GridView.builder(
                 scrollDirection: Axis.vertical,

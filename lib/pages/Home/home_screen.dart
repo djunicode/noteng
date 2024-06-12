@@ -72,6 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
     posts = await PostsRepo.getAllPosts();
     notes = await NotesRepo.getAllNotes();
     videos = await VideoRepo.getAllVideos();
+
+    jobs.sort((a, b) => b.uploadTime!.compareTo(a.uploadTime!));
+    posts.sort((a, b) => b.dateUpdated!.compareTo(a.dateUpdated!));
+    notes.sort((a, b) => b.averageRating!.compareTo(a.averageRating!));
+
     if (mounted) {
       setState(() {});
     }
@@ -359,516 +364,521 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return fetchData();
+        },
+        child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // InkWell(
-                //   onTap: () async {
-                //     UserRepo.registerUser(User.fromJson({
-                //       "sapid": "60004230269",
-                //       "password": "pass@123",
-                //       "fname": "Meet",
-                //       "lname": "Chavan",
-                //       "email": "meetchavan24@gmail.com",
-                //       "contact_number": "8169264512"
-                //     }));
-                //   },
-                //   child: const Text(
-                //     "Test Signup User",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     UserRepo.loginUser(User.fromJson({
-                //       "sapid": "60004230269",
-                //       "password": "pass@123",
-                //     }));
-                //   },
-                //   child: const Text(
-                //     "Test Login User",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     UserRepo.refreshToken();
-                //   },
-                //   child: const Text(
-                //     "Test Refresh Token",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     UserRepo.getUserDetails();
-                //   },
-                //   child: const Text(
-                //     "Test Get User Details",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     UserRepo.editUserDetails(User.fromJson({
-                //       "fname": "Meet",
-                //       "lname": "Chavan",
-                //       "email": "meetchavan24@gmail.com",
-                //       "contact_number": "8169264511"
-                //     }));
-                //   },
-                //   child: const Text(
-                //     "Test Update User Details",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     PostsRepo.getAllPosts().then((value) {
-                //       print(value[0].toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get All Posts",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     PostsRepo.getSinglePost(2).then((value) {
-                //       print(value.toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get Single Post",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     PostsRepo.createPost(
-                //         Posts.fromJson({
-                //           "title": "ABC",
-                //           "deadline": "2024-04-06T17:58:57Z",
-                //           "post_url": "http://abc.com",
-                //           "description": "ABCD",
-                //           "likes": 1,
-                //           "organised_by": "college",
-                //           "subtype": "hackathon",
-                //           "is_interested": true,
-                //           "date_updated": "2024-06-05",
-                //           "date_uploaded": "2024-06-05",
-                //           "image":
-                //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/images/Screenshot_2024-06-05_at_11.11.36AM_eeu4on.png",
-                //           "user": "60004230269"
-                //         }),
-                //         await pickFile());
-                //   },
-                //   child: const Text(
-                //     "Test Create Post",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     PostsRepo.deletePost(9);
-                //   },
-                //   child: const Text(
-                //     "Test Delete Post",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     PostsRepo.updatePost(
-                //         Posts.fromJson({
-                //           "post_id": 3,
-                //           "title": "ABC",
-                //           "post_url": "http://abc.com",
-                //           "description": "ABCD",
-                //           "likes": 1,
-                //           "organised_by": "college",
-                //           "subtype": "hackathon",
-                //           "is_interested": true,
-                //         }),
-                //         await pickFile());
-                //   },
-                //   child: const Text(
-                //     "Test Update Post",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     NotesRepo.getAllNotes().then((value) {
-                //       print(value[0].toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get All Notes",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     NotesRepo.getSingleNote(2).then((value) {
-                //       print(value.toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get Single Note",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     NotesRepo.createNote(
-                //         Notes.fromJson({
-                //           "note_id": 5,
-                //           "ratings": [],
-                //           "average_rating": 0,
-                //           "note_title": "updated test1",
-                //           "note_description":
-                //               "This is the updated description of the note1.",
-                //           "subject": "Maths4",
-                //           "department": "Comps2",
-                //           "document":
-                //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/raw/Screenshot_2024-06-05_at_11.11.36AM_fs0vul.png",
-                //           "user": "60004230269"
-                //         }),
-                //         await pickFile());
-                //   },
-                //   child: const Text(
-                //     "Test Create Note",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     NotesRepo.deleteNote(5);
-                //   },
-                //   child: const Text(
-                //     "Test Delete Note",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     NotesRepo.updateNote(
-                //         Notes.fromJson({
-                //           "note_id": 6,
-                //           "ratings": [],
-                //           "average_rating": 0,
-                //           "note_title": "updated test1",
-                //           "note_description":
-                //               "This is the updated description of the note1.",
-                //           "subject": "Maths4",
-                //           "department": "Comps2",
-                //           "user": "60004230269"
-                //         }),
-                //         await pickFile());
-                //   },
-                //   child: const Text(
-                //     "Test Update Note",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     JobRepo.getAllJobs().then((value) {
-                //       print(value[0].toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get All Jobs",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     JobRepo.getSingleJob(2).then((value) {
-                //       print(value.toJson());
-                //     });
-                //   },
-                //   child: const Text(
-                //     "Test Get Single Job",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     JobRepo.createJob(Job.fromJson({
-                //       "company": "AMEX_TEST",
-                //       "job_title": "Software Engineer",
-                //       "subtype": "Job",
-                //       "mode": "Offline",
-                //       "location": "Remote",
-                //       "contact_no": "9082228928",
-                //       "requirements":
-                //           "No Backlogss till now - 8.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
-                //       "duration_in_months": 3,
-                //       "description":
-                //           "We are seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
-                //       "upload_time": "2024-06-06T15:40:23.466223Z",
-                //       "user": "60004230269"
-                //     }));
-                //   },
-                //   child: const Text(
-                //     "Test Create Job",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     JobRepo.deleteJob(9);
-                //   },
-                //   child: const Text(
-                //     "Test Delete Job",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // InkWell(
-                //   onTap: () async {
-                //     JobRepo.updateJob(Job.fromJson({
-                //       "job_id": 10,
-                //       "company": "AMEX_TEST 2",
-                //       "subtype": "Job",
-                //       "mode": "Offline",
-                //       "location": "Remote",
-                //       "contact_no": "9082228008",
-                //       "requirements":
-                //           "No Backlogss till now - 7.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
-                //       "duration_in_months": 3,
-                //       "description":
-                //           "We are not seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
-                //       "upload_time": "2024-06-06T15:40:23.466223Z",
-                //     }));
-                //   },
-                //   child: const Text(
-                //     "Test Update Job",
-                //     style: TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w700),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                const Text(
-                  "Explore Latest Job Opportunities",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Divider(
-                  color: secondaryColor,
-                  thickness: 0.5,
-                ),
-                SizedBox(
-                  height: 140,
-                  child: jobs.length > 0
-                      ? PageView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: jobs.length,
-                          itemBuilder: (context, index) {
-                            return JobListWidget(
-                              jobs[index],
-                            );
-                          },
-                        )
-                      : JobListWidget_Shimmer(),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Explore Latest Posts & Hackathons",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Divider(
-                  color: secondaryColor,
-                  thickness: 0.5,
-                ),
-                SizedBox(
-                  height: 180,
-                  child: posts.length > 0
-                      ? PageView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: posts.length,
-                          itemBuilder: (context, index) {
-                            return PostListWidget(
-                              posts[index],
-                            );
-                          },
-                        )
-                      : PostListWidget_Shimmer(),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 215,
-            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-            width: double.infinity,
-            color: primaryColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Explore Shared Notes",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Divider(
-                  color: Colors.white,
-                  thickness: 0.5,
-                ),
-                SizedBox(
-                    height: 156,
-                    child: notes.length > 0
-                        ? ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: notes.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.to(() => NotesDetails(notes[index]))!
-                                      .then((value) => setState(() {}));
-                                },
-                                child: NotesListWidget(
-                                  notes[index],
-                                ),
-                              );
-                            },
-                          )
-                        : ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return NotesListWidget_Shimmer();
-                            },
-                          )),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Explore Shared Video Resources",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                const Divider(
-                  color: secondaryColor,
-                  thickness: 0.5,
-                ),
-                SizedBox(
-                    height: 246,
-                    child: videos.length > 0
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // InkWell(
+                  //   onTap: () async {
+                  //     UserRepo.registerUser(User.fromJson({
+                  //       "sapid": "60004230269",
+                  //       "password": "pass@123",
+                  //       "fname": "Meet",
+                  //       "lname": "Chavan",
+                  //       "email": "meetchavan24@gmail.com",
+                  //       "contact_number": "8169264512"
+                  //     }));
+                  //   },
+                  //   child: const Text(
+                  //     "Test Signup User",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     UserRepo.loginUser(User.fromJson({
+                  //       "sapid": "60004230269",
+                  //       "password": "pass@123",
+                  //     }));
+                  //   },
+                  //   child: const Text(
+                  //     "Test Login User",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     UserRepo.refreshToken();
+                  //   },
+                  //   child: const Text(
+                  //     "Test Refresh Token",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     UserRepo.getUserDetails();
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get User Details",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     UserRepo.editUserDetails(User.fromJson({
+                  //       "fname": "Meet",
+                  //       "lname": "Chavan",
+                  //       "email": "meetchavan24@gmail.com",
+                  //       "contact_number": "8169264511"
+                  //     }));
+                  //   },
+                  //   child: const Text(
+                  //     "Test Update User Details",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     PostsRepo.getAllPosts().then((value) {
+                  //       print(value[0].toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get All Posts",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     PostsRepo.getSinglePost(2).then((value) {
+                  //       print(value.toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get Single Post",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     PostsRepo.createPost(
+                  //         Posts.fromJson({
+                  //           "title": "ABC",
+                  //           "deadline": "2024-04-06T17:58:57Z",
+                  //           "post_url": "http://abc.com",
+                  //           "description": "ABCD",
+                  //           "likes": 1,
+                  //           "organised_by": "college",
+                  //           "subtype": "hackathon",
+                  //           "is_interested": true,
+                  //           "date_updated": "2024-06-05",
+                  //           "date_uploaded": "2024-06-05",
+                  //           "image":
+                  //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/images/Screenshot_2024-06-05_at_11.11.36AM_eeu4on.png",
+                  //           "user": "60004230269"
+                  //         }),
+                  //         await pickFile());
+                  //   },
+                  //   child: const Text(
+                  //     "Test Create Post",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     PostsRepo.deletePost(9);
+                  //   },
+                  //   child: const Text(
+                  //     "Test Delete Post",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     PostsRepo.updatePost(
+                  //         Posts.fromJson({
+                  //           "post_id": 3,
+                  //           "title": "ABC",
+                  //           "post_url": "http://abc.com",
+                  //           "description": "ABCD",
+                  //           "likes": 1,
+                  //           "organised_by": "college",
+                  //           "subtype": "hackathon",
+                  //           "is_interested": true,
+                  //         }),
+                  //         await pickFile());
+                  //   },
+                  //   child: const Text(
+                  //     "Test Update Post",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     NotesRepo.getAllNotes().then((value) {
+                  //       print(value[0].toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get All Notes",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     NotesRepo.getSingleNote(2).then((value) {
+                  //       print(value.toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get Single Note",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     NotesRepo.createNote(
+                  //         Notes.fromJson({
+                  //           "note_id": 5,
+                  //           "ratings": [],
+                  //           "average_rating": 0,
+                  //           "note_title": "updated test1",
+                  //           "note_description":
+                  //               "This is the updated description of the note1.",
+                  //           "subject": "Maths4",
+                  //           "department": "Comps2",
+                  //           "document":
+                  //               "https://res.cloudinary.com/dhwxjoncj/raw/upload/v1/media/raw/Screenshot_2024-06-05_at_11.11.36AM_fs0vul.png",
+                  //           "user": "60004230269"
+                  //         }),
+                  //         await pickFile());
+                  //   },
+                  //   child: const Text(
+                  //     "Test Create Note",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     NotesRepo.deleteNote(5);
+                  //   },
+                  //   child: const Text(
+                  //     "Test Delete Note",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     NotesRepo.updateNote(
+                  //         Notes.fromJson({
+                  //           "note_id": 6,
+                  //           "ratings": [],
+                  //           "average_rating": 0,
+                  //           "note_title": "updated test1",
+                  //           "note_description":
+                  //               "This is the updated description of the note1.",
+                  //           "subject": "Maths4",
+                  //           "department": "Comps2",
+                  //           "user": "60004230269"
+                  //         }),
+                  //         await pickFile());
+                  //   },
+                  //   child: const Text(
+                  //     "Test Update Note",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     JobRepo.getAllJobs().then((value) {
+                  //       print(value[0].toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get All Jobs",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     JobRepo.getSingleJob(2).then((value) {
+                  //       print(value.toJson());
+                  //     });
+                  //   },
+                  //   child: const Text(
+                  //     "Test Get Single Job",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     JobRepo.createJob(Job.fromJson({
+                  //       "company": "AMEX_TEST",
+                  //       "job_title": "Software Engineer",
+                  //       "subtype": "Job",
+                  //       "mode": "Offline",
+                  //       "location": "Remote",
+                  //       "contact_no": "9082228928",
+                  //       "requirements":
+                  //           "No Backlogss till now - 8.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                  //       "duration_in_months": 3,
+                  //       "description":
+                  //           "We are seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                  //       "upload_time": "2024-06-06T15:40:23.466223Z",
+                  //       "user": "60004230269"
+                  //     }));
+                  //   },
+                  //   child: const Text(
+                  //     "Test Create Job",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     JobRepo.deleteJob(9);
+                  //   },
+                  //   child: const Text(
+                  //     "Test Delete Job",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: () async {
+                  //     JobRepo.updateJob(Job.fromJson({
+                  //       "job_id": 10,
+                  //       "company": "AMEX_TEST 2",
+                  //       "subtype": "Job",
+                  //       "mode": "Offline",
+                  //       "location": "Remote",
+                  //       "contact_no": "9082228008",
+                  //       "requirements":
+                  //           "No Backlogss till now - 7.5+ CGPA - Knowledge of any Backend Framework - Proficiency In DSA - System Design - Database Management",
+                  //       "duration_in_months": 3,
+                  //       "description":
+                  //           "We are not seeking a highly motivated and talented AI Intern to join our dynamic team. Asan AI Intern, you will have the opportunity to work on cutting-edge projects in artificialintelligence and machine learning. You will collaborate with our experienced AI researchers and engineers to develop innovative solutions that address real-world challenges across various industries.",
+                  //       "upload_time": "2024-06-06T15:40:23.466223Z",
+                  //     }));
+                  //   },
+                  //   child: const Text(
+                  //     "Test Update Job",
+                  //     style: TextStyle(
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //         fontWeight: FontWeight.w700),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  const Text(
+                    "Explore Latest Job Opportunities",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  const Divider(
+                    color: secondaryColor,
+                    thickness: 0.5,
+                  ),
+                  SizedBox(
+                    height: 140,
+                    child: jobs.length > 0
                         ? PageView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: videos.length,
+                            itemCount: jobs.length,
                             itemBuilder: (context, index) {
-                              return VideoListWidget(
-                                video: videos[index],
+                              return JobListWidget(
+                                jobs[index],
                               );
                             },
                           )
-                        : VideoListWidget_Shimmer()),
-              ],
+                        : JobListWidget_Shimmer(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Explore Latest Posts & Hackathons",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  const Divider(
+                    color: secondaryColor,
+                    thickness: 0.5,
+                  ),
+                  SizedBox(
+                    height: 180,
+                    child: posts.length > 0
+                        ? PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: posts.length,
+                            itemBuilder: (context, index) {
+                              return PostListWidget(
+                                posts[index],
+                              );
+                            },
+                          )
+                        : PostListWidget_Shimmer(),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-        ],
-      )),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 215,
+              padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+              width: double.infinity,
+              color: primaryColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Explore Shared Notes",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: 0.5,
+                  ),
+                  SizedBox(
+                      height: 156,
+                      child: notes.length > 0
+                          ? ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: notes.length,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(() => NotesDetails(notes[index]))!
+                                        .then((value) => setState(() {}));
+                                  },
+                                  child: NotesListWidget(
+                                    notes[index],
+                                  ),
+                                );
+                              },
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return NotesListWidget_Shimmer();
+                              },
+                            )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Explore Shared Video Resources",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  const Divider(
+                    color: secondaryColor,
+                    thickness: 0.5,
+                  ),
+                  SizedBox(
+                      height: 246,
+                      child: videos.length > 0
+                          ? PageView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: videos.length,
+                              itemBuilder: (context, index) {
+                                return VideoListWidget(
+                                  video: videos[index],
+                                );
+                              },
+                            )
+                          : VideoListWidget_Shimmer()),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+          ],
+        )),
+      ),
     );
   }
 }

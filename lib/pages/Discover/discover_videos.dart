@@ -147,23 +147,26 @@ class _DiscoverVideosState extends State<DiscoverVideos> {
         ),
       ),
       body: videos.length > 0
-          ? ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: videos.length,
-              itemBuilder: (context, index) {
-                if (videos[index]
-                    .topics!
-                    .toLowerCase()
-                    .contains(SearchController.text.toLowerCase())) {
-                  return Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                      child: VideoListWidget(
-                        video: videos[index],
-                      ));
-                } else {
-                  return SizedBox();
-                }
-              },
+          ? RefreshIndicator(
+              onRefresh: fetchData,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: videos.length,
+                itemBuilder: (context, index) {
+                  if (videos[index]
+                      .topics!
+                      .toLowerCase()
+                      .contains(SearchController.text.toLowerCase())) {
+                    return Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                        child: VideoListWidget(
+                          video: videos[index],
+                        ));
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
             )
           : ListView.builder(
               scrollDirection: Axis.vertical,

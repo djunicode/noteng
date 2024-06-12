@@ -38,6 +38,8 @@ class _DiscoverJobState extends State<DiscoverJob> {
 
   Future fetchData() async {
     jobs = await JobRepo.getAllJobs();
+    jobs.sort((a, b) => b.uploadTime!.compareTo(a.uploadTime!));
+
     if (mounted) {
       setState(() {});
     }
@@ -145,24 +147,27 @@ class _DiscoverJobState extends State<DiscoverJob> {
         ),
       ),
       body: jobs.length > 0
-          ? ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: jobs.length,
-              itemBuilder: (context, index) {
-                if (jobs[index]
-                    .company!
-                    .toLowerCase()
-                    .contains(SearchController.text.toLowerCase())) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                    child: JobListWidget(
-                      jobs[index],
-                    ),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              },
+          ? RefreshIndicator(
+              onRefresh: () => fetchData(),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: jobs.length,
+                itemBuilder: (context, index) {
+                  if (jobs[index]
+                      .company!
+                      .toLowerCase()
+                      .contains(SearchController.text.toLowerCase())) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                      child: JobListWidget(
+                        jobs[index],
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
             )
           : ListView.builder(
               itemBuilder: (context, index) {

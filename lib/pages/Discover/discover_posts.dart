@@ -38,6 +38,7 @@ class _DiscoverPostState extends State<DiscoverPost> {
 
   Future fetchData() async {
     posts = await PostsRepo.getAllPosts();
+    posts.sort((a, b) => b.dateUpdated!.compareTo(a.dateUpdated!));
     if (mounted) {
       setState(() {});
     }
@@ -145,24 +146,27 @@ class _DiscoverPostState extends State<DiscoverPost> {
         ),
       ),
       body: posts.length > 0
-          ? ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: posts.length,
-              itemBuilder: (context, index) {
-                if (posts[index]
-                    .title!
-                    .toLowerCase()
-                    .contains(SearchController.text.toLowerCase())) {
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
-                    child: PostListWidget(
-                      posts[index],
-                    ),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              },
+          ? RefreshIndicator(
+              onRefresh: fetchData,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  if (posts[index]
+                      .title!
+                      .toLowerCase()
+                      .contains(SearchController.text.toLowerCase())) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                      child: PostListWidget(
+                        posts[index],
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
             )
           : ListView.builder(
               itemBuilder: (context, index) {
