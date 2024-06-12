@@ -30,7 +30,7 @@ const Sidebar = () => {
   }
 
   function loginNavigate() {
-    navigate('/LoginPage');
+    navigate('/profile');
   }
   function toggleSidebar() {
     setIsOpen(!isOpen);
@@ -77,34 +77,34 @@ const Sidebar = () => {
             </div>
             <p className='flex items-center font-bold text-custom-blue font-poppins mx-auto'>Home</p>
           </div>
-          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 '>
+          <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 cursor-pointer' onClick={Discover}>
             <div className='pl-2 cursor-pointer'>
-              < ExploreIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} onClick={Discover}/>
+              < ExploreIcon style={{ width: '30px', height: '30px', color: '#394DFD' }}/>
             </div>
             <p className='flex items-center text-center font-bold text-custom-blue font-poppins ml-auto mr-auto'>Discover</p>
           </div>
           <div className='flex flex-col justify-center items-center max-w-auto my-3'>
             <div className='flex flex-col gap-2 mt-8'>
-              <div className='flex gap-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createJob}>
+              <div className='flex gap-2 cursor-pointer' onClick={createJob}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Add Job Opportunity</p>
               </div>
-              <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createPost}>
+              <div className='flex gap-2 mt-2 cursor-pointer' onClick={createPost}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Create New Post</p>
               </div>
-              <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={createNote}>
+              <div className='flex gap-2 mt-2 cursor-pointer' onClick={createNote}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Upload Notes</p>
               </div>
-              <div className='flex gap-2 mt-2'>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg cursor-pointer' onClick={uploadVideo}>
+              <div className='flex gap-2 mt-2 cursor-pointer' onClick={uploadVideo}>
+                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
                   <AddIcon style={{ color: '#394DFD' }} />
                 </div>
                 <p className='font-bold text-white'>Share Video</p>

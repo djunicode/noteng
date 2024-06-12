@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Home/Sidebar';
 import '../styles/PostJob.css';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PostJob = () => {
   const [subtype, setsubtype] = useState(null);
@@ -71,7 +71,7 @@ const handleSubmit = (e) => {
   axios.post('https://monilmeh.pythonanywhere.com/api/jobboard/', formData, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3ODQ4NDcyLCJpYXQiOjE3MTc4MjY4NzIsImp0aSI6IjZmNTI5ZGEzM2QwZjQzNDM4NzZhM2UyNzlhMTEyZjdmIiwidXNlcl9pZCI6IjYwMDA0MjIwMTgzIn0.1IRs_bt9_9KFtwpbwlhDd9YG-3bYFcKrU2H1Nw__HcA' // Replace <your_token> with your actual token
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTMyMjc2LCJpYXQiOjE3MTc5MTA2NzYsImp0aSI6IjFkNjI5MWViOGQzYzQwNjc5OTQyN2U4YWFiYjQ2ODIxIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.bK54XJ1-vnJjzGMhLdubn47FpZnxNgG1x4NZwnu1dsE' // Replace <your_token> with your actual token
     }
   })
   .then((response) => {
