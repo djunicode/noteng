@@ -2,7 +2,7 @@ name: noteng
 description: "2024 - DJUnicode - NOTENG"
 publish_to: "none"
 
-version: 1.0.2+1
+version: 1.0.3+1
 
 environment:
   sdk: ">=3.3.1 <4.0.0"

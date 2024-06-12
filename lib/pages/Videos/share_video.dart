@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
@@ -39,16 +40,23 @@ class _ShareVideoState extends State<ShareVideo> {
     }
 
     Video video = Video(
-      links: _videoLink.text,
-      sem: int.parse(_videoSemester.text),
-      subject: _videoSubject.text,
-      topics: _videoTopic.text,
-    );
+        links: _videoLink.text,
+        sem: int.parse(_videoSemester.text),
+        subject: _videoSubject.text,
+        topics: _videoTopic.text,
+        user: sapid);
 
     Video createdVideo = await VideoRepo.createVideo(video);
     if (createdVideo != null && createdVideo.links != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Video successfully uploaded')),
+      );
+      Get.back();
       print("Video successfully uploaded");
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to upload video')),
+      );
       print("Failed to upload video");
     }
   }
@@ -56,6 +64,7 @@ class _ShareVideoState extends State<ShareVideo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBarWidget(title: "Share Video Resource"),
       body: Padding(
         padding: EdgeInsets.all(15),

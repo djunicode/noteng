@@ -136,6 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
+        backgroundColor: Colors.white,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Get.bottomSheet(const Modalbottom(), persistent: false);

@@ -92,6 +92,7 @@ class _AddNewJobState extends State<AddNewJob> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const AppBarWidget(title: "Post Job Opportunity"),
       body: SingleChildScrollView(
         child: Padding(

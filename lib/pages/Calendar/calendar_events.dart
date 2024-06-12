@@ -13,6 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:noteng/data/CalendarEvents/calendarModel.dart' as Cal;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/colors.dart';
+import '../../data/User/userRepo.dart';
 
 class CalendarEvents extends StatefulWidget {
   const CalendarEvents({super.key});
@@ -23,11 +24,18 @@ class CalendarEvents extends StatefulWidget {
 
 class _CalendarEventsState extends State<CalendarEvents> {
   List<NeatCleanCalendarEvent> list = [];
+  bool isAdmin = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    checkAdmin();
     fetchCalendar();
+  }
+
+  Future<void> checkAdmin() async {
+    isAdmin = await UserRepo.isAdmin();
+    setState(() {});
   }
 
   var sap_id;
@@ -45,204 +53,226 @@ class _CalendarEventsState extends State<CalendarEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          TextEditingController title = TextEditingController();
-          TextEditingController description = TextEditingController();
-          TextEditingController event_date = TextEditingController();
+      floatingActionButton: isAdmin
+          ? FloatingActionButton(
+              onPressed: () {
+                TextEditingController title = TextEditingController();
+                TextEditingController description = TextEditingController();
+                TextEditingController event_date = TextEditingController();
 
-          Get.bottomSheet(
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                          ),
+                Get.bottomSheet(
+                        SingleChildScrollView(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Event Title",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                              textFieldWidget(
-                                hintText: "Enter the event title",
-                                maxLines: 1,
-                                controller: title,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Event Description",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                              textFieldWidget(
-                                hintText: "Enter Event Description",
-                                maxLines: 3,
-                                controller: description,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Event Date",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await showDatePicker(
-                                    context: context,
-                                    lastDate: DateTime(2030),
-                                    firstDate: DateTime(2024),
-                                    initialDate: DateTime.now(),
-                                  ).then((pickedDate) {
-                                    if (pickedDate == null) return;
-                                    event_date.text = DateFormat('yyyy-MM-dd')
-                                        .format(pickedDate);
-                                  });
-                                },
-                                child: TextFormField(
-                                  enabled: false,
-                                  readOnly: true,
-                                  controller: event_date,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    labelText: "Choose the Event Date",
-                                    floatingLabelStyle:
-                                        TextStyle(color: primaryColor),
-                                    contentPadding: EdgeInsets.all(14.0),
-                                    filled: true,
-                                    fillColor: secondaryAccentColor,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16.0),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: "Choose the Event Date",
-                                    hintStyle: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                    suffixIcon: Icon(Icons.calendar_month),
+                              Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    child: InkWell(
-                                      onTap: () {
-                                        if (title.text.isEmpty ||
-                                            description.text.isEmpty ||
-                                            event_date.text.isEmpty) {
-                                          return;
-                                        }
-                                        CalendarRepo.createEvent(Cal.CalendarEvents(
-                                                date: event_date.text,
-                                                description: description.text,
-                                                title: title.text,
-                                                note:
-                                                    "Added via NOTENG Mobile App"))
-                                            .then((value) {
-                                          if (value.calendarId != null) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "Event added successfully")));
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        "Failed to add event")));
-                                          }
-                                          Get.back();
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Event Title",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                    textFieldWidget(
+                                      hintText: "Enter the event title",
+                                      maxLines: 1,
+                                      controller: title,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Event Description",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                    textFieldWidget(
+                                      hintText: "Enter Event Description",
+                                      maxLines: 3,
+                                      controller: description,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "Event Date",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        await showDatePicker(
+                                          context: context,
+                                          lastDate: DateTime(2030),
+                                          firstDate: DateTime(2024),
+                                          initialDate: DateTime.now(),
+                                        ).then((pickedDate) {
+                                          if (pickedDate == null) return;
+                                          event_date.text =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(pickedDate);
                                         });
                                       },
-                                      child: Container(
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                            color: primaryColor,
+                                      child: TextFormField(
+                                        enabled: false,
+                                        readOnly: true,
+                                        controller: event_date,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        decoration: InputDecoration(
+                                          floatingLabelBehavior:
+                                              FloatingLabelBehavior.never,
+                                          labelText: "Choose the Event Date",
+                                          floatingLabelStyle:
+                                              TextStyle(color: primaryColor),
+                                          contentPadding: EdgeInsets.all(14.0),
+                                          filled: true,
+                                          fillColor: secondaryAccentColor,
+                                          focusedBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: const Center(
-                                          child: Text(
-                                            'Add Event',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
+                                                BorderRadius.circular(16.0),
+                                            borderSide: BorderSide.none,
                                           ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          hintText: "Choose the Event Date",
+                                          hintStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                          suffixIcon:
+                                              Icon(Icons.calendar_month),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '*The event added will be visible to everyone.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              if (title.text.isEmpty ||
+                                                  description.text.isEmpty ||
+                                                  event_date.text.isEmpty) {
+                                                return;
+                                              }
+                                              CalendarRepo.createEvent(
+                                                      Cal.CalendarEvents(
+                                                          date: event_date.text,
+                                                          description:
+                                                              description.text,
+                                                          title: title.text,
+                                                          note:
+                                                              "Added via NOTENG Mobile App"))
+                                                  .then((value) {
+                                                if (value.calendarId != null) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "Event added successfully")));
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "Failed to add event")));
+                                                }
+                                                Get.back();
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  color: primaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: const Center(
+                                                child: Text(
+                                                  'Add Event',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      '*The event added will be visible to everyone.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 10),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  persistent: false)
-              .then((value) {
-            fetchCalendar();
-            setState(() {});
-          });
-        },
-        backgroundColor: primaryColor,
-        child: const Icon(
-          Icons.calendar_month_outlined,
-          color: Colors.white,
-        ),
-      ),
+                        persistent: false)
+                    .then((value) {
+                  fetchCalendar();
+                  setState(() {});
+                });
+              },
+              backgroundColor: primaryColor,
+              child: const Icon(
+                Icons.calendar_month_outlined,
+                color: Colors.white,
+              ),
+            )
+          : FloatingActionButton(
+              onPressed: () {
+                Get.bottomSheet(const Modalbottom(), persistent: false);
+              },
+              backgroundColor: primaryColor,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Bottomnavbar(3),
       backgroundColor: Colors.white,
