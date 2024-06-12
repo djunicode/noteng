@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/chip_selection_widget.dart';
@@ -31,7 +32,7 @@ class _AddNewJobState extends State<AddNewJob> {
     if (_companyName.text.isEmpty ||
         _jobTitle.text.isEmpty ||
         _selectedJobType.isEmpty ||
-        _selectedWorkMode.isEmpty ||
+        _selectedWorkType.isEmpty ||
         _location.text.isEmpty ||
         _contact.text.isEmpty ||
         _requirements.text.isEmpty ||
@@ -41,7 +42,7 @@ class _AddNewJobState extends State<AddNewJob> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Fields are empty')),
       );
-      print("Please fill all fields and select at least one file");
+      print("Please fill all fields");
       return;
     }
 
@@ -56,22 +57,29 @@ class _AddNewJobState extends State<AddNewJob> {
         company: _companyName.text,
         contactNo: _contact.text,
         description: _description.text,
-        durationInMonths: _tenure.hashCode,
+        durationInMonths: int.parse(_tenure.text),
         jobTitle: _jobTitle.text,
         location: _location.text,
-        mode: _selectedWorkMode,
+        mode: _selectedWorkType,
         requirements: _requirements.text,
         subtype: _selectedJobType,
         user: sapid);
 
     try {
       Job addNewJob = await JobRepo.createJob(job);
+
+      if (addNewJob.jobId != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Job created successfully: ${addNewJob.jobTitle}')),
+        );
+        Get.back();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Job creation failed')),
+        );
+      }
       // Handle success
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Job created successfully: ${addNewJob.jobTitle}')),
-      );
-      print("Job created successfully: ${addNewJob.jobTitle}");
     } catch (e) {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
@@ -137,10 +145,65 @@ class _AddNewJobState extends State<AddNewJob> {
                       "Job Title",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 5),
-                    textFieldWidget(
-                      hintText: "Enter Job Title",
-                      controller: _jobTitle,
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: DropdownButtonFormField<String>(
+                        hint: const Text('Select'),
+                        value: _jobTitle.text,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              _jobTitle.text = value!;
+                            },
+                          );
+                        },
+                        items: const [
+                          DropdownMenuItem(
+                            value: '',
+                            child: Text('Select'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Software Engineer',
+                            child: Text('Software Engineer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Data Analyst',
+                            child: Text('Data Analyst'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Web Developer',
+                            child: Text('Web Developer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'UI/UX Designer',
+                            child: Text('UI/UX Designer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Project Manager',
+                            child: Text('Project Manager'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Business Analyst',
+                            child: Text('Business Analyst'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Bakend Developer',
+                            child: Text('Bakend Developer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Frontend Developer',
+                            child: Text('Frontend Developer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Fullstack Developer',
+                            child: Text('Fullstack Developer'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Machine Learning Engineer',
+                            child: Text('Machine Learning Engineer'),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -196,7 +259,7 @@ class _AddNewJobState extends State<AddNewJob> {
                     ),
                     const SizedBox(height: 5),
                     ChipSelectionWidget(
-                      options: ["Internship", "Full Time Job"],
+                      options: ["internship", "Job"],
                       onTypeSelected: (selectedType) {
                         setState(() {
                           _selectedJobType = selectedType;
@@ -269,7 +332,7 @@ class _AddNewJobState extends State<AddNewJob> {
                     ),
                     const SizedBox(height: 5),
                     ChipSelectionWidget(
-                      options: const ["Full Time", "Part Time"],
+                      options: const ["Offline", "Online", "Hybrid", "Remote"],
                       onTypeSelected: (selectedType) {
                         setState(() {
                           _selectedWorkType = selectedType;
@@ -280,27 +343,27 @@ class _AddNewJobState extends State<AddNewJob> {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Work Mode",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(height: 5),
-                    ChipSelectionWidget(
-                      onTypeSelected: (selectedMode) {
-                        setState(() {
-                          _selectedWorkMode = selectedMode;
-                        });
-                      },
-                      options: const ["Online", "Offline"],
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 10),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       const Text(
+              //         "Work Mode",
+              //         style: TextStyle(fontWeight: FontWeight.w600),
+              //       ),
+              //       const SizedBox(height: 5),
+              //       ChipSelectionWidget(
+              //         onTypeSelected: (selectedMode) {
+              //           setState(() {
+              //             _selectedWorkMode = selectedMode;
+              //           });
+              //         },
+              //         options: const ["Online", "Offline"],
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

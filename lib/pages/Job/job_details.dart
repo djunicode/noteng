@@ -150,6 +150,7 @@ class JobDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Container(
+                      width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: secondaryAccentColor,
@@ -173,6 +174,7 @@ class JobDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Container(
+                      width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           color: secondaryAccentColor,
