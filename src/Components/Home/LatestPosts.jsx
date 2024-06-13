@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; 
 
 function LatestPosts() {
   const [cardData, setCardData] = useState([]);
-
+  const navigate = useNavigate();
+  function Discover() {
+    navigate('/DiscoverPage');
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,7 +43,7 @@ function LatestPosts() {
         <span className='flex font-bold text-[35px]'>Latest Posts</span>
       </p>
       <div className='ml-6 md:w-full  border-b-2'></div>
-      <div className='flex flex-col gap-5 ml-10 mr-10 md:flex-row md:ml-2 mt-4 md:justify-evenly'>
+      <div className='flex flex-col gap-5 ml-10 mr-10 md:mr-2  md:flex-row md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return (
             <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2  lg:ml-2' key={i}>
@@ -63,8 +67,8 @@ function LatestPosts() {
           );
         })}
       </div>
-      <div className="flex justify-center md:justify-end md:mr-14 ">
-        <a href="#" className="text-blue-600 font-bold">See More</a>
+      <div className="flex justify-center md:justify-end md:mr-5 ">
+      <p className="text-blue-600 font-bold cursor-pointer" onClick={Discover}>See More</p>
       </div>
     </div>
   );

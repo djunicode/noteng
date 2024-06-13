@@ -3,8 +3,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function JobOpportunity() {
   const[cardData,setCardData]=useState([]);
+  const navigate = useNavigate();
+  function Discover() {
+    navigate('/DiscoverPage');
+  }
   useEffect(()=>{
     const fetchData=async()=>{
       try{
@@ -46,7 +51,7 @@ function JobOpportunity() {
         <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
       </p>
       <div className='ml-6 md:w-full border-b-2'></div>
-      <div className='flex flex-col justify-center items-center mr-10 ml-10 gap-5 md:flex-row md:ml-2 mt-4 md:justify-evenly'>
+      <div className='flex flex-col justify-center items-center  mr-10 ml-10 gap-5 md:flex-row md:mr-2  md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
@@ -79,8 +84,8 @@ function JobOpportunity() {
           </div>
         })}
       </div>
-      <div className="flex justify-center md:justify-end md:mr-14">
-        <a href="#" className="text-blue-600 font-bold">See More</a>
+      <div className="flex justify-center md:justify-end md:mr-5">
+      <p className="text-blue-600 font-bold cursor-pointer" onClick={Discover}>See More</p>
       </div>
     </div>
   )

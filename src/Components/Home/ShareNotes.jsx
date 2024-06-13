@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 function ShareNotes() {
-  const [cardData, setCardData] = useState([]);
 
+  const [cardData, setCardData] = useState([]);
+  const navigate = useNavigate();
+function Discover() {
+    navigate('/DiscoverPage');
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +48,7 @@ function ShareNotes() {
         <span className='font-bold text-[35px]'>Share Notes</span>
       </p>
       <div className='ml-6 md:w-full border-b-2'></div>
-      <div className='flex flex-col mr-10 ml-10  gap-5 md:flex-row md:ml-2 mt-4 lg:justify-evenly md:justify-evenly '>
+      <div className='flex flex-col  ml-10 mr-10 gap-5 md:flex-row md:ml-2 md:mr-2 mt-4 lg:justify-evenly md:justify-evenly '>
         {cardData.map((data, i) => (
           <div className='lg:flex md:flex justify-evenly flex-1 mr-1 ml-1 md:mr-2 block md:ml-2  lg:ml-2 ' key={i}>
             <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
@@ -70,8 +74,8 @@ function ShareNotes() {
         ))}
          
       </div>
-      <div className="flex justify-center md:justify-end md:mr-14">
-        <a href="#" className="text-blue-600 font-bold">See More</a>
+      <div className="flex justify-center md:justify-end md:mr-5">
+        <p className="text-blue-600 font-bold cursor-pointer" onClick={Discover}>See More</p>
       </div>
     </div>
   );
