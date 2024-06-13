@@ -10,6 +10,7 @@ function UploadNotes() {
     notesDescription: '',
     rating: 4,
     document: null,
+    type:' ',
     user: '60004220207' // Assuming user ID is constant
   });
 
@@ -38,7 +39,7 @@ function UploadNotes() {
     form.append('subject', formData.subject);
     form.append('department', formData.department);
     form.append('note_description', formData.notesDescription);
-    // form.append('stars',formData.rating);
+    form.append('type',formData.type);
     form.append('document', formData.document);
     form.append('user', formData.user);
 
@@ -46,7 +47,7 @@ function UploadNotes() {
       const response = await axios.post(endpoint, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3OTMyMjc2LCJpYXQiOjE3MTc5MTA2NzYsImp0aSI6IjFkNjI5MWViOGQzYzQwNjc5OTQyN2U4YWFiYjQ2ODIxIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.bK54XJ1-vnJjzGMhLdubn47FpZnxNgG1x4NZwnu1dsE'
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
         },
       });
 
@@ -58,7 +59,9 @@ function UploadNotes() {
           department: '',
           notesDescription: '',
           rating:4,
+          type:' ',
           document: null,
+          
           user: '60004220207'
         });
       } else {
