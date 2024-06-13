@@ -8,7 +8,7 @@ function Jobs() {
   useEffect(() => {
     fetch('https://monilmeh.pythonanywhere.com/api/jobboard/', {
       headers: {
-        'Authorization': `Bearer ${token}` // Replace with your actual access token
+        'Authorization': `Bearer ${token}` 
       }
     })
       .then(response => response.json())

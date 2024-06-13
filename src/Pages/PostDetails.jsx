@@ -1,61 +1,83 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../Components/Home/Sidebar';
 import BackButton from '../assets/BackButton.png';
 import { Button } from '@mui/material';
-import '../styles/ViewJob.css';
-import '../Components/NewPost/viewpost.css';
 import PosDetailsImg from '../assets/postdetails.svg';
-const PostDetails = () => {
-    const navigate = useNavigate();
+import axios from 'axios';
 
-    const handleGoBack = (event) => {
-        event.preventDefault();
-        navigate.goBack();
+const PostDetails = () => {
+  const navigate = useNavigate();
+  const { id } = useParams(); // Assuming you are passing post ID as a URL parameter
+  const [postDetails, setPostDetails] = useState(null);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchPostDetails = async () => {
+      try {
+        const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/posts/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        });
+        setPostDetails(response.data);
+      } catch (error) {
+        console.error('Error fetching post details:', error);
+      }
     };
 
-    return (
-        <div className='flex flex-row'>
-            <Sidebar />
-            <>
-                <div className='flex flex-col maincontent'>
-                    <div className='flex flex-row'>
-                        <Button className='backButton' onClick={handleGoBack}>
-                            <img src={BackButton} alt='Back' />
-                        </Button>
-                        <p className='ml-6 mt-10 flex items-center'>
-                            <span className='font-bold heading custom-heading'>Post Details</span>
-                        </p>
-                    </div>
-                    <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
-                    <div>
-                        <h3 className='company-name'>Post Title</h3>
-                    </div>
-                    <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
-                    <h3 className='company-description'>Post Description</h3>
-                    <p className='job-descrip'>Hey tech enthusiasts and innovators! Are you ready to showcase your skills, collaborate with like-minded individuals, and create groundbreaking solutions to real-world challenges? your calendars for the Annual Tech Innovators Hackathon, where creativity meets technology..</p>
-                    <div className='postimg'><img src={PosDetailsImg} alt="" /></div>
-                    <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray' />
-                    <div className='flex flex-row'>
-                        <div className='flex flex-col poster-details'>
-                            <p>Posted By:</p>
-                            <p>Ansh Shah</p>
-                        </div>
-                        <div className='flex flex-col post-datetime'>
-                            <p>19th May 2024</p>
-                            <p>16:22</p>
-                        </div>
-                        <div className='flex flex-grow contactbutton'>
-                            <button type="submit" className="submit-button">
-                                Contact Post Admin
-                            </button>
-                        </div>
-                    </div>
+    fetchPostDetails();
+  }, [id, token]);
 
-                </div>
-            </>
+  const handleGoBack = (event) => {
+    event.preventDefault();
+    navigate(-1);
+  };
+
+  if (!postDetails) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className='flex flex-row'>
+      <Sidebar />
+      <div className='flex flex-col maincontent p-4'>
+        <div className='flex flex-row items-center'>
+          <Button className='backButton' onClick={handleGoBack}>
+            <img src={BackButton} alt='Back' className='w-6 h-6' />
+          </Button>
+          <p className='ml-6 mt-10 font-bold text-xl'>Post Details</p>
         </div>
-    )
+        <hr className='my-2 border-b-2 border-gray-300' />
+        <div>
+          <h3 className='text-2xl font-bold'>{postDetails.title}</h3>
+        </div>
+        <hr className='my-2 border-b-2 border-gray-300' />
+        <h3 className='text-xl font-bold'>Post Description</h3>
+        <p className='text-base'>{postDetails.description}</p>
+        <div className='postimg flex justify-center items-center mt-4'>
+          <img src={postDetails.image} alt={postDetails.title} className='w-64 h-auto object-contain' />
+        </div>
+        <hr className='my-4 border-b-2 border-gray-300' />
+        <div className='flex flex-row'>
+          <div className='flex flex-col mr-8'>
+            <p className='font-bold'>Posted By:</p>
+            <p>Ansh Shah</p>
+          </div>
+          <div className='flex flex-col mr-8'>
+            <p className='font-bold'>Posted on:</p>
+            <p>{new Date(postDetails.created_at).toLocaleDateString()}</p>
+            <p>{new Date(postDetails.created_at).toLocaleTimeString()}</p>
+          </div>
+          <div className='flex flex-grow'>
+            <button className='submit-button bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600'>
+              Contact Post Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default PostDetails;
