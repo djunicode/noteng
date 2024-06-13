@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/User/userModel.dart';
@@ -64,7 +66,7 @@ class _EditProfileState extends State<EditProfile> {
       print("User not found in SharedPreferences");
       return;
     }
-
+    LoadingBar.loadingDialog(context);
     User user = User(
       sapid: sapid,
       fname: firName.text,
@@ -80,13 +82,15 @@ class _EditProfileState extends State<EditProfile> {
         SnackBar(content: Text('User Edited successfully: ${editUser.sapid}')),
       );
       print("User edited successfully: ${editUser.sapid}");
+      Get.back();
     } catch (e) {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('editing failed: $e')),
+        SnackBar(content: Text('Editing failed: $e')),
       );
       print("editing failed: $e");
     }
+    Get.back();
   }
 
   @override

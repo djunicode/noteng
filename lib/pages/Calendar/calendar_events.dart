@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/Widgets/bottom_nav_bar.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/modalbottom.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/data/CalendarEvents/calendarRepo.dart';
@@ -192,6 +193,7 @@ class _CalendarEventsState extends State<CalendarEvents> {
                                                   event_date.text.isEmpty) {
                                                 return;
                                               }
+                                              LoadingBar.loadingDialog(context);
                                               CalendarRepo.createEvent(
                                                       Cal.CalendarEvents(
                                                           date: event_date.text,
@@ -206,6 +208,7 @@ class _CalendarEventsState extends State<CalendarEvents> {
                                                       .showSnackBar(const SnackBar(
                                                           content: Text(
                                                               "Event added successfully")));
+                                                  Get.back();
                                                 } else {
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(const SnackBar(
@@ -402,9 +405,12 @@ class _CalendarEventsState extends State<CalendarEvents> {
                                             TextButton(
                                                 onPressed: () async {
                                                   Get.back();
+                                                  LoadingBar.loadingDialog(
+                                                      context);
                                                   await CalendarRepo
                                                       .deleteEvent(event
                                                           .metadata!['id']);
+                                                  Get.back();
                                                   setState(() {
                                                     fetchCalendar();
                                                   });

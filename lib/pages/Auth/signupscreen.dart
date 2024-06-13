@@ -60,6 +60,29 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 8.0),
               DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  contentPadding: EdgeInsets.all(14.0),
+                  filled: true,
+                  fillColor: secondaryAccentColor,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
                 hint: const Text('Select'),
                 value: _userType.isNotEmpty ? _userType : null,
                 onChanged: (value) {
@@ -93,6 +116,29 @@ class _SignupScreenState extends State<SignupScreen> {
               DropdownButtonFormField<String>(
                 hint: const Text('Select'),
                 value: _department.isNotEmpty ? _department : null,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  contentPadding: EdgeInsets.all(14.0),
+                  filled: true,
+                  fillColor: secondaryAccentColor,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  hintStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
                 onChanged: (value) {
                   setState(
                     () {

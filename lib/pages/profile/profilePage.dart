@@ -7,6 +7,7 @@ import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/bottom_nav_bar.dart';
 import 'package:noteng/Widgets/discoverNotesListWidget.dart';
 import 'package:noteng/Widgets/jobListWidget.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/modalbottom.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Job/jobModel.dart';
@@ -1150,9 +1151,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     TextButton(
                                                         onPressed: () {
                                                           Get.back();
+                                                          LoadingBar
+                                                              .loadingDialog(
+                                                                  context);
                                                           JobRepo.deleteJob(
                                                               jobs[index]
                                                                   .jobId!);
+                                                          Get.back();
                                                           setState(() {
                                                             jobs.removeAt(
                                                                 index);
@@ -1237,9 +1242,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     TextButton(
                                                         onPressed: () {
                                                           Get.back();
+                                                          LoadingBar
+                                                              .loadingDialog(
+                                                                  context);
                                                           PostsRepo.deletePost(
                                                               posts[index]
                                                                   .postId!);
+                                                          Get.back();
                                                           setState(() {
                                                             posts.removeAt(
                                                                 index);
@@ -1326,9 +1335,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       TextButton(
                                                           onPressed: () {
                                                             Get.back();
+                                                            LoadingBar
+                                                                .loadingDialog(
+                                                                    context);
                                                             NotesRepo.deleteNote(
                                                                 notes[index]
                                                                     .noteId!);
+                                                            Get.back();
                                                             setState(() {
                                                               notes.removeAt(
                                                                   index);
@@ -1414,9 +1427,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     TextButton(
                                                         onPressed: () {
                                                           Get.back();
+                                                          LoadingBar
+                                                              .loadingDialog(
+                                                                  context);
                                                           VideoRepo.deleteVideo(
                                                               videos[index]
                                                                   .video_id!);
+                                                          Get.back();
                                                           setState(() {
                                                             videos.removeAt(
                                                                 index);

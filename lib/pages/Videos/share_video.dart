@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/data/Video/videoModel.dart';
 import 'package:noteng/data/Video/videoRepo.dart';
@@ -38,7 +39,7 @@ class _ShareVideoState extends State<ShareVideo> {
       print("User not found in SharedPreferences");
       return;
     }
-
+    LoadingBar.loadingDialog(context);
     Video video = Video(
         links: _videoLink.text,
         sem: int.parse(_videoSemester.text),
@@ -52,12 +53,14 @@ class _ShareVideoState extends State<ShareVideo> {
         SnackBar(content: Text('Video successfully uploaded')),
       );
       Get.back();
+      Get.back();
       print("Video successfully uploaded");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to upload video')),
       );
       print("Failed to upload video");
+      Get.back();
     }
   }
 

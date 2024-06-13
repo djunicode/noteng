@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/User/userModel.dart';
 import 'package:noteng/data/User/userRepo.dart';
@@ -101,12 +102,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         password: passwordController.text,
                       );
 
+                      LoadingBar.loadingDialog(context);
+
                       bool registrationSuccess = await UserRepo.loginUser(user);
 
                       if (registrationSuccess) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Login successful')),
                         );
+                        Get.back();
                         Future.delayed(Duration(seconds: 2), () {
                           Get.offAll(HomeScreen(),
                               transition: Transition.fadeIn);
@@ -116,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Login failed')),
                         );
+                        Get.back();
                       }
                     }
                   },

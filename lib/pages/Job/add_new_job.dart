@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
 import 'package:noteng/Widgets/chip_selection_widget.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/data/Job/jobModel.dart';
 import 'package:noteng/data/Job/jobRepo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constants/colors.dart';
 
 class AddNewJob extends StatefulWidget {
   AddNewJob({Key? key});
@@ -52,6 +55,7 @@ class _AddNewJobState extends State<AddNewJob> {
       print("User not found in SharedPreferences");
       return;
     }
+    LoadingBar.loadingDialog(context);
 
     Job job = Job(
         company: _companyName.text,
@@ -74,10 +78,12 @@ class _AddNewJobState extends State<AddNewJob> {
               content: Text('Job created successfully: ${addNewJob.jobTitle}')),
         );
         Get.back();
+        Get.back();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Job creation failed')),
         );
+        Get.back();
       }
       // Handle success
     } catch (e) {
@@ -85,6 +91,7 @@ class _AddNewJobState extends State<AddNewJob> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Upload failed: $e')),
       );
+      Get.back();
       print("Upload failed: $e");
     }
   }
@@ -147,10 +154,33 @@ class _AddNewJobState extends State<AddNewJob> {
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(0),
                       child: DropdownButtonFormField<String>(
                         hint: const Text('Select'),
                         value: _jobTitle.text,
+                        decoration: InputDecoration(
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          contentPadding: EdgeInsets.all(14.0),
+                          filled: true,
+                          fillColor: secondaryAccentColor,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
                         onChanged: (value) {
                           setState(
                             () {

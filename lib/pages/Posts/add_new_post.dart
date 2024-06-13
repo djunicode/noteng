@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Posts/postModel.dart';
@@ -77,6 +78,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
       print("User not found in SharedPreferences");
       return;
     }
+    LoadingBar.loadingDialog(context);
 
     // File file = File(result!.files.first.path!);
 
@@ -99,6 +101,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
           SnackBar(content: Text('Upload failed')),
         );
         print("Upload failed");
+        Get.back();
         return;
       }
       // Handle success
@@ -108,12 +111,14 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
       );
       print("Post created successfully: ${createdPost.title}");
       Get.back();
+      Get.back();
     } catch (e) {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Upload failed: $e')),
       );
       print("Upload failed: $e");
+      Get.back();
     }
   }
 
@@ -190,8 +195,31 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    contentPadding: EdgeInsets.all(14.0),
+                    filled: true,
+                    fillColor: secondaryAccentColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
                   hint: const Text('Organized By'),
                   value: _organizedBy.isNotEmpty ? _organizedBy : null,
                   onChanged: (value) {
@@ -208,11 +236,11 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                     ),
                     DropdownMenuItem(
                       value: 'college',
-                      child: Text('college'),
+                      child: Text('College'),
                     ),
                     DropdownMenuItem(
                       value: 'commitee',
-                      child: Text('commitee'),
+                      child: Text('Commitee'),
                     ),
                   ],
                 ),
@@ -229,8 +257,31 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 0),
+                padding: const EdgeInsets.fromLTRB(5.0, 0, 5, 0),
                 child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    contentPadding: EdgeInsets.all(14.0),
+                    filled: true,
+                    fillColor: secondaryAccentColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
                   hint: const Text('Select'),
                   value: _eventType.isNotEmpty ? _eventType : null,
                   onChanged: (value) {
@@ -247,19 +298,19 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                     ),
                     DropdownMenuItem(
                       value: 'hackathon',
-                      child: Text('hackathon'),
+                      child: Text('Hackathon'),
                     ),
                     DropdownMenuItem(
                       value: 'cultural',
-                      child: Text('cultural'),
+                      child: Text('Cultural'),
                     ),
                     DropdownMenuItem(
                       value: 'datathon',
-                      child: Text('datathon'),
+                      child: Text('Datathon'),
                     ),
                     DropdownMenuItem(
                       value: 'startup',
-                      child: Text('startup'),
+                      child: Text('Startup'),
                     ),
                   ],
                 ),
@@ -357,12 +408,7 @@ class _AddNewPostPageState extends State<AddNewPostPage> {
                 height: 200,
                 width: 400,
                 decoration: BoxDecoration(
-                  color: backgroundColor,
-                  border: Border.all(
-                    width: 2.0,
-                    color: Colors.black,
-                    style: BorderStyle.solid, // Removes the solid border
-                  ),
+                  color: secondaryAccentColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(

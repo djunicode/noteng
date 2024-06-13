@@ -34,18 +34,18 @@ class _ChipSelectionWidgetState extends State<ChipSelectionWidget> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
+                  margin: EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                     color:
                         _selectedType == option ? primaryColor : Colors.white,
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.grey),
                   ),
                   child: Text(
                     option,
                     style: TextStyle(
-                      color: _selectedType == option
-                          ? Colors.white
-                          : Colors.black,
+                      color:
+                          _selectedType == option ? Colors.white : Colors.black,
                     ),
                   ),
                 ),

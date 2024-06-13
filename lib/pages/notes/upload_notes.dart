@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteng/Widgets/app_bar_widget.dart';
 import 'package:noteng/Widgets/button_widget.dart';
+import 'package:noteng/Widgets/loading.dart';
 
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
@@ -44,7 +45,7 @@ class _UploadNotesState extends State<UploadNotes> {
       print("User not found in SharedPreferences");
       return;
     }
-
+    LoadingBar.loadingDialog(context);
     File file = File(result!.files.first.path!);
 
     Notes note = Notes(
@@ -64,14 +65,17 @@ class _UploadNotesState extends State<UploadNotes> {
             .showSnackBar(SnackBar(content: Text("Notes added successfully!")));
         print("Upload successful: ${createdNote.noteTitle}");
         Get.back();
+        Get.back();
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Failed to upload Note!")));
         print("Failed to create note.");
+        Get.back();
       }
     } catch (e) {
       // Handle error
       print("Upload failed: $e");
+      Get.back();
     }
   }
 
@@ -126,8 +130,31 @@ class _UploadNotesState extends State<UploadNotes> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(0.0),
                 child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    contentPadding: EdgeInsets.all(14.0),
+                    filled: true,
+                    fillColor: secondaryAccentColor,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
                   hint: const Text('Select'),
                   value: _selectedItem.isNotEmpty ? _selectedItem : null,
                   onChanged: (newValue) {
@@ -205,12 +232,7 @@ class _UploadNotesState extends State<UploadNotes> {
                 height: 200,
                 width: 400,
                 decoration: BoxDecoration(
-                  color: backgroundColor,
-                  border: Border.all(
-                    width: 2.0,
-                    color: Colors.black,
-                    style: BorderStyle.solid, // Removes the solid border
-                  ),
+                  color: secondaryAccentColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(

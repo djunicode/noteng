@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:noteng/Widgets/loading.dart';
 import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/User/userModel.dart';
@@ -71,21 +72,6 @@ class _UserRegistrationState extends State<UserRegistration> {
                     height: 10.0,
                   ),
                   textFieldWidget(
-                    hintText: "Password:",
-                    readOnly: false,
-                    obsecureText: true,
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter password';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  textFieldWidget(
                     hintText: "First Name:",
                     readOnly: false,
                     controller: firstNameController,
@@ -143,6 +129,21 @@ class _UserRegistrationState extends State<UserRegistration> {
                     },
                   ),
                   SizedBox(
+                    height: 10.0,
+                  ),
+                  textFieldWidget(
+                    hintText: "Password:",
+                    readOnly: false,
+                    obsecureText: true,
+                    controller: passwordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
                     height: 16.0,
                   ),
                   ElevatedButton(
@@ -168,6 +169,8 @@ class _UserRegistrationState extends State<UserRegistration> {
                             contactNumber: contactNumberController.text,
                             expertise: widget.expertise);
 
+                        LoadingBar.loadingDialog(context);
+
                         bool registrationSuccess =
                             await UserRepo.registerUser(user);
 
@@ -177,6 +180,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Registration successful')),
                           );
+                          Get.back();
 
                           Future.delayed(Duration(seconds: 2), () {
                             Get.offAll(HomeScreen(),
@@ -187,6 +191,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Registration failed')),
                           );
+                          Get.back();
                         }
                       }
                     },
