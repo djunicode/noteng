@@ -5,16 +5,20 @@ import { useNavigate } from 'react-router-dom';
 
 function LatestPosts() {
   const [cardData, setCardData] = useState([]);
+<<<<<<< HEAD
   const navigate = useNavigate();
   function Discover() {
     navigate('/DiscoverPage');
   }
+=======
+  const token = localStorage.getItem('token');
+>>>>>>> 24b55b5e11785ee244c8c0239a0e29acf4cea551
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://monilmeh.pythonanywhere.com//api/posts', {
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+            'Authorization': `Bearer ${token}`
           }
         });
         // console.log('API Response:', response.data); 
@@ -35,7 +39,7 @@ function LatestPosts() {
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <div className='flex flex-col w-full'>

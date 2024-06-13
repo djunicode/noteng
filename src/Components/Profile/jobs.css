@@ -1,0 +1,40 @@
+.flex {
+    display: flex;
+  }
+  
+  .overflow-x-scroll {
+    overflow-x: auto;
+  }
+  
+  .space-x-4 > * + * {
+    margin-left: 1rem; /* Adjust spacing between cards as needed */
+  }
+  
+  .border {
+    border: 1px solid #ccc;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bg-gray-300 {
+    background-color: #e2e8f0;
+  }
+  
+  .md\:w-full {
+    width: 100%;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .text-custom-blue {
+    color: #394dfd;
+  }
+  

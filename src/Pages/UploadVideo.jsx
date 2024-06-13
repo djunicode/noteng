@@ -18,6 +18,7 @@ const ViewNote = () => {
         links: '',
         user: '60004220207' // Assuming user ID is constant
     });
+    const token = localStorage.getItem('token');
 
     const handleInputChange = (event) => {
         const { id, value } = event.target;
@@ -30,7 +31,7 @@ const ViewNote = () => {
             const response = await axios.post('https://monilmeh.pythonanywhere.com/api/videolinks/', formData, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+                    'Authorization': `Bearer ${token}`
                 }
             });
             console.log(response.data);
@@ -44,7 +45,7 @@ const ViewNote = () => {
 
     const handleGoBack = (event) => {
         event.preventDefault();
-        navigate.goBack();
+        navigate(-1);
     };
 
     return (

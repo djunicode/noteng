@@ -9,6 +9,7 @@ const PostJob = () => {
   const [mode, setmode] = useState(null);
   const [message, setMessage] = useState(''); // Add this line
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
   // Function to handle the selection of job type
   const handlesubtypeSelection = (type) => {
     setsubtype(type);
@@ -71,7 +72,7 @@ const handleSubmit = (e) => {
   axios.post('https://monilmeh.pythonanywhere.com/api/jobboard/', formData, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+      'Authorization': `Bearer ${token}`
      
     }
   })

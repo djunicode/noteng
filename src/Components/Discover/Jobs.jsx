@@ -3,23 +3,24 @@ import JobCard from './JobCard';
 
 function Jobs() {
   const [jobs, setJobs] = useState([]);
-
+  const token = localStorage.getItem('token');
+  console.log(token);
   useEffect(() => {
     fetch('https://monilmeh.pythonanywhere.com/api/jobboard/', {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+        'Authorization': `Bearer ${token}` // Replace with your actual access token
       }
     })
       .then(response => response.json())
       .then(data => setJobs(data))
       .catch(error => console.error('Error fetching jobs:', error));
-  }, []);
+  }, [token]);
 
   const handleDelete = (jobId) => {
     fetch(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjI5OTc4LCJpYXQiOjE3MTgyMDgzNzgsImp0aSI6IjM2ZTljNTE1MzgyNDRlNjNiMjlhN2IxZDk3NjkyOWM1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.taIPP2tzCiUFtYX8I20yWUaNfp8ESZvJa9auROp8-tc' // Replace with your actual access token
+        'Authorization': `Bearer ${token}` // Replace with your actual access token
       }
     })
       .then(response => {
@@ -31,6 +32,7 @@ function Jobs() {
       })
       .catch(error => console.error('Error deleting job:', error));
   };
+  console.log(jobs);
 
   return (
     <div className='m-6 grid grid-cols-1 md:grid-cols-2 gap-4'>

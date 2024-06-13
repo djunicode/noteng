@@ -14,6 +14,8 @@ function NewPost() {
     user: '60004220207' // Assuming user ID is static for this example
   });
 
+  const token = localStorage.getItem('token');
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -48,7 +50,7 @@ function NewPost() {
       const response = await axios.post(endpoint, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+          'Authorization': `Bearer ${token}`
         },
       });
 
