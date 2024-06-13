@@ -68,6 +68,7 @@ function NewPost() {
           post_url: '',
           user: '60004220207'
         });
+        console.log(formData);
       } else {
         alert('Failed to create post');
       }

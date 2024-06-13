@@ -18,7 +18,7 @@ function JobCard({ job, onDelete }) {
   };
 
   return (
-    <div className='border p-4 rounded-lg shadow bg-gray-300 md:w-full cursor-pointer' onClick={handleCardClick}>
+    <div className='border p-4 rounded-lg shadow bg-gray-300 max-w-full cursor-pointer' onClick={handleCardClick}>
       <div className='relative'>
         <div className='absolute top-0 right-0 z-10'>
           <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={handleDeleteClick} />

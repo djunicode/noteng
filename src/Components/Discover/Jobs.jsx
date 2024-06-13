@@ -20,7 +20,7 @@ function Jobs() {
     fetch(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${token}` // Replace with your actual access token
+        'Authorization': `Bearer ${token}` 
       }
     })
       .then(response => {

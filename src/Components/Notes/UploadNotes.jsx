@@ -143,7 +143,7 @@ function UploadNotes() {
         </div>
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 md:ml-0'>
-            <button onClick={handleSubmit} className='w-full bg-custom-blue hover:-scale-105 py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>
+            <button onClick={handleSubmit} className='w-full bg-custom-blue  py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>
           </div>
         </div>
       </div>
