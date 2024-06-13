@@ -53,8 +53,9 @@ function JobOpportunity() {
               <p className='font-bold '>{data.heading1}</p>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
               <p className='text-sm md:text-[18px]'>{data.heading3}</p>
-              <p className=' text-sm border-b-[1px]  md:text-[16px]'>{data.body}</p>
-              <p className=' text-sm border-b-[1px]  md:text-[16px]'>{data.body1}</p>
+              {/* <p className='text-sm border-b-[1px] md:text-[16px]'>{data.body.substring(0, 100)}</p> */}
+
+              <p className=' text-sm border-b-[1px]  md:text-[16px]'>{data.body1.substring(0,60)}</p>
               <p className=' text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.contact}</p>
               <div className='flex justify-between'>
                 <div className='flex items-center'>
