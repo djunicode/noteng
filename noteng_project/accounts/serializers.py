@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Like,CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel,NoteRating, MentorshipModel#, EventModel
+from .models import CalendarModel, PostModel,NotesModel,JobBoardModel,VideolinksModel,NoteRating, MentorshipModel#, EventModel
 from authentication.models import User
 from authentication.serializers import UserSerializer
 from django.core.exceptions import ValidationError
@@ -8,16 +8,8 @@ class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CalendarModel
         fields = '__all__'
-        
-class LikeSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Like
-        fields = ['user', 'created_at']
 
 class PostSerializer(serializers.ModelSerializer):
-    likes_count = serializers.ReadOnlyField(source='likes_count')
     class Meta:
         model = PostModel
         fields = '__all__'

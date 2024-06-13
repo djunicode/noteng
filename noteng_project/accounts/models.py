@@ -30,6 +30,7 @@ class PostModel(models.Model):
     deadline = models.DateTimeField()
     post_url = models.URLField()
     description = models.TextField()
+    likes = models.PositiveIntegerField()
     organised_by = models.CharField(max_length=50, choices=ORGANIZERS, default = ('college', 'college'))
     subtype = models.CharField(max_length=20, choices=EVENT_TYPES, default = ('hackathon', 'hackathon'))
     # type = models.CharField(max_length=10, choices=POST_TYPES)
@@ -37,18 +38,6 @@ class PostModel(models.Model):
     date_updated = models.DateField(auto_now=True)
     date_uploaded = models.DateField(auto_now_add=True)
     image=models.ImageField(upload_to='images/',  storage=RawMediaCloudinaryStorage())
-    
-    @property
-    def likes_count(self):
-        return self.likes.count()
-    
-class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='likes')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ('user', 'post')
 
 class JobBoardModel(models.Model):
     job_id = models.AutoField(primary_key=True)
