@@ -7,6 +7,7 @@ const LoginPage = ({ onLoginChange }) => {
     const navigate = useNavigate();
     const [sapid, setSapid] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,13 +34,14 @@ const LoginPage = ({ onLoginChange }) => {
                 localStorage.setItem('sapid', sapid); // Persist SAP ID in local storage
                 navigate('/Home'); // Redirect to homepage after successful login
             } else {
+                setError('Invalid credentials'); // Set error message for wrong credentials
                 console.error('Login failed:', response.statusText);
             }
         } catch (error) {
+            setError('An unexpected error occurred'); // Set error message for uncaught errors
             console.error('Error:', error);
         }
     };
-    
 
     return (
         <div className="w-full h-screen bg-white flex-col justify-center items-center overflow-hidden ">
@@ -75,6 +77,7 @@ const LoginPage = ({ onLoginChange }) => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
+                    {error && <p className="text-red-500">{error}</p>} {/* Render error message if error state is set */}
                 </form>
             </div>
             <div className='h-1/3 flex flex-col sm:flex-row justify-center items-center sm:items-start w-full'>
