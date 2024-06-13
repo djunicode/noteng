@@ -98,7 +98,7 @@ class _NotesDetailsState extends State<NotesDetails> {
                 Column(
                   children: [
                     Text(
-                      "Subject: ${widget.note.subject} guigyugyuguyguggygig",
+                      "Subject: ${widget.note.subject}",
                       style: const TextStyle(
                           fontSize: 15,
                           color: secondaryColor,
@@ -109,7 +109,7 @@ class _NotesDetailsState extends State<NotesDetails> {
                 Column(
                   children: [
                     Text(
-                      "Department: ${widget.note.department} gyiuyguyguiyguyguyg",
+                      "Department: ${widget.note.department}",
                       style: const TextStyle(
                           fontSize: 15,
                           color: secondaryColor,
