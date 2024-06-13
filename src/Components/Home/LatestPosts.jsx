@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import axios from 'axios';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom'; 
 
 function LatestPosts() {
@@ -23,6 +24,7 @@ function LatestPosts() {
         });
         // console.log('API Response:', response.data); 
         const data = response.data.map((item) => ({
+          id:item.post_id,
           heading1: item.title,
           body: item.description,
           icon: <FavoriteBorderOutlinedIcon className="text-blue-500" style={{ width: '20px', height: '20px' }} />,
@@ -40,6 +42,19 @@ function LatestPosts() {
     };
     fetchData();
   }, [token]);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://monilmeh.pythonanywhere.com//api/posts/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      // Remove the deleted job from the state
+      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+    } catch (error) {
+      console.error('Error deleting job', error);
+    }
+  };
 
   return (
     <div className='flex flex-col w-full'>
@@ -52,7 +67,11 @@ function LatestPosts() {
           return (
             <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2  lg:ml-2' key={i}>
               <div className='border p-3 rounded-lg bg-gray-200 w-full'>
+
+                <div className='flex justify-between'>
                 <p className='font-bold text-[18px] md:text-[15px]'>{data.heading1}</p>
+                <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={()=>handleDelete(data.id)} />
+                </div>
                 <div className='flex flex-col items-center'>
                   <img src={data.image} alt={data.heading1} className='w-full h-80 object-cover mb-3' />
                   <p className='mt-2 text-sm border-b-[1px] pb-3 text-[16px]'>{data.body}</p>

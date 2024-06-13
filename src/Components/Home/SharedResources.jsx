@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
 function SharedResources() {
   const [cardData, setCardData] = useState([]);
   const navigate = useNavigate();
@@ -44,7 +45,10 @@ function SharedResources() {
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
+              <div className='flex justify-between'>
               <p className='font-bold '>{data.heading1}</p>
+              <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500'  />
+                </div>
               <div className='flex gap-2'>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
               <p className='text-sm md:text-[18px]'>Semester:{data.semester}</p>

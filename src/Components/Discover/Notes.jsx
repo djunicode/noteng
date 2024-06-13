@@ -6,11 +6,11 @@ import axios from 'axios';
 
 function Notes() {
     const [cardData, setCardData] = useState([]);
-
+    const token=localStorage.getItem('token');
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'; // Replace with the actual token
+       
         const response = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -37,7 +37,7 @@ function Notes() {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <div className='flex flex-col w-full'>

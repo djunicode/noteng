@@ -3,6 +3,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined';
 import axios from 'axios';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 function JobOpportunity() {
   const[cardData,setCardData]=useState([]);
@@ -24,6 +25,7 @@ function JobOpportunity() {
           }
         });
         const data=response.data.slice(0, 3).map((item)=>({
+          id:item.job_id,
           heading1:item.company,
           heading2:item.job_title,
           heading3:item.subtype,
@@ -49,6 +51,19 @@ function JobOpportunity() {
     };
     fetchData();
   },[token]);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://monilmeh.pythonanywhere.com/api/jobboard/${id}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      // Remove the deleted job from the state
+      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+    } catch (error) {
+      console.error('Error deleting job', error);
+    }
+  };
   return (
     <div className='flex flex-col'>
       <p className=' md:ml-6 md:justify-start mt-5 flex justify-center items-center'>
@@ -59,7 +74,10 @@ function JobOpportunity() {
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
+              <div className='flex justify-between'>
               <p className='font-bold '>{data.heading1}</p>
+              <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500 ' onClick={() => handleDelete(data.id)} />
+              </div>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
               <p className='text-sm md:text-[18px]'>{data.heading3}</p>
               {/* <p className='text-sm border-b-[1px] md:text-[16px]'>{data.body.substring(0, 100)}</p> */}
