@@ -38,7 +38,7 @@ const ViewJob = () => {
   };
 
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-col'>
       <Sidebar/>
       <>
         <div className='flex flex-col maincontent'>
