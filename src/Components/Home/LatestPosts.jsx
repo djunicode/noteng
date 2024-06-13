@@ -49,7 +49,7 @@ function LatestPosts() {
           'Authorization': `Bearer ${token}`
         }
       });
-      // Remove the deleted job from the state
+     
       setCardData((prevData) => prevData.filter((job) => job.id !== id));
     } catch (error) {
       console.error('Error deleting job', error);
@@ -57,11 +57,11 @@ function LatestPosts() {
   };
 
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col '>
       <p className='flex items-center justify-center md:justify-start md:ml-6'>
         <span className='flex font-bold text-[35px]'>Latest Posts</span>
       </p>
-      <div className='ml-6 md:w-full  border-b-2'></div>
+      <div className='ml-6   border-b-2'></div>
       <div className='flex flex-col gap-5 ml-10 mr-10 md:mr-2  md:flex-row md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return (

@@ -20,6 +20,7 @@ function SharedResources() {
         });
         console.log('API Response:', response.data); 
         const data = response.data.map((item) => ({
+          id:item.video_id,
           heading1: item.subject,
           heading2:item.topics,
           semester:item.sem,
@@ -35,26 +36,41 @@ function SharedResources() {
     fetchData();
   }, [token]);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://monilmeh.pythonanywhere.com//api/posts/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+     
+      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+    } catch (error) {
+      console.error('Error deleting job', error);
+    }
+  };
+
+
   return (
     <div className='flex flex-col'>
       <p className=' md:ml-6 md:justify-start  flex justify-center items-center'>
         <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
       </p>
-      <div className='ml-6 md:w-full border-b-2'></div>
+      <div className='ml-6 border-b-2'></div>
       <div className='flex flex-col justify-center items-center mr-10 ml-10 gap-5 md:flex-row md:ml-2 md:mr-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-2' key={i}>
             <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
               <div className='flex justify-between'>
               <p className='font-bold '>{data.heading1}</p>
-              <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500'  />
+              <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={()=>{handleDelete(data.id)}} />
                 </div>
               <div className='flex gap-2'>
               <p className='text-sm md:text-[18px]'>{data.heading2}</p>
               <p className='text-sm md:text-[18px]'>Semester:{data.semester}</p>
               </div>
               <div className='flex '>
-                <video src={data.url} controls width='400' />
+                <iframe src={data.url} className='max-w-full' controls width='350' title={data.heading1}></iframe>
               </div>
 
               

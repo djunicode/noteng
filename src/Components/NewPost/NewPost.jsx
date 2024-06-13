@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 function NewPost() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     subtype: '',
@@ -11,7 +12,7 @@ function NewPost() {
     deadline: '',
     likes: 100,
     post_url: '',
-    user: '60004220207' // Assuming user ID is static for this example
+    user: '60004220207' 
   });
 
   const token = localStorage.getItem('token');
@@ -37,10 +38,10 @@ function NewPost() {
     const endpoint = 'https://monilmeh.pythonanywhere.com/api/posts';
     const form = new FormData();
 
-    form.append('title', formData.title); // Ensure this matches the expected field name
+    form.append('title', formData.title); 
     form.append('category', formData.subtype);
     form.append('description', formData.description);
-    form.append('image', formData.document); // Ensure this matches the expected field name
+    form.append('image', formData.document); 
     form.append('deadline', formData.deadline);
     form.append('likes', formData.likes);
     form.append('post_url', formData.post_url);
@@ -56,6 +57,7 @@ function NewPost() {
 
       if (response.status === 201) {
         alert('Post created successfully!');
+        navigate('/');
         setFormData({
           title: '',
           subtype: '',

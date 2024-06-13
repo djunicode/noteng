@@ -69,7 +69,7 @@ function JobOpportunity() {
       <p className=' md:ml-6 md:justify-start mt-5 flex justify-center items-center'>
         <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
       </p>
-      <div className='ml-6 md:w-full border-b-2'></div>
+      <div className='ml-6  border-b-2'></div>
       <div className='flex flex-col justify-center items-center  mr-10 ml-10 gap-5 md:flex-row md:mr-2  md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2' key={i}>

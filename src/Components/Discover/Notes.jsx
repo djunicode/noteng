@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import axios from 'axios';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function Notes() {
@@ -18,6 +19,7 @@ function Notes() {
         });
         console.log(response.data);
         const data = response.data.map((item) => ({
+            id:item.note_id,
           heading1: item.note_title,
           body: item.note_description,
           icon: <StarIcon className="text-yellow-400" style={{ width: '20px', height: '20px' }} />,
@@ -38,6 +40,20 @@ function Notes() {
 
     fetchData();
   }, [token]);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`https://monilmeh.pythonanywhere.com//api/notes/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+     
+      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+    } catch (error) {
+      console.error('Error deleting job', error);
+    }
+  };
+
 
   return (
     <div className='flex flex-col w-full'>
@@ -52,6 +68,7 @@ function Notes() {
                 <div className='flex items-center'>
                   {data.icon}
                   <p>{data.stars && data.stars.toFixed(1)}</p>
+                  < DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={()=>handleDelete(data.id)} />
                 </div>
               </div>
               <div className='flex'>
