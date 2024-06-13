@@ -77,9 +77,9 @@ const ViewNote = () => {
                 <div className='subtitle'>
                     <h2>{noteDetails && noteDetails.note_title}</h2>
                 </div>
-                <div className='head3'>
-                    <h2 className='px-40'>Subject: {noteDetails && noteDetails.subject}</h2>
-                    <h2 className='px-40'>Department: {noteDetails && noteDetails.department}</h2>
+                <div className='head3 md:flex-row flex-col'>
+                    <h2 className='md:px-40'>Subject: {noteDetails && noteDetails.subject}</h2>
+                    <h2 className='md:px-40'>Department: {noteDetails && noteDetails.department}</h2>
                 </div>
                 <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
                 <h3 className='notes-description'>Notes Description</h3>
@@ -103,7 +103,7 @@ const ViewNote = () => {
                     </button>
                 </div>
                 <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
-                <div className='flex flex-row'>
+                <div className='flex md:flex-row flex-col justify-center items-center'>
                     <div className='flex flex-col poster-details'>
                         <p>Uploaded By:</p>
                         <p>{noteDetails && noteDetails.user}</p>
