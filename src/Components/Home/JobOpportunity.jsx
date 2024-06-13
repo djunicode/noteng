@@ -15,6 +15,9 @@ function JobOpportunity() {
 
   const token=localStorage.getItem('token');
 
+  function handleCardClick(id) {
+    navigate(`/viewjob/${id}`);
+  }
   useEffect(()=>{
     const fetchData=async()=>{
       try{
@@ -24,6 +27,7 @@ function JobOpportunity() {
             'Authorization':`Bearer ${token}`
           }
         });
+        
         const data=response.data.slice(0, 3).map((item)=>({
           id:item.job_id,
           heading1:item.company,
@@ -72,22 +76,22 @@ function JobOpportunity() {
       <div className='ml-6  border-b-2'></div>
       <div className='flex flex-col justify-center items-center  mr-10 ml-10 gap-5 md:flex-row md:mr-2  md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
-          return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2' key={i}>
+          return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2' key={i} onClick={()=>handleCardClick(data.id)}>
             <div className='border p-3 rounded-lg bg-gray-300 md:w-[100%]'>
               <div className='flex justify-between'>
               <p className='font-bold '>{data.heading1}</p>
               <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500 ' onClick={() => handleDelete(data.id)} />
               </div>
-              <p className='text-sm md:text-[18px]'>{data.heading2}</p>
-              <p className='text-sm md:text-[18px]'>{data.heading3}</p>
+              <p className='text-sm md:text-[18px] mt-3 mb-4'>{data.heading2} - {data.heading3}</p>
+              
               {/* <p className='text-sm border-b-[1px] md:text-[16px]'>{data.body.substring(0, 100)}</p> */}
 
-              <p className=' text-sm border-b-[1px]  md:text-[16px]'>{data.body1.substring(0,60)}</p>
-              <p className=' text-sm border-b-[1px] pb-3 border-custom-blue md:text-[16px]'>{data.contact}</p>
+              <p className=' text-sm border-b-[1px]  md:text-[16px]'>{data.body1.substring(0,100)}...</p>
+              <p className=' text-sm border-b-[1px] mt-3 mb-3 pb-3 border-custom-blue md:text-[16px]'>Contact - {data.contact}</p>
               <div className='flex justify-between'>
                 <div className='flex items-center'>
                   {data.icon }
-                  <p className='text-custom-blue text-[8px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.time}</p>
+                  <p className='text-custom-blue text-[8px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.time} months</p>
                 </div>
                 <div className='flex items-center'>
                   {data.timeicon}
@@ -98,7 +102,7 @@ function JobOpportunity() {
                   <p className='text-custom-blue text-[9px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.mode}</p>
                 </div>
                 <div className='flex items-center'>
-                  <p className='text-custom-blue text-[9px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{data.date}</p>
+                  <p className='text-custom-blue text-[9px] md:text-[10px] lg:text-[12px] font-bold md:font-normal'>{new Date(data.date).toLocaleDateString()}</p>
                 </div>
               </div>
             </div>

@@ -52,7 +52,7 @@ function SharedResources() {
 
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col mb-10'>
       <p className=' md:ml-6 md:justify-start  flex justify-center items-center'>
         <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
       </p>
