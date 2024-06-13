@@ -9,8 +9,6 @@ function DiscoverPage() {
         <Sidebar/>
         <div className='flex flex-col w-full '>
             <Discover/>
-            
-           
         </div>
 
     </div>

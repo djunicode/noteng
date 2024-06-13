@@ -34,7 +34,7 @@ const ViewNote = () => {
 
     const handleGoBack = (event) => {
         event.preventDefault();
-        navigate.goBack();
+        navigate(-1);
     };
 
     const downloadNote = async () => {

@@ -6,9 +6,9 @@ import '../../styles/profile.css';
 
 const MyCard = ({ userData }) => {
   return (
-    <div className='flex flex-col w-full h-auto justify-center items-center'>
+    <div className='flex flex-col h-auto items-start'>
       <div className='border-b-2'></div>
-      <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row mt-4 md:justify-evenly w-full'>
+      <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row mt-4 md:justify-evenly w-[77vw]'>
         <div className='profilecard flex justify-evenly w-full mr-1 ml-1 md:mr-2 md:ml-2'>
           <div className='border p-3 rounded-lg bg-custom-blue w-full h-auto'>
             <div className='absolute top-2 right-2 z-10'>

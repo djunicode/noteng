@@ -11,6 +11,7 @@ import MyResources from '../Components/Profile/MyResources';
 import MyCard from '../Components/Profile/MyCard';
 import DescriptionProfile from '../Components/Profile/DescriptionProfile';
 import axios from 'axios';
+import MyVideos from '../Components/Profile/MyVideos'; // Import MyVideos component
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Profile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [userJobs, setUserJobs] = useState([]);
   const [userVideos, setUserVideos] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
 
   const token = localStorage.getItem('token');
   const sapid = localStorage.getItem('sapid');
@@ -31,12 +33,51 @@ const Profile = () => {
     }
   });
 
+  const handleJobDelete = (jobId) => {
+    fetch(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}` // Replace with your actual access token
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          setUserJobs(userJobs.filter(job => job.job_id !== jobId));
+        } else {
+          console.error('Error deleting job');
+        }
+      })
+      .catch(error => console.error('Error deleting job:', error));
+  };
+  const handlePostDelete = (postId) => {
+    const token = localStorage.getItem('token'); // Ensure the token is fetched correctly
+  
+    fetch(`https://monilmeh.pythonanywhere.com/api/posts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}` // Use the actual access token
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          setUserPosts(prevPosts => prevPosts.filter(post => post.post_id !== postId));
+        } else {
+          console.error('Error deleting post');
+        }
+      })
+      .catch(error => console.error('Error deleting post:', error));
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch user data
         const userResponse = await axiosInstance.get('/auth/user/');
         setUserData(userResponse.data);
+
+        // Check if user is admin
+        const adminResponse = await axiosInstance.get('/api/isAdmin/');
+        setIsAdmin(adminResponse.data);
 
         // Fetch all data and filter by sapid
         const [notesResponse, postsResponse, jobsResponse, videosResponse] = await Promise.all([
@@ -49,12 +90,10 @@ const Profile = () => {
         setUserNotes(notesResponse.data.filter(note => note.user === sapid));
         setUserPosts(postsResponse.data.filter(post => post.user === sapid));
         setUserJobs(jobsResponse.data.filter(job => job.user === sapid));
-        setUserVideos(videosResponse.data.filter(video => video.user === sapid));
-        console.log(userData);
-        console.log(userNotes);
+        if (adminResponse.data) {
+          setUserVideos(videosResponse.data.filter(video => video.user === sapid));
+        }
         console.log(userPosts);
-        console.log(userJobs);
-        console.log(userVideos);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -91,10 +130,10 @@ const Profile = () => {
             userData={userData}
             updateUser={setUserData}
           />
-          <MyJobs jobs={userJobs} />
-          <MyPosts posts={userPosts} />
+          <MyJobs jobs={userJobs} onDelete={handleJobDelete}/>
+          <MyPosts posts={userPosts} onDelete={handlePostDelete} />
           <MyNotes notes={userNotes} />
-          <MyResources videos={userVideos} />
+          {isAdmin && <MyVideos videos={userVideos} />} {/* Show MyVideos only if user is admin */}
         </div>
       </div>
     </div>

@@ -8,7 +8,9 @@ function MyJobs({ jobs, onDelete }) {
         <span className='font-bold'>My Posted Job Opportunities</span>
       </p>
       <div className='ml-6 border-b-2'></div>
-      <div className='flex overflow-x-scroll p-4 space-x-4'>
+
+      {/* Added container for slider behavior */}
+      <div className='flex overflow-x-scroll p-4 space-x-4 max-w-[1200px] mx-auto'>
         {jobs.map((job, i) => (
           <JobCard key={i} job={job} onDelete={onDelete} />
         ))}

@@ -1,98 +1,71 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './notes.css'; // Adjust the path according to your project structure
 
-import StarIcon from '@mui/icons-material/Star';
-import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
+const MyNotes = ({ notes }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
+  const handleNoteClick = (noteId) => {
+    navigate(`/viewnote/${noteId}`);
+  };
 
-const cardData = [
-    {
-        "heading1": 'Notes Title',
-        
-        "body": "Check out these Study Buddy Notes crafted by students who have been through coding sub..  ",
-        "icon": <StarIcon className=" text-yellow-400 " style={{width:'20px',height:'20px'}}  />,
-        "department":" Department",
-        
-        'timelimit': '100 + Likes',
-        'pdf':<PictureAsPdfOutlinedIcon className='text-custom-blue' style={{width:'20px',height:'20px'}} />
-    
-    },
-    {
-        "heading1": 'Notes Title',
-        
-        "body": "Check out these Study Buddy Notes crafted by students who have been through coding sub..",
-        "icon": <StarIcon className="  text-yellow-400 " style={{width:'20px',height:'20px'}}  />,
-        "department":" Department",
-        'timelimit': '100 + Likes',
-        'pdf':<PictureAsPdfOutlinedIcon className='text-custom-blue' style={{width:'20px',height:'20px'}} />
-    
-    },
-    {
-        "heading1": 'Notes Title',
-        "body": "Check out these Study Buddy Notes crafted by students who have been through coding sub..",
-        "icon": <StarIcon className=" text-yellow-400 " style={{width:'20px',height:'20px'}}  />,
-        "department":" Department",
-        'pdf':<PictureAsPdfOutlinedIcon className='text-custom-blue' style={{width:'20px',height:'20px'}} />,
-        'timelimit': '100 + Likes',
-        
-    },
-    {
-        "heading1": 'Notes Title',
-        "body": "Check out these Study Buddy Notes crafted by students who have been through coding sub..",
-        "icon": <StarIcon className=" text-yellow-400 " style={{width:'20px',height:'20px'}}  />,
-        "department":" Department",
-        'pdf':<PictureAsPdfOutlinedIcon className='text-custom-blue' style={{width:'20px',height:'20px'}} />
-        
-        
-        },
-        {
-        "heading1": 'Notes Title',
-        "body": "Check out these Study Buddy Notes crafted by students who have been through coding sub..",
-        "icon": <StarIcon className=" text-yellow-400 " style={{width:'20px',height:'20px'}}  />,
-        "department":" Department",
-        'pdf':<PictureAsPdfOutlinedIcon className='text-custom-blue' style={{width:'20px',height:'20px'}} />
-        
-        },
-    ]
-function ShareNotes() {
-return (
-    <div className='flex flex-col '>
-        <p className='justify-center md:ml-6 md:justify-start flex items-center'>
-        <span className='font-bold'>My Shared Notes</span>
-        </p>
-        <div className='ml-6 w-[78vw] border-b-2'></div>
-        <div className='flex  flex-col m-10 gap-5 md:flex-row md:ml-1 mt-4 justify-evenly'>
-        {cardData.map((data, i) => {
-                                return (
-                                    <div className='relative flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
-                                        <div className='border p-3 rounded-lg bg-gray-200'>
-                                            <div className='absolute top-0 right-0'>
-                                                <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' />
-                                            </div>
-                                            <div className='flex flex-col gap-2'>
-                                                <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
-                                                    <p className='font-bold'>{data.heading1}</p>
-                                                    <div className='flex items-center'>
-                                                        {data.icon}
-                                                        <p>4.6</p>
-                                                    </div>
-                                                </div>
-                                                <div className='flex'>
-                                                    <p>{data.body}</p>
-                                                </div>
-                                                <div className='flex justify-between'>
-                                                    <p className='text-custom-blue font-bold md:font-normal'>{data.department}</p>
-                                                    {data.pdf}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === notes.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? notes.length - 1 : prev - 1));
+  };
+
+  return (
+    <div className="flex flex-col">
+      <p className="flex items-center justify-center md:justify-start md:ml-6">
+        <span className="flex font-bold">My Notes</span>
+      </p>
+      <div className="ml-6 w-[78vw] border-b-2"></div>
+      {notes.length > 0 ? (
+        <div className="slider-container mt-4">
+          <div className="slider" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+            {notes.map((note, index) => (
+              <div
+                key={index}
+                className="slide p-4 cursor-pointer"
+                onClick={() => handleNoteClick(note.note_id)}
+              >
+                <div className="p-4 bg-gray-300 rounded-lg shadow-lg">
+                  <h2 className="font-bold text-lg">{note.note_title}</h2>
+                  <p className="text-sm text-gray-600 mt-2">{note.note_description.substring(0, 100)}...</p>
+                  <div className="flex items-center justify-between mt-3">
+                    <p className="text-gray-700">{note.department}</p>
+                    <div className="flex items-center">
+                      <span className="text-gray-700 font-bold">Rating:</span>
+                      <p className="text-gray-700 ml-2">{note.average_rating}</p>
                     </div>
-                );
-}
+                  </div>
+                  {note.document.endsWith('.pdf') ? (
+                    <div className="mt-4">
+                      <object data={note.document} type="application/pdf" width="100%" height="200px">
+                        <p>Alternative text - include a link <a href={note.document}>to the PDF!</a></p>
+                      </object>
+                    </div>
+                  ) : (
+                    <img src={note.document} alt={note.note_title} className="mt-4 w-full h-40 object-cover rounded-lg" />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="slider-controls">
+            <button className="slider-button" onClick={prevSlide}>Previous</button>
+            <button className="slider-button" onClick={nextSlide}>Next</button>
+          </div>
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 mt-4">No notes found.</p>
+      )}
+    </div>
+  );
+};
 
-export default ShareNotes
+export default MyNotes;

@@ -42,9 +42,9 @@ function DescriptionProfile({ jobCount, postCount, noteCount, videoCount, userDa
 
   return (
     <>
-      <div className='flex flex-col gap-3 w-[100vw]'>
-        <div className="flex flex-row justify-center">
-          <div className="bg-gray-200 p-4 rounded-md max-w-[800px] ml-0">
+      <div className='flex flex-col gap-3 w-[80vw]'>
+        <div className="flex flex-row justify-center ml-16">
+          <div className="bg-gray-300 p-4 rounded-md max-w-[800px] ml-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
               <div className="relative mb-12 px-3 lg:mb-0 text-center">
                 <div className="mb-2 flex justify-center">
@@ -96,7 +96,7 @@ function DescriptionProfile({ jobCount, postCount, noteCount, videoCount, userDa
                 Add New Post
               </button>
               <button
-                className='w-full bg-gray-200 py-4 px-8 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-primary ml-15'
+                className='w-full bg-gray-300 py-4 px-8 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-primary ml-15'
                 onClick={() => setIsModalOpen(true)}
               >
                 Edit Profile
@@ -107,8 +107,8 @@ function DescriptionProfile({ jobCount, postCount, noteCount, videoCount, userDa
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg w-96">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg w-96 relative z-60">
             <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
             <form onSubmit={handleEditProfile}>
               <div className="mb-4">
