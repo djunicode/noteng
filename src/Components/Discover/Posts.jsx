@@ -54,7 +54,7 @@ function Posts() {
       {cardData.map((data, i) => {
         return (
           <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
-            <div className='border p-3 rounded-lg bg-gray-200 w-full'>
+            <div className='border p-3 rounded-lg bg-gray-300 w-full'>
             <div className='flex justify-between'>
                 <p className='font-bold text-[18px] md:text-[15px]'>{data.heading1}</p>
                 <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={()=>handleDelete(data.id)} />

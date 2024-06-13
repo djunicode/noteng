@@ -68,7 +68,7 @@ function ShareNotes() {
       <div className='flex flex-col ml-10 mr-10 gap-5 md:flex-row md:ml-2 md:mr-2 mt-4 lg:justify-evenly md:justify-evenly'>
         {cardData.map((data, i) => (
           <div className='lg:flex md:flex justify-evenly flex-1 mr-1 ml-1 md:mr-2 block md:ml-2 lg:ml-2' key={i}>
-            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
+            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-300 md:w-[100%]'>
               <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
                 <p className='font-bold'>{data.heading1}</p>
                 <div className='flex '>

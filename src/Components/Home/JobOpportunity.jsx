@@ -73,7 +73,7 @@ function JobOpportunity() {
       <div className='flex flex-col justify-center items-center  mr-10 ml-10 gap-5 md:flex-row md:mr-2  md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2' key={i}>
-            <div className='border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
+            <div className='border p-3 rounded-lg bg-gray-300 md:w-[100%]'>
               <div className='flex justify-between'>
               <p className='font-bold '>{data.heading1}</p>
               <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500 ' onClick={() => handleDelete(data.id)} />
