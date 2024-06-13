@@ -6,17 +6,19 @@ import { Button } from '@mui/material';
 import axios from 'axios'; // Import Axios
 import '../styles/ViewJob.css';
 
+
 const ViewJob = () => {
   const navigate = useNavigate();
   const { jobId } = useParams();
   const [jobDetails, setJobDetails] = useState(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
         const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
           headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjI5OTc4LCJpYXQiOjE3MTgyMDgzNzgsImp0aSI6IjM2ZTljNTE1MzgyNDRlNjNiMjlhN2IxZDk3NjkyOWM1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.taIPP2tzCiUFtYX8I20yWUaNfp8ESZvJa9auROp8-tc' 
+            'Authorization': `Bearer ${token}`
           }
         });
         setJobDetails(response.data);
@@ -28,11 +30,11 @@ const ViewJob = () => {
     if (jobId) {
       fetchJobDetails();
     }
-  }, [jobId]);
+  }, [jobId,token]);
 
   const handleGoBack = (event) => {
     event.preventDefault();
-    navigate.goBack();
+    navigate(-1);
   };
 
   return (
@@ -45,7 +47,7 @@ const ViewJob = () => {
               <img src={BackButton} alt='Back'/>
             </Button>
             <p className='ml-6 mt-10 flex items-center'>
-              <span className='font-bold heading custom-heading'>Post Job Opportunities</span>
+              <span className='font-bold heading custom-heading'>View Job Opportunities</span>
             </p>
           </div>
           <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>

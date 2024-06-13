@@ -29,6 +29,8 @@ const LoginPage = ({ onLoginChange }) => {
                 console.log('Login successful:', data);
                 onLoginChange(true); // Call the onLoginChange callback with true to indicate user is logged in
                 localStorage.setItem('isLoggedIn', 'true'); // Persist login state in local storage
+                localStorage.setItem('token', data.access); // Persist token in local storage
+                localStorage.setItem('sapid', sapid); // Persist SAP ID in local storage
                 navigate('/Home'); // Redirect to homepage after successful login
             } else {
                 console.error('Login failed:', response.statusText);
@@ -77,10 +79,10 @@ const LoginPage = ({ onLoginChange }) => {
             </div>
             <div className='h-1/3 flex flex-col sm:flex-row justify-center items-center sm:items-start w-full'>
                 <div className="w-full sm:w-1/3 flex flex-col items-center">
-                    <span className="text-xs cursor-pointer">Forgot your password?</span>
+                    <span className="text-s cursor-pointer mb-2">Forgot your password?</span>
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold mb-6 ml-6 pr-6 sm:pr-0 rounded"
+                        className="w-full h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mb-6 ml-6 pr-6 sm:pr-0 rounded"
                         onClick={handleSubmit}
                     >
                         Login

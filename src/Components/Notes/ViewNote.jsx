@@ -10,13 +10,14 @@ const ViewNote = () => {
     const navigate = useNavigate();
     const { noteId } = useParams();
     const [noteDetails, setNoteDetails] = useState(null);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchNoteDetails = async () => {
             try {
                 const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/notes/${noteId}/`, {
                     headers: {
-                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3ODQ4NDcyLCJpYXQiOjE3MTc4MjY4NzIsImp0aSI6IjZmNTI5ZGEzM2QwZjQzNDM4NzZhM2UyNzlhMTEyZjdmIiwidXNlcl9pZCI6IjYwMDA0MjIwMTgzIn0.1IRs_bt9_9KFtwpbwlhDd9YG-3bYFcKrU2H1Nw__HcA' 
+                        'Authorization': `Bearer ${token}`
                     }
                 });
                 setNoteDetails(response.data);
@@ -29,7 +30,7 @@ const ViewNote = () => {
         if (noteId) {
             fetchNoteDetails();
         }
-    }, [noteId]);
+    }, [noteId,token]);
 
     const handleGoBack = (event) => {
         event.preventDefault();

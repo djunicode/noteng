@@ -3,23 +3,24 @@ import VideoCard from './VideoCard';
 
 function Videos() {
   const [videos, setVideos] = useState([]);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+        'Authorization': `Bearer ${token}`
       }
     })
       .then(response => response.json())
       .then(data => setVideos(data))
       .catch(error => console.error('Error fetching videos:', error));
-  }, []);
+  }, [token]);
 
   const handleDelete = (videoId) => {
     fetch(`https://monilmeh.pythonanywhere.com/api/videos/${videoId}/`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjI5OTc4LCJpYXQiOjE3MTgyMDgzNzgsImp0aSI6IjM2ZTljNTE1MzgyNDRlNjNiMjlhN2IxZDk3NjkyOWM1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.taIPP2tzCiUFtYX8I20yWUaNfp8ESZvJa9auROp8-tc' // Replace with your actual access token
+        'Authorization': `Bearer ${token}`
       }
     })
       .then(response => {
