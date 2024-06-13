@@ -6,14 +6,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function JobOpportunity() {
   const[cardData,setCardData]=useState([]);
-<<<<<<< HEAD
+
   const navigate = useNavigate();
   function Discover() {
     navigate('/DiscoverPage');
   }
-=======
+
   const token=localStorage.getItem('token');
->>>>>>> 24b55b5e11785ee244c8c0239a0e29acf4cea551
+
   useEffect(()=>{
     const fetchData=async()=>{
       try{
