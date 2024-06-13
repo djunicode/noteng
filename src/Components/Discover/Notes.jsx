@@ -1,0 +1,72 @@
+import React, { useEffect, useState } from 'react';
+import StarIcon from '@mui/icons-material/Star';
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import axios from 'axios';
+
+
+function Notes() {
+    const [cardData, setCardData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'; // Replace with the actual token
+        const response = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        console.log(response.data);
+        const data = response.data.map((item) => ({
+          heading1: item.note_title,
+          body: item.note_description,
+          icon: <StarIcon className="text-yellow-400" style={{ width: '20px', height: '20px' }} />,
+          stars: item.average_rating,
+          department: item.department,
+          pdf: (
+            <a href={item.document} target="_blank" rel="noopener noreferrer">
+              <PictureAsPdfOutlinedIcon className='text-custom-blue' style={{ width: '20px', height: '20px' }} />
+            </a>
+          ),
+        }));
+
+        setCardData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className='flex flex-col w-full'>
+    
+     
+      <div className='grid grid-cols-1 gap-5 m-10 md:grid-cols-4 md:gap-10 '>
+        {cardData.map((data, i) => (
+          <div className='lg:flex md:flex justify-evenly flex-1 mr-1 ml-1 md:mr-2 block md:ml-2 lg:mr-4 lg:ml-2 ' key={i}>
+            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-200 md:w-[100%]'>
+              <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
+                <p className='font-bold'>{data.heading1}</p>
+                <div className='flex items-center'>
+                  {data.icon}
+                  <p>{data.stars && data.stars.toFixed(1)}</p>
+                </div>
+              </div>
+              <div className='flex'>
+                <p>{data.body}</p>
+              </div>
+              <div className='flex justify-between'>
+                <p className='text-custom-blue font-bold md:font-normal'>{data.department}</p>
+                {data.pdf}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default Notes

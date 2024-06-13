@@ -13,19 +13,19 @@ function LatestPosts() {
             'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
           }
         });
-        console.log('API Response:', response.data); // Log the API response
+        // console.log('API Response:', response.data); 
         const data = response.data.map((item) => ({
           heading1: item.title,
           body: item.description,
           icon: <FavoriteBorderOutlinedIcon className="text-blue-500" style={{ width: '20px', height: '20px' }} />,
           timelimit: item.likes,
-          category: item.subtype, // Ensure this matches the API response
+          category: item.subtype, 
           url: item.post_url,
           deadlines: item.deadline,
           image: item.image,
         }));
-        console.log('Mapped Data:', data); // Log the mapped data
-        setCardData(data);
+        console.log('Mapped Data:', data); 
+        setCardData(data.slice(0, 3));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,11 +38,11 @@ function LatestPosts() {
       <p className='flex items-center justify-center md:justify-start md:ml-6'>
         <span className='flex font-bold text-[35px]'>Latest Posts</span>
       </p>
-      <div className='ml-6 w-full border-b-2'></div>
+      <div className='ml-6 md:w-full  border-b-2'></div>
       <div className='flex flex-col gap-5 ml-10 mr-10 md:flex-row md:ml-2 mt-4 md:justify-evenly'>
         {cardData.map((data, i) => {
           return (
-            <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2' key={i}>
+            <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2  lg:ml-2' key={i}>
               <div className='border p-3 rounded-lg bg-gray-200 w-full'>
                 <p className='font-bold text-[18px] md:text-[15px]'>{data.heading1}</p>
                 <div className='flex flex-col items-center'>
