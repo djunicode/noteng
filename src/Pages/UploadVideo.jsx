@@ -30,7 +30,7 @@ const ViewNote = () => {
             const response = await axios.post('https://monilmeh.pythonanywhere.com/api/videolinks/', formData, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3NzA5NTEwLCJpYXQiOjE3MTc2ODc5MTAsImp0aSI6IjdhZmY0OWY4OGU2ZTQ4NzNhY2ExNDc5MGFmM2VlMzU3IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.2qEts4v2MSFYoVfC1Ge2Tv5xJyhI8cMB5UoesbsDz-0'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
                 }
             });
             console.log(response.data);

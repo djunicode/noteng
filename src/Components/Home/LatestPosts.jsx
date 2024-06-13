@@ -63,6 +63,9 @@ function LatestPosts() {
           );
         })}
       </div>
+      <div className="flex justify-center md:justify-end md:mr-14 ">
+        <a href="#" className="text-blue-600 font-bold">See More</a>
+      </div>
     </div>
   );
 }
