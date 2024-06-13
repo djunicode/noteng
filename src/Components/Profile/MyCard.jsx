@@ -21,10 +21,10 @@ const cardData = [
     
     function MyCard() {
         return (
-            <div className='flex flex-col w-full h-auto'>
+            <div className='flex flex-col w-full h-auto justify-center items-center'>
                 
                 <div className='border-b-2'></div>
-                <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row md:ml-1 mt-4 md:justify-evenly'>
+                <div className='flex flex-col justify-center items-center m-10 gap-5 md:flex-row mt-4 md:justify-evenly'>
                     {cardData.map((data, i) => {
                         return (
                             <div className='profilecard flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 ' key={i}>

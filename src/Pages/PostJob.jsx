@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Home/Sidebar';
 import '../styles/PostJob.css';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PostJob = () => {
   const [subtype, setsubtype] = useState(null);
@@ -72,6 +72,7 @@ const handleSubmit = (e) => {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjY5MzkxLCJpYXQiOjE3MTgyNDc3OTEsImp0aSI6ImI1NDU5NTYyOThhMDQwNGY4ZTkzN2JkYWM0MjRiNjYyIiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.3Tap7Xk9toixMMOwbnkgegqcg4vBZ-3WJvLlyoST97g'
+     
     }
   })
   .then((response) => {

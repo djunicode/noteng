@@ -32,12 +32,12 @@
     margin-top: 8px;
     height: 36px;
 }
-.job-descrip {
+.job-descrip{
     font-family: Poppins;
     max-width: 1060px;
     color: #8391A1;
     margin-left: 3vw;
-    box-shadow: 0px 4px 12px rgba(247, 248, 249, 0.5);
+    box-shadow: 0px 4px 12px rgba(77, 77, 78, 0.5);
     background-color: #F7F8F9;
     border: 1px solid #E8ECF4;
     padding: 14px 24px 14px 24px;

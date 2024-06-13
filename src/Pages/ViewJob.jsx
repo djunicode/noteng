@@ -16,7 +16,7 @@ const ViewJob = () => {
       try {
         const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobId}/`, {
           headers: {
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE3NzA5NTEwLCJpYXQiOjE3MTc2ODc5MTAsImp0aSI6IjdhZmY0OWY4OGU2ZTQ4NzNhY2ExNDc5MGFmM2VlMzU3IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.2qEts4v2MSFYoVfC1Ge2Tv5xJyhI8cMB5UoesbsDz-0' 
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE4MjI5OTc4LCJpYXQiOjE3MTgyMDgzNzgsImp0aSI6IjM2ZTljNTE1MzgyNDRlNjNiMjlhN2IxZDk3NjkyOWM1IiwidXNlcl9pZCI6IjYwMDA0MjIwMjA3In0.taIPP2tzCiUFtYX8I20yWUaNfp8ESZvJa9auROp8-tc' 
           }
         });
         setJobDetails(response.data);
