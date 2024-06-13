@@ -25,6 +25,7 @@ class _UserRegistrationState extends State<UserRegistration> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController contactNumberController = TextEditingController();
+  bool isPassVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +118,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                     height: 10.0,
                   ),
                   textFieldWidget(
-                    hintText: "Conatct Number:",
+                    hintText: "Contact Number:",
                     readOnly: false,
                     numberOnly: true,
                     controller: contactNumberController,
@@ -131,11 +132,47 @@ class _UserRegistrationState extends State<UserRegistration> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  textFieldWidget(
-                    hintText: "Password:",
-                    readOnly: false,
-                    obsecureText: true,
+                  TextFormField(
+                    obscureText: isPassVisible,
                     controller: passwordController,
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: "Password:",
+                      floatingLabelStyle: TextStyle(color: primaryColor),
+                      contentPadding: EdgeInsets.all(14.0),
+                      filled: true,
+                      fillColor: secondaryAccentColor,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Password:",
+                      hintStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              isPassVisible = !isPassVisible;
+                            });
+                          },
+                          child: Icon(isPassVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility)),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter password';

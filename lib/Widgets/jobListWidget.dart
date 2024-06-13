@@ -52,7 +52,7 @@ class JobListWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  DateFormat('dd MMMM yyyy, HH:mm')
+                  DateFormat('dd MMMM yyyy')
                       .format(DateTime.parse(job.uploadTime!)),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
@@ -91,65 +91,82 @@ class JobListWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.calendar_today,
-                      size: 16,
-                      color: secondaryColor,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      ("${job.durationInMonths!} Months"),
-                      style: const TextStyle(
+                Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.calendar_today,
+                        size: 16,
                         color: secondaryColor,
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.w800,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        ("${job.durationInMonths!} Months"),
+                        style: const TextStyle(
+                          color: secondaryColor,
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    const FaIcon(
-                      FontAwesomeIcons.clock,
-                      size: 16,
-                      color: secondaryColor,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      job.mode!,
-                      style: const TextStyle(
+                Flexible(
+                  child: Row(
+                    children: [
+                      const FaIcon(
+                        FontAwesomeIcons.clock,
+                        size: 16,
                         color: secondaryColor,
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.w800,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        job.mode!,
+                        style: const TextStyle(
+                          color: secondaryColor,
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    const FaIcon(
-                      FontAwesomeIcons.building,
-                      size: 16,
-                      color: secondaryColor,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      job.location!,
-                      style: const TextStyle(
+                Flexible(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const FaIcon(
+                        FontAwesomeIcons.building,
+                        size: 16,
                         color: secondaryColor,
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.w800,
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              job.location!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: secondaryColor,
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -95,19 +95,27 @@ class _NotesDetailsState extends State<NotesDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Subject: ${widget.note.subject}",
-                  style: const TextStyle(
-                      fontSize: 15,
-                      color: secondaryColor,
-                      fontWeight: FontWeight.w700),
+                Column(
+                  children: [
+                    Text(
+                      "Subject: ${widget.note.subject} guigyugyuguyguggygig",
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: secondaryColor,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Department: ${widget.note.department}",
-                  style: const TextStyle(
-                      fontSize: 15,
-                      color: secondaryColor,
-                      fontWeight: FontWeight.w700),
+                Column(
+                  children: [
+                    Text(
+                      "Department: ${widget.note.department} gyiuyguyguiyguyguyg",
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: secondaryColor,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 )
               ],
             ),

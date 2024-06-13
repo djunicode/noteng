@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _sapId = '';
   String _password = '';
+  bool isPassVisible = false;
   TextEditingController sapIdController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -76,12 +77,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isPassVisible = !isPassVisible;
+                        });
+                      },
+                      child: Icon(isPassVisible
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
                     hintText: 'Enter password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  obscureText: true,
+                  obscureText: !isPassVisible,
                   onChanged: (value) {
                     _password = value;
                   },

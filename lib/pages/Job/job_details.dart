@@ -19,7 +19,7 @@ class JobDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formattedDate =
-        DateFormat('dd-MMM-yyyy').format(DateTime.parse(job.uploadTime!));
+        DateFormat('EEEE, MM/dd/y').format(DateTime.parse(job.uploadTime!));
     String hour = DateFormat('HH').format(DateTime.parse(job.uploadTime!));
     String minute = DateFormat('mm').format(DateTime.parse(job.uploadTime!));
 
@@ -217,11 +217,11 @@ class JobDetails extends StatelessWidget {
                         style: const TextStyle(
                             color: secondaryColor, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        "$hour:$minute",
-                        style: const TextStyle(
-                            color: secondaryColor, fontWeight: FontWeight.bold),
-                      ),
+                      // Text(
+                      //   "$hour:$minute",
+                      //   style: const TextStyle(
+                      //       color: secondaryColor, fontWeight: FontWeight.bold),
+                      // ),
                     ],
                   )
                 ],
