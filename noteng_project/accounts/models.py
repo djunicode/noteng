@@ -2,9 +2,20 @@ from django.db import models
 from authentication.models import User
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 class VideolinksModel(models.Model):
+    subject = [
+        ('ALL','ALL'),
+        ('CS','CS'),
+        ('IT','IT'),
+        ('AIML','AIML'),
+        ('AIDS','AIDS'),
+        ('DS','DS'),
+        ('IOT','IOT'),
+        ('EXTC','EXTC'),
+        ('ME','ME'),
+    ]
     video_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100)
+    subject = models.CharField(max_length=50, choices= subject)
     sem = models.IntegerField()
     topics = models.CharField(max_length=100)
     links = models.URLField()
@@ -101,10 +112,21 @@ class NotesModel(models.Model):
         (4, 'Four Stars'),
         (5, 'Five Stars'),
     ]
+    subject = [
+        ('ALL','ALL'),
+        ('CS','CS'),
+        ('IT','IT'),
+        ('AIML','AIML'),
+        ('AIDS','AIDS'),
+        ('DS','DS'),
+        ('IOT','IOT'),
+        ('EXTC','EXTC'),
+        ('ME','ME'),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     note_title = models.TextField()
     note_description = models.TextField()
-    subject = models.TextField()
+    subject = models.CharField(max_length=50, choices= subject)
     department = models.CharField(max_length=100)
     # rating = models.IntegerField(choices=RATING_CHOICES)
     document = models.FileField(upload_to='raw/',  storage=RawMediaCloudinaryStorage())
