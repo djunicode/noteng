@@ -19,7 +19,7 @@ function SharedResources() {
           }
         });
         console.log('API Response:', response.data); 
-        const data = response.data.map((item) => ({
+        const data = response.data.toReversed().map((item) => ({
           id:item.video_id,
           heading1: item.subject,
           heading2:item.topics,

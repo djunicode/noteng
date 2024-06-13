@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 function UploadNotes() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -11,9 +12,10 @@ function UploadNotes() {
     notesDescription: '',
     rating: 4,
     document: null,
-    type:' ',
+    type: '',
     user: '60004220207' // Assuming user ID is constant
   });
+  const [fileName, setFileName] = useState('');
 
   const token = localStorage.getItem('token');
 
@@ -26,10 +28,12 @@ function UploadNotes() {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setFormData({
       ...formData,
-      document: e.target.files[0]
+      document: file
     });
+    setFileName(file ? file.name : '');
   };
 
   const handleSubmit = async (e) => {
@@ -42,7 +46,7 @@ function UploadNotes() {
     form.append('subject', formData.subject);
     form.append('department', formData.department);
     form.append('note_description', formData.notesDescription);
-    form.append('type',formData.type);
+    form.append('type', formData.type);
     form.append('document', formData.document);
     form.append('user', formData.user);
 
@@ -62,12 +66,12 @@ function UploadNotes() {
           subject: '',
           department: '',
           notesDescription: '',
-          rating:4,
-          type:' ',
+          rating: 4,
+          type: '',
           document: null,
-          
           user: '60004220207'
         });
+        setFileName('');
       } else {
         alert('Failed to upload notes');
       }
@@ -94,7 +98,7 @@ function UploadNotes() {
         value={formData.notesTitle}
         onChange={handleChange}
         placeholder='Enter Notes title'
-        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
       />
       <div className='flex flex-col lg:flex-row justify-between'>
         <div className='flex flex-col w-[100vw] lg:w-full gap-3'>
@@ -105,7 +109,7 @@ function UploadNotes() {
             value={formData.subject}
             onChange={handleChange}
             placeholder='Enter Subject'
-            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
           />
         </div>
         <div className='flex flex-col w-full gap-3'>
@@ -116,7 +120,7 @@ function UploadNotes() {
             value={formData.department}
             onChange={handleChange}
             placeholder='Enter Department'
-            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
           />
         </div>
       </div>
@@ -127,13 +131,13 @@ function UploadNotes() {
         value={formData.notesDescription}
         onChange={handleChange}
         placeholder='Enter Notes Description'
-        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
       />
       <p className='text-[25px] ml-6'>Upload Document</p>
       <div className='flex gap-8 md:flex-row flex-col'>
-        <div className='flex flex-row gap-2 justify-center md:flex-col ml-6 md:p-36 mb-4 p-20 mr-6 border-dotted border-x-2 border-y-2 border-gray-400 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg'>
+        <div className='flex flex-row gap-2 justify-center md:flex-col ml-6 md:p-36 mb-4 p-20 mr-6 border-dotted border-x-2 border-y-2 border-gray-400 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg' onClick={handleButtonClick}>
           <CloudUploadOutlinedIcon />
-          <button onClick={handleButtonClick}>Upload</button>
+          <button>Upload</button>
           <input
             type='file'
             onChange={handleFileChange}
@@ -141,9 +145,12 @@ function UploadNotes() {
             id='fileUpload'
           />
         </div>
+        {fileName && (
+          <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
+        )}
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 md:ml-0'>
-            <button onClick={handleSubmit} className='w-full bg-custom-blue  py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>
+            <button onClick={handleSubmit} className='w-full bg-custom-blue py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>
           </div>
         </div>
       </div>

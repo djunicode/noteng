@@ -28,7 +28,7 @@ function JobOpportunity() {
           }
         });
         
-        const data=response.data.slice(0, 3).map((item)=>({
+        const data=response.data.toReversed().slice(0, 3).map((item)=>({
           id:item.job_id,
           heading1:item.company,
           heading2:item.job_title,

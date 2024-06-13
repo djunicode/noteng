@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 function NewPost() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function NewPost() {
     post_url: '',
     user: '60004220207' 
   });
+  const [fileName, setFileName] = useState('');
 
   const token = localStorage.getItem('token');
 
@@ -26,10 +28,12 @@ function NewPost() {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setFormData({
       ...formData,
-      document: e.target.files[0],
+      document: file,
     });
+    setFileName(file ? file.name : '');
   };
 
   const handleSubmit = async (e) => {
@@ -68,6 +72,7 @@ function NewPost() {
           post_url: '',
           user: '60004220207'
         });
+        setFileName('');
         console.log(formData);
       } else {
         alert('Failed to create post');
@@ -97,7 +102,7 @@ function NewPost() {
             value={formData.title}
             onChange={handleChange}
             placeholder='Enter Post Title'
-            className='border ml-6 mr-6  inputarea bg-white  border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required '
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
           />
         </div>
         <div className='flex flex-col flex-1'>
@@ -108,7 +113,7 @@ function NewPost() {
             value={formData.subtype}
             onChange={handleChange}
             placeholder='Enter Post Category'
-            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
           />
         </div>
       </div>
@@ -119,37 +124,37 @@ function NewPost() {
         value={formData.description}
         onChange={handleChange}
         placeholder='Enter Post Description'
-        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
       />
-      <div className='flex flex-col lg:flex-row '>
-      <div className='flex flex-col flex-1'>
-      <p className='text-[25px] ml-6'>Deadline</p>
-      <input
-        type='text'
-        name='deadline'
-        value={formData.deadline}
-        onChange={handleChange}
-        placeholder='Enter Deadline'
-        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
-      />
-      </div>
-      <div className='flex flex-col flex-1'>
-      <p className='text-[25px] ml-6'>Post URL</p>
-      <input
-        type='text'
-        name='post_url'
-        value={formData.post_url}
-        onChange={handleChange}
-        placeholder='Enter Post URL'
-        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
-      />
-      </div>
+      <div className='flex flex-col lg:flex-row'>
+        <div className='flex flex-col flex-1'>
+          <p className='text-[25px] ml-6'>Deadline</p>
+          <input
+            type='text'
+            name='deadline'
+            value={formData.deadline}
+            onChange={handleChange}
+            placeholder='Enter Deadline'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          />
+        </div>
+        <div className='flex flex-col flex-1'>
+          <p className='text-[25px] ml-6'>Post URL</p>
+          <input
+            type='text'
+            name='post_url'
+            value={formData.post_url}
+            onChange={handleChange}
+            placeholder='Enter Post URL'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          />
+        </div>
       </div>
       <p className='text-[25px] ml-6'>Upload Images</p>
       <div className='flex gap-8 flex-col md:flex-row'>
-        <div className='flex flex-row gap-2 justify-center md:flex-col ml-6 mb-3 p-20 md:p-36 mr-6 md:mr-0 border-dotted border-2 border-gray-400 rounded-lg'>
+        <div onClick={handleButtonClick} className='flex flex-row gap-2 justify-center md:flex-col ml-6 mb-3 p-20 md:p-36 mr-6 md:mr-0 border-dotted border-2 border-gray-400 rounded-lg'>
           <CloudUploadOutlinedIcon />
-          <button onClick={handleButtonClick}>Upload</button>
+          <button>Upload</button>
           <input
             type='file'
             onChange={handleFileChange}
@@ -157,6 +162,9 @@ function NewPost() {
             id='fileUpload'
           />
         </div>
+        {fileName && (
+          <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
+        )}
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 lg:mr-0'>
             <button

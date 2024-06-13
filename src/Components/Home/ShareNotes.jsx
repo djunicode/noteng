@@ -19,7 +19,7 @@ function ShareNotes() {
           }
         });
         console.log(response.data);
-        const data = response.data.map((item) => ({
+        const data = response.data.toReversed().map((item) => ({
           id: item.note_id,
           heading1: item.note_title,
           body: item.note_description,
