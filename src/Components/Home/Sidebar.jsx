@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import SearchIcon from '@mui/icons-material/Search';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,11 +8,11 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import Sidebarresponsive from './Sidebarresponsive';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState({ fname: 'John', lname: 'Doe' });
+  const [isAdmin, setIsAdmin] = useState(false);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -31,7 +30,23 @@ const Sidebar = () => {
       }
     };
 
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch('https://monilmeh.pythonanywhere.com/api/isAdmin/', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const data = await response.json();
+        setIsAdmin(data.is_admin);
+        console.log('Admin status:', data.isAdmin);
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+      }
+    };
+
     fetchUserData();
+    checkAdminStatus();
   }, [token]);
 
   function handleHomeClick() {
@@ -96,12 +111,6 @@ const Sidebar = () => {
               </div>
             </div>
           </div>
-          <div className='flex items-center bg-white rounded-l-lg rounded-r-lg mx-4 my-4'>
-            <input type='text' placeholder='Search for posts, notes...' className='w-full outline-none border-none rounded-l-lg ml-4' />
-            <div className='w-8 h-8 bg-custom-blue flex justify-center items-center rounded-md mr-0.5 cursor-pointer py-5'>
-              <SearchIcon style={{ color: 'white' }} />
-            </div>
-          </div>
           <div className='flex bg-custom-gray rounded-l-lg rounded-r-lg mx-4 my-3 p-1 cursor-pointer' onClick={handleHomeClick}>
             <div className='pl-2'>
               <HomeOutlinedIcon style={{ width: '30px', height: '30px', color: '#394DFD' }} />
@@ -134,24 +143,24 @@ const Sidebar = () => {
                 </div>
                 <p className='font-bold text-white'>Upload Notes</p>
               </div>
-              <div className='flex gap-2 mt-2 cursor-pointer' onClick={uploadVideo}>
-                <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
-                  <AddIcon style={{ color: '#394DFD' }} />
+              {isAdmin && (
+                <div className='flex gap-2 mt-2 cursor-pointer' onClick={uploadVideo}>
+                  <div className='flex h-8 w-8 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
+                    <AddIcon style={{ color: '#394DFD' }} />
+                  </div>
+                  <p className='font-bold text-white'>Share Video</p>
                 </div>
-                <p className='font-bold text-white'>Share Video</p>
-              </div>
+              )}
               <div className='flex gap-2 mt-8 ml-12 cursor-pointer' onClick={handleLogout}>
-                
                 <button onClick={handleLogout} className='font-bold text-white text-2xl'>
-              Logout
-            </button>
-            <div className='flex h-10 w-10 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
+                  Logout
+                </button>
+                <div className='flex h-10 w-10 bg-custom-gray items-center justify-center rounded-l-lg rounded-r-lg'>
                   <LogoutIcon style={{ color: '#394DFD' }} />
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
