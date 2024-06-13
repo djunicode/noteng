@@ -36,7 +36,7 @@ const SignUp = () => {
             });
 
             if (response.ok) {
-                navigate('/');
+                navigate('/LoginPage');
             } else {
                 const errorData = await response.json();
                 console.error('Error response from server:', errorData);

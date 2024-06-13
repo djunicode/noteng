@@ -16,7 +16,7 @@ const ViewNote = () => {
         sem: '',
         topics: '',
         links: '',
-        user: '60004220207' // Assuming user ID is constant
+        user: localStorage.getItem('sapid')// Assuming user ID is constant
     });
     const token = localStorage.getItem('token');
 
