@@ -97,7 +97,7 @@ function NewPost() {
             value={formData.title}
             onChange={handleChange}
             placeholder='Enter Post Title'
-            className='border ml-6 mr-6 p-4 rounded-lg bg-custom-gray'
+            className='border ml-6 mr-6  inputarea bg-white  border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required '
           />
         </div>
         <div className='flex flex-col flex-1'>
@@ -108,7 +108,7 @@ function NewPost() {
             value={formData.subtype}
             onChange={handleChange}
             placeholder='Enter Post Category'
-            className='border ml-6 mr-6 p-4 rounded-lg bg-custom-gray'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
           />
         </div>
       </div>
@@ -119,7 +119,7 @@ function NewPost() {
         value={formData.description}
         onChange={handleChange}
         placeholder='Enter Post Description'
-        className='border ml-6 mr-6 p-4 rounded-lg bg-custom-gray'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
       />
       <div className='flex flex-col lg:flex-row '>
       <div className='flex flex-col flex-1'>
@@ -130,7 +130,7 @@ function NewPost() {
         value={formData.deadline}
         onChange={handleChange}
         placeholder='Enter Deadline'
-        className='border ml-6 mr-6 p-4 rounded-lg bg-custom-gray'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
       />
       </div>
       <div className='flex flex-col flex-1'>
@@ -141,7 +141,7 @@ function NewPost() {
         value={formData.post_url}
         onChange={handleChange}
         placeholder='Enter Post URL'
-        className='border ml-6 mr-6 p-4 rounded-lg bg-custom-gray'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
       />
       </div>
       </div>

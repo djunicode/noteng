@@ -41,7 +41,7 @@ const ViewJob = () => {
     <div className='flex md:flex-row flex-col'>
       <Sidebar/>
       <>
-        <div className='flex flex-col maincontent'>
+        <div className='flex flex-col maincontent overflow-y-scroll h-[100vh]'>
           <div className='flex flex-row'>
             <Button className='backButton' onClick={handleGoBack}>
               <img src={BackButton} alt='Back'/>

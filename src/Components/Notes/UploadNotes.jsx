@@ -93,8 +93,8 @@ function UploadNotes() {
         name='notesTitle'
         value={formData.notesTitle}
         onChange={handleChange}
-        placeholder='Hint Text'
-        className='border ml-6 p-4 rounded-tl-lg rounded-tr-lg mr-6 rounded-bl-lg rounded-br-lg bg-custom-gray'
+        placeholder='Enter Notes title'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
       />
       <div className='flex flex-col lg:flex-row justify-between'>
         <div className='flex flex-col w-[100vw] lg:w-full gap-3'>
@@ -104,8 +104,8 @@ function UploadNotes() {
             name='subject'
             value={formData.subject}
             onChange={handleChange}
-            placeholder='Hint Text'
-            className='border ml-6 mr-6 p-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg bg-custom-gray'
+            placeholder='Enter Subject'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
           />
         </div>
         <div className='flex flex-col w-full gap-3'>
@@ -115,8 +115,8 @@ function UploadNotes() {
             name='department'
             value={formData.department}
             onChange={handleChange}
-            placeholder='Hint Text'
-            className='border ml-6 p-4 rounded-tl-lg mr-6 rounded-tr-lg rounded-bl-lg rounded-br-lg bg-custom-gray'
+            placeholder='Enter Department'
+            className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
           />
         </div>
       </div>
@@ -126,8 +126,8 @@ function UploadNotes() {
         name='notesDescription'
         value={formData.notesDescription}
         onChange={handleChange}
-        placeholder='Hint Text'
-        className='border ml-6 p-4 rounded-tl-lg rounded-tr-lg mr-6 rounded-bl-lg rounded-br-lg bg-custom-gray'
+        placeholder='Enter Notes Description'
+        className='border ml-6 mr-6 inputarea bg-white border-gray-100 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-4 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Company Location" required'
       />
       <p className='text-[25px] ml-6'>Upload Document</p>
       <div className='flex gap-8 md:flex-row flex-col'>
