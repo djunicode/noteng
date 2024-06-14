@@ -78,6 +78,11 @@ const SignUp = () => {
                             className="bg-custom-blue py-4 flex justify-center items-center text-white px-20 rounded-md w-full sm:w-1/4 mx-auto sm:mx-0">
                             Sign Up
                         </button>
+                        <span
+                        className="text-s cursor-pointer"
+                        onClick={() => navigate('/LoginPage')}
+                    >Already Have an Account? Login Here!
+                    </span>
                     </form>
 
                     {errorMessage && (

@@ -8,14 +8,15 @@ import axios from 'axios';
 
 const PostDetails = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // Assuming you are passing post ID as a URL parameter
+  const { postId } = useParams(); // Assuming you are passing post postId as a URL parameter
   const [postDetails, setPostDetails] = useState(null);
   const token = localStorage.getItem('token');
+  const sapid = localStorage.getItem('sapid');
 
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/posts/${id}`, {
+        const response = await axios.get(`https://monilmeh.pythonanywhere.com/api/posts/${postId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
@@ -27,7 +28,7 @@ const PostDetails = () => {
     };
 
     fetchPostDetails();
-  }, [id, token]);
+  }, [postId, token]);
 
   const handleGoBack = (event) => {
     event.preventDefault();
@@ -43,26 +44,26 @@ const PostDetails = () => {
       <Sidebar />
       <div className='flex flex-col maincontent p-4 overflow-y-scroll h-[100vh]'>
         <div className='flex flex-row items-center'>
-          <Button className='backButton' onClick={handleGoBack}>
-            <img src={BackButton} alt='Back' className='w-6 h-6' />
+              <Button className='backButton' onClick={handleGoBack}>
+              <img src={BackButton} alt='Back'/>
           </Button>
-          <p className='ml-6 mt-10 font-bold text-4xl'>Post Details</p>
+          <p className='ml-6 mt-10 mb-6 font-bold text-4xl'>Post Details</p>
         </div>
         <hr className='my-2 border-b-2 border-gray-300' />
         <div>
-          <h3 className='text-3xl font-bold '>{postDetails.title}</h3>
+          <h3 className='text-3xl font-bold mb-3 mt-3'>{postDetails.title}</h3>
         </div>
         <hr className='my-2 border-b-2 border-gray-300' />
-        <h3 className='text-3xl font-bold'>Post Description</h3>
-        <p className='text-2xl'>{postDetails.description}</p>
+        <h3 className='text-2xl font-bold mt-3 mb-3 ml-6'>Post Description</h3>
+        <p className='text-xl mt-3 mb-3 ml-6'>{postDetails.description}</p>
         <div className='postimg flex justify-center items-center mt-4'>
-          <img src={postDetails.image} alt={postDetails.title} className='w-[450px] h-auto object-contain' />
+          <img src={postDetails.image} alt={postDetails.title} className='w-[450px] h-auto object-contain' style={{borderRadius:'10%'}}/>
         </div>
         <hr className='my-4 border-b-2 border-gray-300' />
         <div className='flex flex-row'>
           <div className='flex flex-col mr-8'>
             <p className='font-bold text-xl'>Posted By:</p>
-            <p className='text-base'>Ansh Shah</p>
+            <p className='text-base'>{sapid}</p>
           </div>
           <div className='flex flex-col mr-8'>
             <p className='font-bold text-xl'>Posted on:</p>

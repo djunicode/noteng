@@ -25,7 +25,7 @@ function LatestPosts() {
             'Authorization': `Bearer ${token}`
           }
         });
-        const data = response.data.map((item) => ({
+        const data = response.data.toReversed().map((item) => ({
           id: item.post_id,
           heading1: item.title,
           body: item.description,

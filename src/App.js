@@ -51,7 +51,7 @@ function App() {
           <Route path='/ViewJob/:jobId' element={isLoggedIn ? <ViewJob /> : <Navigate to="/LoginPage" />} />
           <Route path='/ViewNote/:noteId' element={isLoggedIn ? <ViewNote /> : <Navigate to="/LoginPage" />} />
           <Route path='/UploadNewPosts' element={isLoggedIn ? <UploadNewPosts /> : <Navigate to="/LoginPage" />} />
-          <Route path='/PostDetails' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
+          <Route path='/PostDetails/:postId' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
           <Route path='/Profile' element={isLoggedIn ? <Profile /> : <Navigate to="/LoginPage" />} />
           <Route path='/CreateNote' element={isLoggedIn ? <NewNotes /> : <Navigate to="/LoginPage" />} />
           <Route path='/UploadVideo' element={isLoggedIn ? <UploadVideo /> : <Navigate to="/LoginPage" />} />
