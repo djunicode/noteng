@@ -35,9 +35,11 @@ function Videos() {
 
   return (
     <div className='m-6 grid grid-cols-1 md:grid-cols-2 gap-4'>
-      {videos.map((video) => (
+      {videos.length === 0 ? (
+        <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl'>Please wait videos might be loading...</h1>
+      ) : (videos.map((video) => (
         <VideoCard key={video.video_id} video={video} onDelete={handleDelete} />
-      ))}
+      )))}
     </div>
   );
 }

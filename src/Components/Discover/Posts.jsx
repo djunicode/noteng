@@ -17,19 +17,19 @@ function Posts() {
             'Authorization': `Bearer ${token}`,
           }
         });
-        console.log('API Response:', response.data); 
+        console.log('API Response:', response.data);
         const data = response.data.map((item) => ({
           heading1: item.title,
           id: item.post_id,
           body: item.description,
           icon: <FavoriteBorderOutlinedIcon className="text-blue-500" style={{ width: '20px', height: '20px' }} />,
           timelimit: item.likes,
-          category: item.subtype, 
+          category: item.subtype,
           url: item.post_url,
           deadlines: item.deadline,
           image: item.image,
         }));
-        console.log('Mapped Data:', data); 
+        console.log('Mapped Data:', data);
         setCardData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -58,7 +58,9 @@ function Posts() {
   return (
     <div className='flex flex-col w-full'>
       <div className='grid grid-cols-1 gap-5 m-10 md:grid-cols-2 md:gap-10'>
-        {cardData.map((data, i) => (
+        {cardData.length === 0 ? (
+          <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl'>Please wait posts might be loading...</h1>
+        ) : (cardData.map((data, i) => (
           <div
             className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2 cursor-pointer'
             key={i}
@@ -84,7 +86,7 @@ function Posts() {
               </div>
             </div>
           </div>
-        ))}
+        )))}
       </div>
     </div>
   );

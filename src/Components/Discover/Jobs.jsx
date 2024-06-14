@@ -36,11 +36,14 @@ function Jobs() {
 
   return (
     <div className='m-6 grid grid-cols-1 md:grid-cols-2 gap-4'>
-      {jobs.map((job) => (
-        <JobCard key={job.job_id} job={job} onDelete={handleDelete} />
-      ))}
+      {jobs.length === 0 ? (
+        <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl'>Please wait jobs openings migth be loading...</h1>
+      ) : (
+        jobs.map((job) => (
+          <JobCard key={job.job_id} job={job} onDelete={handleDelete} />
+        ))
+      )}
     </div>
   );
 }
-
 export default Jobs;
