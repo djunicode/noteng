@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../Components/Home/Sidebar';
 import BackButton from '../assets/BackButton.png';
 import { Button } from '@mui/material';
-import PosDetailsImg from '../assets/postdetails.svg';
+
 import axios from 'axios';
 
 const PostDetails = () => {
