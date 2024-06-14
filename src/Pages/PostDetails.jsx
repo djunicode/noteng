@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const PostDetails = () => {
   const navigate = useNavigate();
-  const { postId } = useParams(); // Assuming you are passing post postId as a URL parameter
+  const { postId } = useParams(); 
   const [postDetails, setPostDetails] = useState(null);
   const token = localStorage.getItem('token');
   const sapid = localStorage.getItem('sapid');

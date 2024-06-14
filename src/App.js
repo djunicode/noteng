@@ -57,7 +57,7 @@ function App() {
           <Route path='/UploadVideo' element={isLoggedIn ? <UploadVideo /> : <Navigate to="/LoginPage" />} />
           <Route path='/DiscoverPage' element={isLoggedIn ? <DiscoverPage /> : <Navigate to="/LoginPage" />} />
           <Route path='/' element={isLoggedIn ? <Home /> : <Navigate to="/Splash" />} />
-          <Route path='/post/:id' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
+          <Route path='/post/:postId' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
         </Routes>
       )}
     </Router>
