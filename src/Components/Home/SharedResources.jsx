@@ -25,7 +25,7 @@ function SharedResources() {
           heading2:item.topics,
           semester:item.sem,
           url:item.links,
-          user:'60004220207'
+          user:'6000422020100'
         }));
         console.log('Mapped Data:', data); 
         setCardData(data.slice(0, 3));
@@ -38,7 +38,7 @@ function SharedResources() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://monilmeh.pythonanywhere.com//api/posts/${id}`, {
+      await axios.delete(`https://monilmeh.pythonanywhere.com//api/videolinks/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -54,7 +54,7 @@ function SharedResources() {
   return (
     <div className='flex flex-col mb-10'>
       <p className=' md:ml-6 md:justify-start  flex justify-center items-center'>
-        <span className='font-bold text-[35px]'>Explore Latest Job Opportunities</span>
+        <span className='font-bold text-[35px]'>Shared Resources</span>
       </p>
       <div className='ml-6 border-b-2'></div>
       <div className='flex flex-col justify-center items-center mr-10 ml-10 gap-5 md:flex-row md:ml-2 md:mr-2 mt-4 md:justify-evenly'>
