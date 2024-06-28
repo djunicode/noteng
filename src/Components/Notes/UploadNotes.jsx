@@ -136,6 +136,7 @@ function UploadNotes() {
       <p className='text-[25px] ml-6'>Upload Document</p>
       <div className='flex gap-8 md:flex-row flex-col'>
         <div className='flex flex-row gap-2 justify-center md:flex-col ml-6 md:p-36 mb-4 p-20 mr-6 border-dotted border-x-2 border-y-2 border-gray-400 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg' onClick={handleButtonClick}>
+          <div className='flex flex-col items-center'>
           <CloudUploadOutlinedIcon />
           <button>Upload</button>
           <input
@@ -144,10 +145,14 @@ function UploadNotes() {
             className='hidden'
             id='fileUpload'
           />
-        </div>
-        {fileName && (
+          </div>
+        
+           {fileName && (
           <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
         )}
+           
+        </div>
+       
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 md:ml-0'>
             <button onClick={handleSubmit} className='w-full bg-custom-blue py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>

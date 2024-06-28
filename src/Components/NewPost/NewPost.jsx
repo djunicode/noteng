@@ -153,6 +153,7 @@ function NewPost() {
       <p className='text-[25px] ml-6'>Upload Images</p>
       <div className='flex gap-8 flex-col md:flex-row'>
         <div onClick={handleButtonClick} className='flex flex-row gap-2 justify-center md:flex-col ml-6 mb-3 p-20 md:p-36 mr-6 md:mr-0 border-dotted border-2 border-gray-400 rounded-lg'>
+          <div className='flex flex-col items-center'>
           <CloudUploadOutlinedIcon />
           <button>Upload</button>
           <input
@@ -161,10 +162,12 @@ function NewPost() {
             className='hidden'
             id='fileUpload'
           />
-        </div>
-        {fileName && (
+          </div>
+          {fileName && (
           <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
         )}
+        </div>
+        
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 lg:mr-0'>
             <button
