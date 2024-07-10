@@ -15,7 +15,7 @@ function UploadNotes() {
     rating: 4,
     document: null,
     type: '',
-    user: '60004220207' // Assuming user ID is constant
+    user: ''
   });
   const [fileName, setFileName] = useState('');
 
@@ -71,7 +71,7 @@ function UploadNotes() {
           rating: 4,
           type: '',
           document: null,
-          user: '60004220207'
+          user: ''
         });
         setFileName('');
       } else {
