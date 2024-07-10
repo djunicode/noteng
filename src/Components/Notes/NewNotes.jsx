@@ -4,9 +4,9 @@ import UploadNotes from './UploadNotes'
 function NewPostPage() {
   return (
    
-        <div className='flex flex-col lg:flex-row  h-full'>
+        <div className='flex flex-col overflow-y-scroll  lg:flex-row h-full scroll-smooth'>
             <Sidebar />
-            <div className='flex overflow-y-scroll h-[100vh]'>
+            <div className='flexh-[100vh] mb-20'>
                 <UploadNotes  />
             </div>
         </div>

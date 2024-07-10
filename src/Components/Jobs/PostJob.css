@@ -4,9 +4,10 @@
   }
   
   .maincontent {
-    width: 100%;
     font-family: Poppins;
     color: #20222E;
+    margin-bottom: 40px;
+    overflow-y: auto;
   }
   
   .maincontent label {

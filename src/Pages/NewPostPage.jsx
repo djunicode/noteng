@@ -4,9 +4,9 @@ import Sidebar from '../Components/Home/Sidebar'
 function NewPostPage() {
   return (
    
-        <div className='flex flex-col lg:flex-row  h-full'>
+        <div className='flex flex-col lg:flex-row scroll-smooth h-full'>
             <Sidebar />
-            <div className='flex overflow-y-scroll h-[100vh]'>
+            <div className='flexh-[100vh] mb-10'>
                 <NewPost  />
             </div>
         </div>

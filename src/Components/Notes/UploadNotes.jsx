@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import BackButton from '../../assets/BackButton.png';
 
 function UploadNotes() {
   const navigate = useNavigate();
@@ -84,12 +86,21 @@ function UploadNotes() {
   const handleButtonClick = () => {
     document.getElementById('fileUpload').click();
   };
+  const handleGoBack = (event) => {
+    event.preventDefault();
+    navigate(-1);
+  };
 
   return (
     <div className='flex flex-col gap-3'>
-      <p className='flex items-center justify-center md:justify-start md:ml-6'>
-        <span className='flex font-bold text-[35px]'>Upload Notes</span>
-      </p>
+      <div className='flex flex-row items-center'>
+        <Button className='h-20' onClick={handleGoBack}>
+          <img src={BackButton} alt='Back' />
+        </Button>
+        <p className='flex items-center justify-center md:justify-start md:ml-6'>
+          <span className='flex font-bold text-[35px]'>Upload Notes</span>
+        </p>
+      </div>
       <div className='ml-6 w-[78vw] border-b-2'></div>
       <p className='text-[25px] ml-6'>Notes title</p>
       <input
@@ -137,22 +148,22 @@ function UploadNotes() {
       <div className='flex gap-8 md:flex-row flex-col'>
         <div className='flex flex-row gap-2 justify-center md:flex-col ml-6 md:p-36 mb-4 p-20 mr-6 border-dotted border-x-2 border-y-2 border-gray-400 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg' onClick={handleButtonClick}>
           <div className='flex flex-col items-center'>
-          <CloudUploadOutlinedIcon />
-          <button>Upload</button>
-          <input
-            type='file'
-            onChange={handleFileChange}
-            className='hidden'
-            id='fileUpload'
-          />
+            <CloudUploadOutlinedIcon />
+            <button>Upload</button>
+            <input
+              type='file'
+              onChange={handleFileChange}
+              className='hidden'
+              id='fileUpload'
+            />
           </div>
-        
-           {fileName && (
-          <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
-        )}
-           
+
+          {fileName && (
+            <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
+          )}
+
         </div>
-       
+
         <div className='flex w-full h-full items-center justify-center'>
           <div className='w-full mr-6 ml-6 md:ml-0'>
             <button onClick={handleSubmit} className='w-full bg-custom-blue py-4 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg text-white'>Add New Post</button>

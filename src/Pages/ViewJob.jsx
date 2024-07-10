@@ -37,15 +37,15 @@ const ViewJob = () => {
   };
 
   return (
-    <div className='flex flex-col md:flex-row'>
+    <div className='flex flex-col lg:flex-row h-screen'>
       <Sidebar />
-      <div className='flex flex-col flex-grow overflow-y-scroll h-screen p-4'>
-        <div className='flex flex-col sm:flex-row items-center'>
-          <Button className='backButton' onClick={handleGoBack}>
+      <div className='flex flex-col flex-grow overflow-y-scroll p-4'>
+        <div className='flex flex-row items-center'>
+          <Button className='h-12 sm:h-20' onClick={handleGoBack}>
             <img src={BackButton} alt='Back' />
           </Button>
           <p className='ml-6 mt-10 sm:mt-0 flex items-center'>
-            <span className='font-bold text-xl sm:text-2xl custom-heading'>View Job Opportunities</span>
+            <span className='font-bold text-md lg:text-2xl custom-heading'>View Job Opportunities</span>
           </p>
         </div>
         <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
@@ -54,7 +54,7 @@ const ViewJob = () => {
             <h3 className='company-name text-xl sm:text-2xl'>{jobDetails.company}</h3>
             <p className='company-location text-sm sm:text-base'>{jobDetails.location}</p>
             <div className='flex flex-wrap gap-2 mt-2'>
-              <button type="button" className="badges1 inline-flex items-center px-3 py-2 text-xs sm:text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button type="button" className="badges inline-flex items-center px-3 py-2 text-xs sm:text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 {jobDetails.subtype}
               </button>
               <button type="button" className="badges inline-flex items-center px-3 py-2 text-xs sm:text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

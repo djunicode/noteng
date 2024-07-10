@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Home from './Pages/Home';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import PostJob from './Pages/PostJob';
 import ViewJob from './Pages/ViewJob';
 import NewPost from './Pages/NewPostPage';
 import UploadNewPosts from './Pages/UploadNewPosts';
@@ -15,6 +14,7 @@ import DiscoverPage from './Pages/DiscoverPage';
 import Splash from './Pages/Splash';
 import LoginPage from './Pages/LoginPage';
 import PostDetails from './Pages/PostDetails';
+import NewJob from './Components/Jobs/NewJob';
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
           <Route path='/LoginPage' element={<LoginPage onLoginChange={handleLogin} />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/CreatePost' element={isLoggedIn ? <NewPost /> : <Navigate to="/LoginPage" />} />
-          <Route path='/CreateJob' element={isLoggedIn ? <PostJob /> : <Navigate to="/LoginPage" />} />
+          <Route path='/CreateJob' element={isLoggedIn ? <NewJob /> : <Navigate to="/LoginPage" />} />
           <Route path='/ViewJob/:jobId' element={isLoggedIn ? <ViewJob /> : <Navigate to="/LoginPage" />} />
           <Route path='/ViewNote/:noteId' element={isLoggedIn ? <ViewNote /> : <Navigate to="/LoginPage" />} />
           <Route path='/UploadNewPosts' element={isLoggedIn ? <UploadNewPosts /> : <Navigate to="/LoginPage" />} />

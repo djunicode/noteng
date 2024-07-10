@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import BackButton from '../../assets/BackButton.png';
+import './viewpost.css';
 
 function NewPost() {
   const navigate = useNavigate();
@@ -13,7 +16,7 @@ function NewPost() {
     deadline: '',
     likes: 100,
     post_url: '',
-    user: '60004220207' 
+    user: '60004220207'
   });
   const [fileName, setFileName] = useState('');
 
@@ -42,10 +45,10 @@ function NewPost() {
     const endpoint = 'https://monilmeh.pythonanywhere.com/api/posts';
     const form = new FormData();
 
-    form.append('title', formData.title); 
+    form.append('title', formData.title);
     form.append('category', formData.subtype);
     form.append('description', formData.description);
-    form.append('image', formData.document); 
+    form.append('image', formData.document);
     form.append('deadline', formData.deadline);
     form.append('likes', formData.likes);
     form.append('post_url', formData.post_url);
@@ -73,7 +76,6 @@ function NewPost() {
           user: '60004220207'
         });
         setFileName('');
-        console.log(formData);
       } else {
         alert('Failed to create post');
       }
@@ -87,11 +89,27 @@ function NewPost() {
     document.getElementById('fileUpload').click();
   };
 
+  const handleGoBack = (event) => {
+    event.preventDefault();
+    navigate(-1);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
+    }
+  };
+
   return (
-    <div className='flex flex-col gap-3 w-full'>
-      <p className='flex items-center justify-center md:justify-start md:ml-6'>
-        <span className='flex font-bold text-[35px]'>Create New Post</span>
-      </p>
+    <div className='flex flex-col gap-3 w-full' onKeyPress={handleKeyPress}>
+      <div className='flex flex-row items-center'>
+        <Button className='h-20' onClick={handleGoBack}>
+          <img src={BackButton} alt='Back' />
+        </Button>
+        <p className='ml-6 mt-10 sm:mt-0 flex items-center'>
+          <span className='flex font-bold text-[35px]'>Create New Post</span>
+        </p>
+      </div>
       <div className='ml-6 w-[78vw] border-b-2'></div>
       <div className='flex flex-col lg:flex-row'>
         <div className='flex flex-col flex-1'>
@@ -154,22 +172,21 @@ function NewPost() {
       <div className='flex gap-8 flex-col md:flex-row'>
         <div onClick={handleButtonClick} className='flex flex-row gap-2 justify-center md:flex-col ml-6 mb-3 p-20 md:p-36 mr-6 md:mr-0 border-dotted border-2 border-gray-400 rounded-lg'>
           <div className='flex flex-col items-center'>
-          <CloudUploadOutlinedIcon />
-          <button>Upload</button>
-          <input
-            type='file'
-            onChange={handleFileChange}
-            className='hidden'
-            id='fileUpload'
-          />
+            <CloudUploadOutlinedIcon />
+            <button>Upload</button>
+            <input
+              type='file'
+              onChange={handleFileChange}
+              className='hidden'
+              id='fileUpload'
+            />
           </div>
           {fileName && (
-          <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
-        )}
+            <p className='ml-6 text-green-500'>File Uploaded: {fileName}</p>
+          )}
         </div>
-        
         <div className='flex w-full h-full items-center justify-center'>
-          <div className='w-full mr-6 ml-6 lg:mr-0'>
+          <div className='w-full mr-6 ml-6'>
             <button
               onClick={handleSubmit}
               className='w-full bg-custom-blue py-4 rounded-lg text-white'
