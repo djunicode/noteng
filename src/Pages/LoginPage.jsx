@@ -34,17 +34,17 @@ const LoginPage = ({ onLoginChange }) => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Login successful:', data);
-                onLoginChange(true); // Call the onLoginChange callback with true to indicate user is logged in
-                localStorage.setItem('isLoggedIn', 'true'); // Persist login state in local storage
-                localStorage.setItem('token', data.access); // Persist token in local storage
-                localStorage.setItem('sapid', sapid); // Persist SAP ID in local storage
-                navigate('/Home'); // Redirect to homepage after successful login
+                onLoginChange(true);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('token', data.access);
+                localStorage.setItem('sapid', sapid);
+                navigate('/Home');
             } else {
-                setError('Invalid credentials'); // Set error message for wrong credentials
+                setError('Invalid credentials');
                 console.error('Login failed:', response.statusText);
             }
         } catch (error) {
-            setError('An unexpected error occurred'); // Set error message for uncaught errors
+            setError('An unexpected error occurred');
             console.error('Error:', error);
         }
     };

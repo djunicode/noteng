@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../Components/Home/Sidebar';
 import BackButton from '../assets/BackButton.png';
 import { Button } from '@mui/material';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import '../styles/ViewJob.css';
 
 
@@ -30,7 +30,7 @@ const ViewJob = () => {
     if (jobId) {
       fetchJobDetails();
     }
-  }, [jobId,token]);
+  }, [jobId, token]);
 
   const handleGoBack = (event) => {
     event.preventDefault();
@@ -39,18 +39,18 @@ const ViewJob = () => {
 
   return (
     <div className='flex md:flex-row flex-col'>
-      <Sidebar/>
+      <Sidebar />
       <>
         <div className='flex flex-col maincontent overflow-y-scroll h-[100vh]'>
-          <div className='flex flex-row'>
+          <div className='flex flex-col sm:flex-row'>
             <Button className='backButton' onClick={handleGoBack}>
-              <img src={BackButton} alt='Back'/>
+              <img src={BackButton} alt='Back' />
             </Button>
             <p className='ml-6 mt-10 flex items-center'>
-              <span className='font-bold heading custom-heading'>View Job Opportunities</span>
+              <span className='font-bold heading custom-heading flex-col'>View Job Opportunities</span>
             </p>
           </div>
-          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
+          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
           {jobDetails && (
             <div>
               <h3 className='company-name'>{jobDetails.company}</h3>
@@ -71,7 +71,7 @@ const ViewJob = () => {
               </div>
             </div>
           )}
-          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
+          <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
           {jobDetails && (
             <div>
               <h3 className='company-name'>Job Description</h3>
@@ -84,8 +84,8 @@ const ViewJob = () => {
                   ))}
                 </ul>
               </p>
-              <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray'/>
-              <div className='flex flex-row'>
+              <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray' />
+              <div className='flex flex-col sm:flex-row'>
                 <div className='flex flex-col poster-details'>
                   <p>Posted By:</p>
                   <p>Monil Mehta</p>
