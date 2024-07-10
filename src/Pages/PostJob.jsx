@@ -88,7 +88,7 @@ const handleSubmit = (e) => {
   });
 };
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-col lg:flex-row'>
       <Sidebar/>
       <>
       <div className='flex flex-col maincontent'>

@@ -10,7 +10,6 @@ function DiscoverPage() {
         <div className='flex flex-col w-full overflow-y-scroll h-[100vh] '>
             <Discover/>
         </div>
-
     </div>
   )
 }

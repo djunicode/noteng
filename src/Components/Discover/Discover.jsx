@@ -3,8 +3,6 @@ import Jobs from './Jobs';
 import Notes from './Notes';
 import Videos from './Videos';
 import Posts from './Posts';
-
-// Import SVG icons
 import { ReactComponent as BriefcaseIcon } from '../../assets/briefcase-alt_svgrepo.com.svg';
 import { ReactComponent as NotesIcon } from '../../assets/doc_svgrepo.com.svg';
 import { ReactComponent as VideosIcon } from '../../assets/video_svgrepo.com.svg';

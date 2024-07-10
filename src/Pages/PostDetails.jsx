@@ -40,7 +40,7 @@ const PostDetails = () => {
   }
 
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-col md:flex-row'>
       <Sidebar />
       <div className='flex flex-col maincontent p-4 overflow-y-scroll h-[100vh]'>
         <div className='flex flex-row items-center'>
