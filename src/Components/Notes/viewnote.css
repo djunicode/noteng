@@ -65,3 +65,7 @@
         text-align: center; /* Center align text */
     }
 }
+
+.maincontent{
+    overflow-y: scroll;
+}
