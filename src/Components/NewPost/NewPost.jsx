@@ -16,7 +16,7 @@ function NewPost() {
     deadline: '',
     likes: 100,
     post_url: '',
-    user: ''
+    user: '60004220207'
   });
   const [fileName, setFileName] = useState('');
 
@@ -73,7 +73,7 @@ function NewPost() {
           deadline: '',
           likes: 100,
           post_url: '',
-          user: ''
+          user: '60004220207'
         });
         setFileName('');
       } else {
