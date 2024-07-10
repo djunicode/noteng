@@ -83,7 +83,7 @@ const ViewJob = () => {
               </ul>
             </p>
             <hr className='full-width-hr mr-6 ml-6 mt-8 border-b-2 border-gray' />
-            <div className='flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mt-4'>
+            <div className='flex flex-col sm:flex-row sm:justify-between items-start sm:items-center mt-4 mb-20'>
               <div className='flex flex-col'>
                 <p className='font-medium'>Posted By:</p>
                 <p className='font-light'>Monil Mehta</p>
