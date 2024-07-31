@@ -27,7 +27,7 @@ const Splash = () => {
 
             <div className="flex flex-col sm:flex-row flex-1">
                 <div className="flex flex-col justify-center items-center sm:items-end w-full sm:w-1/2">
-                    <button onClick={loginClick} className="bg-custom-blue text-black px-20 py-4 w-2/3 sm:w-1/3 rounded-md mb-4 font-bold">Login</button>
+                    <button onClick={loginClick} className="bg-custom-blue text-black px-20 py-4 w-2/3 sm:w-1/3 rounded-md mb-4 font-bold w-[30vw]">Login</button>
                     <button onClick={signupClick} className="bg-gray-300 text-black px-20 py-4 w-2/3 sm:w-1/3 rounded-md mb-4 font-bold">SignUp</button>
                 </div>
                 <div className="flex justify-center items-center w-full sm:w-1/2">

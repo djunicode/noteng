@@ -140,21 +140,35 @@ const LoginPage = ({ onLoginChange }) => {
                     </div>
                 </form>
             </div>
-            <div className="w-full sm:w-1/3 flex flex-col items-center">
-                <span
-                    className="text-s cursor-pointer mb-2 hover:text-blue-500 hover:underline"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Forgot your password?
-                </span>
-                <span
-                    className="text-s cursor-pointer hover:text-blue-500 hover:underline"
-                    onClick={() => navigate('/SignUp')}
-                >
-                    Don't have an account? Sign Up
-                </span>
-            </div>
             <div className='h-1/3 flex flex-col sm:flex-row justify-center items-center sm:items-start w-full'>
+                <div className="w-full sm:w-1/3 flex flex-col items-center">
+                    <span
+                        className="text-s cursor-pointer mb-2"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Forgot your password?
+                    </span>
+                    <button
+                        type="submit"
+                        className="w-full h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold mb-6 ml-6 pr-6 sm:pr-0 rounded"
+                        onClick={handleSubmit}
+                    >
+                        Login
+                    </button>
+                    <span
+                        className="text-s cursor-pointer"
+                        onClick={() => navigate('/SignUp')}
+                    >
+                        Don't have an account? Sign Up
+                    </span>
+                    <span
+                        className="text-s cursor-pointer"
+                        onClick={() => setSapid('00000000000') & setPassword('test123') & handleSubmit}
+                        style={{ color: 'red',fontSize:'20px' }}
+                    >
+                        Test User
+                    </span>
+                </div >
                 <div className="w-full sm:w-1/2 flex flex-col justify-between items-center">
                     <img src={LoginImg2} alt="Login" className="w-3/4" />
                 </div>
