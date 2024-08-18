@@ -97,13 +97,18 @@ const LoginPage = ({ onLoginChange }) => {
 
     return (
         <div className="w-full h-screen bg-white flex flex-col justify-center items-center overflow-hidden">
-            <div className="h-1/4 p-20 flex flex-col sm:flex-row justify-center sm:justify-between items-center">
-                <h1 className="text-3xl sm:text-6xl font-extrabold mb-6">NOTENG</h1>
-                <div className="w-1/3 py-10 hidden sm:flex sm:flex-col justify-between items-center">
-                    <img src={LoginImg1} alt="Login" className="w-3/4" />
-                </div>
-            </div>
-            <div className='flex justify-center '>
+        <div className="h-1/4 w-full mb-20 p-20 flex flex-col sm:flex-row justify-center sm:justify-between items-center">
+        <div className="w-1/2 hidden sm:flex sm:flex-col justify-between items-center">
+          <img src={LoginImg1} alt="Login" />
+        </div>
+        <div className="w-full sm:w-1/2 flex flex-col ">
+        <h1 className="text-3xl sm:text-6xl font-bold " style={{ position: 'relative', left: '-50px',fontSize:'100px',fontFamily:'poppins' }}>NOTENG</h1>
+        <p className="text-2xl sm:text-4xl font-bold mb-20" style={{ position: 'relative', left: '-40px', fontSize: '20px', fontFamily: 'Poppins',color:'gray' }}>All your notes in one place</p>
+        </div>
+      </div>
+            <div className='h-1/3 flex flex-col sm:flex-row justify-center items-center sm:items-start w-full'>
+            
+                <div className="w-full sm:w-1/3 flex flex-col items-center">
                 <form className="w-[30vh] md:w-[40vh] lg:w-[60vh] mb-6" onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="sapid" className="block font-medium text-xl">SAP ID</label>
@@ -130,18 +135,8 @@ const LoginPage = ({ onLoginChange }) => {
                         />
                     </div>
                     {error && <p className="text-red-500 ml-10">*Invalid SAPID or Password </p>} {/* Render error message if error state is set */}
-                    <div className='flex sm:justify-start justify-center'>
-                        <button
-                            type="submit"
-                            className="w-2/3 sm:w-1/2 h-10 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-                        >
-                            Login
-                        </button>
-                    </div>
+                    
                 </form>
-            </div>
-            <div className='h-1/3 flex flex-col sm:flex-row justify-center items-center sm:items-start w-full'>
-                <div className="w-full sm:w-1/3 flex flex-col items-center">
                     <span
                         className="text-s cursor-pointer mb-2"
                         onClick={() => setIsModalOpen(true)}
@@ -162,12 +157,17 @@ const LoginPage = ({ onLoginChange }) => {
                         Don't have an account? Sign Up
                     </span>
                     <span
-                        className="text-s cursor-pointer"
-                        onClick={() => setSapid('00000000000') & setPassword('test123') & handleSubmit}
-                        style={{ color: 'red',fontSize:'20px' }}
+                    className="text-s cursor-pointer"
+                    onClick={(event) => {
+                        setSapid('00000000000');
+                        setPassword('test123');
+                        handleSubmit(event);
+                    }}
+                    style={{ color: 'red', fontSize: '20px' }}
                     >
-                        Test User
+                    Test User
                     </span>
+
                 </div >
                 <div className="w-full sm:w-1/2 flex flex-col justify-between items-center">
                     <img src={LoginImg2} alt="Login" className="w-3/4" />
