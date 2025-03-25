@@ -23,6 +23,12 @@ from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 from rest_framework.views import APIView
+from .serializers import PDFFilesSerializer, QuestionSerializer
+from .utils import (get_pdf_text, 
+                   get_text_chunks, 
+                   get_vector_store,
+                   get_conversational_chain,
+                   get_faiss_vector_store)
 class IsAdminUserView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -227,3 +233,26 @@ class MentorshipDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = MentorshipModel.objects.all()
     serializer_class = MentorshipSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class ProcessPDFsView(APIView):
+    def post(self, request):
+        serializer = PDFFilesSerializer(data=request.data)
+        if serializer.is_valid():
+            pdf_files = request.FILES.getlist('pdfs')
+            raw_text = get_pdf_text(pdf_files)
+            text_chunks = get_text_chunks(raw_text)
+            get_vector_store(text_chunks)
+            return Response({"message": "PDFs processed successfully"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AskQuestionView(APIView):
+    def post(self, request):
+        serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            user_question = serializer.validated_data['question']
+            new_db = get_faiss_vector_store()
+            docs = new_db.similarity_search(user_question)
+            chain = get_conversational_chain()
+            response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
+            return Response({"reply": response["output_text"]})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

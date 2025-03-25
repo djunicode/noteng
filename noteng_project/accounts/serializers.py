@@ -93,3 +93,11 @@ class MentorshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = MentorshipModel
         fields = '__all__'
+
+class PDFFilesSerializer(serializers.Serializer):
+    pdfs = serializers.ListField(
+        child=serializers.FileField(max_length=100000, allow_empty_file=False)
+    )
+
+class QuestionSerializer(serializers.Serializer):
+    question = serializers.CharField()

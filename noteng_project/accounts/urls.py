@@ -21,5 +21,7 @@ urlpatterns = [
     path('mentorship/', MentorshipListView.as_view(), name='mentorship-list'),
     path('mentorship/<int:pk>/', MentorshipDetailView.as_view(), name='mentorship-detail'),
     path('isAdmin/', IsAdminUserView.as_view(), name='is-admin'),
+    path('process-pdfs/', ProcessPDFsView.as_view(), name='process-pdfs'),
+    path('ask-question/', AskQuestionView.as_view(), name='ask-question'),
 ]
 
