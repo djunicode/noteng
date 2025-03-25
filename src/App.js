@@ -44,7 +44,7 @@ function App() {
         <Routes>
           <Route path='/' element={isLoggedIn ? <Home /> : <LandingPage />} />
           <Route path='/Home' element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
-          <Route path='/Splash' element={<Splash />} />
+          <Route path='/Splash' element={isLoggedIn ? <Home /> : <Navigate to="/" />} />
           <Route path='/Landing' element={<LandingPage />} />
           <Route path='/LoginPage' element={<LoginPage onLoginChange={handleLogin} />} />
           <Route path='/SignUp' element={<SignUp />} />

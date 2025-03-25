@@ -1,90 +1,124 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Trash2, Video } from 'lucide-react';
+import Skeleton from '@mui/material/Skeleton';
+
 function SharedResources() {
   const [cardData, setCardData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  function Discover() {
-    navigate('/DiscoverPage');
-  }
+  
+  const handleViewMore = () => {
+    navigate('/DiscoverPage', { state: { activeTab: 'Videos' } });
+  };
 
   const token = localStorage.getItem('token');
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get('https://monilmeh.pythonanywhere.com//api/videolinks/', {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
         });
-        console.log('API Response:', response.data); 
         const data = response.data.toReversed().map((item) => ({
-          id:item.video_id,
+          id: item.video_id,
           heading1: item.subject,
-          heading2:item.topics,
-          semester:item.sem,
-          url:item.links,
-          user:'6000422020100'
+          heading2: item.topics,
+          semester: item.sem,
+          url: item.links,
+          user: '6000422020100'
         }));
-        console.log('Mapped Data:', data); 
         setCardData(data.slice(0, 3));
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
     try {
       await axios.delete(`https://monilmeh.pythonanywhere.com//api/videolinks/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-     
       setCardData((prevData) => prevData.filter((job) => job.id !== id));
     } catch (error) {
-      console.error('Error deleting job', error);
+      console.error('Error deleting video resource', error);
     }
   };
 
-
   return (
-    <div className='flex flex-col mb-10'>
-      <p className=' md:ml-6 md:justify-start  flex justify-center items-center'>
-        <span className='font-bold text-[35px]'>Shared Resources</span>
-      </p>
-      <div className='ml-6 border-b-2'></div>
-      <div className='flex flex-col justify-center items-center mr-10 ml-10 gap-5 md:flex-row md:ml-2 md:mr-2 mt-4 md:justify-evenly'>
-        {cardData.map((data, i) => {
-          return <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-2' key={i}>
-            <div className='border p-3 rounded-lg bg-gray-300 md:w-[100%]'>
-              <div className='flex justify-between'>
-              <p className='font-bold '>{data.heading1}</p>
-              <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={()=>{handleDelete(data.id)}} />
-                </div>
-              <div className='flex gap-2'>
-              <p className='text-sm md:text-[18px]'>{data.heading2}</p>
-              <p className='text-sm md:text-[18px]'>Semester:{data.semester}</p>
-              </div>
-              <div className='flex '>
-                <iframe src={data.url} className='max-w-full' controls width='350' title={data.heading1}></iframe>
-              </div>
-
-              
-             
+    <section className='bg-white rounded-xl shadow-sm p-6 mb-8'>
+      <div className='flex justify-between items-center mb-6'>
+        <h2 className='text-2xl md:text-3xl font-bold text-gray-800 flex items-center'>
+          <Video className="mr-2 text-custom-blue" size={24} />
+          Shared Resources
+        </h2>
+        <button 
+          onClick={handleViewMore}
+          className='text-custom-blue hover:text-blue-700 font-medium flex items-center'
+        >
+          See More
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      {loading ? (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {[1, 2, 3].map((item) => (
+            <div key={item} className='bg-gray-100 rounded-lg p-4 h-full'>
+              <Skeleton variant="text" height={30} />
+              <Skeleton variant="text" height={20} />
+              <Skeleton variant="rectangular" height={180} />
             </div>
-           
-          </div>
-        })}
-      </div>
-      <div className="flex justify-center md:justify-end md:mr-5">
-      <p className="text-blue-600 font-bold cursor-pointer" onClick={Discover}>See More</p>
-      </div>
-    </div>
-  )
+          ))}
+        </div>
+      ) : (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {cardData.map((data) => (
+            <div 
+              key={data.id} 
+              className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer'
+            >
+              <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
+                <h3 className='font-bold text-lg text-gray-800'>{data.heading1}</h3>
+                <Trash2 
+                  size={18}
+                  className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                  onClick={(e) => handleDelete(data.id, e)}
+                />
+              </div>
+              <div className='p-4'>
+                <div className='flex justify-between text-sm text-gray-600 mb-3'>
+                  <p>{data.heading2}</p>
+                  <p>Semester: {data.semester}</p>
+                </div>
+                <div className='aspect-video rounded overflow-hidden bg-gray-200'>
+                  <iframe 
+                    src={data.url} 
+                    className='w-full h-full' 
+                    title={data.heading1} 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
 }
 
-export default SharedResources
+export default SharedResources;

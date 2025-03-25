@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { Heart , MessageCircle, Calendar } from 'lucide-react';
 import axios from 'axios';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom'; 
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import Skeleton from '@mui/material/Skeleton';
 
 function LatestPosts() {
   const [cardData, setCardData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [likedPosts, setLikedPosts] = useState({});
 
   const navigate = useNavigate();
-  function Discover() {
-    navigate('/DiscoverPage');
-  }
+  
+  const handleViewMore = () => {
+    navigate('/DiscoverPage', { state: { activeTab: 'Posts' } });
+  };
+  
   function handleCardClick(id) {
     navigate(`/Postdetails/${id}`);
   }
@@ -19,6 +25,7 @@ function LatestPosts() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get('https://monilmeh.pythonanywhere.com/api/posts', {
           headers: {
@@ -29,71 +36,145 @@ function LatestPosts() {
           id: item.post_id,
           heading1: item.title,
           body: item.description,
-          icon: <FavoriteBorderOutlinedIcon className="text-blue-500" style={{ width: '20px', height: '20px' }} />,
-          timelimit: item.likes,
+          likes: item.likes,
           category: item.subtype, 
           url: item.post_url,
-          deadlines: item.deadline,
+          deadline: item.deadline,
           image: item.image,
         }));
         setCardData(data.slice(0, 3));
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
     try {
       await axios.delete(`https://monilmeh.pythonanywhere.com/api/posts/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+      setCardData((prevData) => prevData.filter((post) => post.id !== id));
     } catch (error) {
-      console.error('Error deleting job', error);
+      console.error('Error deleting post', error);
     }
   };
 
+  const handleLike = (id, e) => {
+    e.stopPropagation();
+    setLikedPosts(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+    // Here you would implement the actual like API call
+  };
+
   return (
-    <div className='flex flex-col '>
-      <p className='flex items-center justify-center md:justify-start md:ml-6'>
-        <span className='flex font-bold text-[35px]'>Latest Posts</span>
-      </p>
-      <div className='ml-6 border-b-2'></div>
-      <div className='flex flex-col gap-5 ml-10 mr-10 md:mr-2 md:flex-row md:ml-2 mt-4 md:justify-evenly'>
-        {cardData.map((data, i) => {
-          return (
-            <div className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:ml-2' key={data.id} onClick={() => handleCardClick(data.id)}>
-              <div className='border p-3 rounded-lg bg-gray-300 w-80'>
-                <div className='flex justify-between'>
-                  <p className='font-bold text-[18px] md:text-[15px]'>{data.heading1}</p>
-                  <DeleteIcon className='text-[#394dfd] cursor-pointer hover:text-red-500' onClick={(e) => { e.stopPropagation(); handleDelete(data.id); }} />
+    <section className='bg-white rounded-xl shadow-sm p-6 mb-8'>
+      <div className='flex justify-between items-center mb-6'>
+        <h2 className='text-2xl md:text-3xl font-bold text-gray-800 flex items-center'>
+          <MessageCircle className="mr-2 text-custom-blue" size={24} />
+          Latest Posts
+        </h2>
+        <button 
+          onClick={handleViewMore}
+          className='text-custom-blue hover:text-blue-700 font-medium flex items-center'
+        >
+          See More
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      {loading ? (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {[1, 2, 3].map((item) => (
+            <div key={item} className='bg-gray-100 rounded-lg p-4'>
+              <Skeleton variant="text" height={30} />
+              <Skeleton variant="rectangular" height={200} />
+              <Skeleton variant="text" height={20} width="80%" />
+              <Skeleton variant="text" height={20} width="60%" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {cardData.map((post) => (
+            <div 
+              key={post.id}
+              onClick={() => handleCardClick(post.id)}
+              className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer'
+            >
+              <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
+                <h3 className='font-bold text-lg text-gray-800 line-clamp-1'>{post.heading1}</h3>
+                <Trash2 
+                  className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                  size={18}
+                  onClick={(e) => handleDelete(post.id, e)}
+                />
+              </div>
+              
+              {post.image && (
+                <div className='aspect-[4/3] overflow-hidden'>
+                  <img 
+                    src={post.image} 
+                    alt={post.heading1} 
+                    className='w-full h-full object-cover transition-transform hover:scale-105'
+                  />
                 </div>
-                <div className='flex flex-col items-center'>
-                  <img src={data.image} alt={data.heading1} className='w-full h-80 object-cover mb-3' />
-                  <p className='mt-2 text-sm border-b-[1px] pb-3 text-[16px]'>{data.body.substring(0, 120)}</p>
-                </div>
-                <a href={data.url} className='font-bold text-[18px] md:text-[15px] border-custom-blue'>{data.url}</a>
-                <div className='flex justify-between'>
-                  <div className='flex items-center'>
-                    {data.icon}
-                    <p className='text-custom-blue font-bold md:font-normal'>{data.timelimit}</p>
-                  </div>
-                  <p className='text-custom-blue font-bold md:font-normal'>{data.category}</p>
-                  <p className='text-custom-blue font-bold md:font-normal'>{new Date(data.deadlines).toLocaleDateString()}</p>
+              )}
+              
+              <div className='p-4'>
+                <p className='text-gray-700 mb-4 line-clamp-3'>{post.body}</p>
+                
+                {post.url && (
+                  <a 
+                    href={post.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    onClick={(e) => e.stopPropagation()}
+                    className='text-custom-blue hover:underline block mb-4 truncate'
+                  >
+                    {post.url}
+                  </a>
+                )}
+                
+                <div className='flex justify-between items-center border-t pt-3 mt-3'>
+                  <button 
+                    onClick={(e) => handleLike(post.id, e)}
+                    className='flex items-center text-gray-600 hover:text-red-500 transition-colors'
+                  >
+                    {likedPosts[post.id] ? 
+                      <FavoriteIcon  size={18} className="text-red-500" /> : 
+                      <Heart size={18} />
+                    }
+                    <span className='ml-1'>{post.likes}</span>
+                  </button>
+                  
+                  <span className='bg-blue-100 text-custom-blue px-3 py-1 rounded-full text-xs font-medium'>
+                    {post.category}
+                  </span>
+                  
+                  {post.deadline && (
+                    <div className='flex items-center text-gray-600 text-sm'>
+                      <Calendar size={16} className="mr-1" />
+                      {new Date(post.deadline).toLocaleDateString()}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
-      <div className="flex justify-center md:justify-end md:mr-5 ">
-        <p className="text-blue-600 font-bold cursor-pointer" onClick={Discover}>See More</p>
-      </div>
-    </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
