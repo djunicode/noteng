@@ -20,7 +20,7 @@ drf-yasg==1.21.10
 faiss-cpu==1.10.0
 filetype==1.2.0
 frozenlist==1.5.0
-google-ai-generativelanguage>=0.6.16,<0.7.0
+google-ai-generativelanguage==0.6.15
 google-api-core==2.24.2
 google-api-python-client==2.165.0
 google-auth==2.38.0
