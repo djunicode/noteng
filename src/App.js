@@ -17,6 +17,7 @@ import PostDetails from './Pages/PostDetails';
 import NewJob from './Components/Jobs/NewJob';
 import LandingPage from './Pages/LandingPage';
 import { AdminProvider } from './Components/Home/AdminContext';
+import Calendar from './Pages/Calendar';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,6 +62,7 @@ function App() {
             <Route path='/UploadVideo' element={isLoggedIn ? <UploadVideo /> : <Navigate to="/LoginPage" />} />
             <Route path='/DiscoverPage' element={isLoggedIn ? <DiscoverPage /> : <Navigate to="/LoginPage" />} />
             <Route path='/post/:postId' element={isLoggedIn ? <PostDetails /> : <Navigate to="/LoginPage" />} />
+            <Route path='/calendar' element={isLoggedIn ? <Calendar /> : <Navigate to="/LoginPage" />} />
           </Routes>
         )}
       </Router>

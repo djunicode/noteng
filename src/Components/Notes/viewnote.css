@@ -26,23 +26,69 @@
 }
 
 .noteimg {
-    width: 1058px;
+    width: 100%;
     min-height: 500px;
     height: min-content;
-    margin-top: 40px;
-    margin-left: 67px;
-    border: 2px solid black;
+    margin-top: 20px;
     border-radius: 10px;
     margin-bottom: 24px;
+    overflow: hidden;
 }
 
 .badges {
-    width: 200px;
+    width: auto;
 }
 
 .badges1 {
     margin-top: 30px;
-    width: 200px;
+    width: auto;
+}
+
+/* Star rating component styles */
+.star-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star-rating .star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.star-rating .star:hover,
+.star-rating .star.active {
+    color: #FFD700; /* Gold color for stars */
+}
+
+.download-button {
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+}
+
+.contact-button {
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+    transform: scale(1.05);
+}
+
+/* Badge styles */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Media queries for responsiveness */
@@ -63,6 +109,10 @@
     .badges1 {
         margin-left: 0; /* Reset left margin */
         text-align: center; /* Center align text */
+    }
+    
+    .star-rating .star {
+        font-size: 1.25rem; /* Slightly smaller stars on mobile */
     }
 }
 
