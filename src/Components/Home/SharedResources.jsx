@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Trash2, Video } from 'lucide-react';
+import { Trash2, Video, Tag, GraduationCap, ExternalLink } from 'lucide-react';
 import Skeleton from '@mui/material/Skeleton';
+import { useAdmin } from './AdminContext';
 
 function SharedResources() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { isAdmin } = useAdmin();
   
   const handleViewMore = () => {
     navigate('/DiscoverPage', { state: { activeTab: 'Videos' } });
@@ -29,7 +31,7 @@ function SharedResources() {
           heading2: item.topics,
           semester: item.sem,
           url: item.links,
-          user: '6000422020100'
+          user: item.user
         }));
         setCardData(data.slice(0, 3));
       } catch (error) {
@@ -91,19 +93,37 @@ function SharedResources() {
               className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer'
             >
               <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
-                <h3 className='font-bold text-lg text-gray-800'>{data.heading1}</h3>
-                <Trash2 
-                  size={18}
-                  className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
-                  onClick={(e) => handleDelete(data.id, e)}
-                />
+                <div className="flex items-center">
+                  <span className={`w-3 h-3 rounded-full mr-2 ${
+                    data.heading1 === 'CS' ? 'bg-blue-500' :
+                    data.heading1 === 'IT' ? 'bg-green-500' :
+                    data.heading1 === 'AIML' ? 'bg-purple-500' :
+                    data.heading1 === 'AIDS' ? 'bg-red-500' :
+                    'bg-gray-500'
+                  }`}></span>
+                  <h3 className='font-bold text-lg text-gray-800'>{data.heading1}</h3>
+                </div>
+                {isAdmin && (
+                  <Trash2 
+                    size={18}
+                    className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                    onClick={(e) => handleDelete(data.id, e)}
+                  />
+                )}
               </div>
               <div className='p-4'>
-                <div className='flex justify-between text-sm text-gray-600 mb-3'>
-                  <p>{data.heading2}</p>
-                  <p>Semester: {data.semester}</p>
+                <div className='flex flex-col mb-3'>
+                  <div className="flex items-center mb-2">
+                    <Tag size={14} className="text-custom-blue mr-1" />
+                    <p className="text-sm text-gray-600 font-medium">{data.heading2}</p>
+                  </div>
+                  <div className="flex items-center">
+                    <GraduationCap size={14} className="text-custom-blue mr-1" />
+                    <p className="text-sm text-gray-600">Semester {data.semester}</p>
+                  </div>
                 </div>
-                <div className='aspect-video rounded overflow-hidden bg-gray-200'>
+                
+                <div className='aspect-video rounded-lg overflow-hidden bg-gray-200 border'>
                   <iframe 
                     src={data.url} 
                     className='w-full h-full' 
@@ -112,6 +132,17 @@ function SharedResources() {
                     allowFullScreen
                   ></iframe>
                 </div>
+                
+                <a 
+                  href={data.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center justify-center mt-3 text-sm text-custom-blue hover:underline"
+                >
+                  <ExternalLink size={14} className="mr-1" />
+                  Open in new tab
+                </a>
               </div>
             </div>
           ))}

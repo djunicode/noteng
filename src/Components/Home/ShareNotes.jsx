@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Star, FileText, BookOpen, Trash2 } from 'lucide-react';
+import { Star, FileText, BookOpen, Trash2, Tag, Building } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
+import { useAdmin } from './AdminContext';
 
 function ShareNotes() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { isAdmin } = useAdmin();
   
   const token = localStorage.getItem('token');
   
@@ -26,6 +28,7 @@ function ShareNotes() {
           body: item.note_description,
           stars: item.average_rating,
           department: item.department,
+          subject: item.subject,
           document: item.document,
         }));
 
@@ -101,23 +104,46 @@ function ShareNotes() {
               className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer'
             >
               <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
-                <h3 className='font-bold text-lg text-gray-800 line-clamp-1'>{data.heading1}</h3>
+                <div className="flex items-center">
+                  <span className={`w-3 h-3 rounded-full mr-2 ${
+                    data.subject === 'CS' ? 'bg-blue-500' :
+                    data.subject === 'IT' ? 'bg-green-500' :
+                    data.subject === 'AIML' ? 'bg-purple-500' :
+                    data.subject === 'AIDS' ? 'bg-red-500' :
+                    'bg-gray-500'
+                  }`}></span>
+                  <h3 className='font-bold text-lg text-gray-800 line-clamp-1'>{data.heading1}</h3>
+                </div>
+                
                 <div className='flex items-center'>
                   <div className='flex items-center mr-2 bg-yellow-100 px-2 py-1 rounded'>
                     <Star className="text-yellow-400" size={16} />
                     <span className='ml-1 text-sm font-medium'>{data.stars ? data.stars.toFixed(1) : 'N/A'}</span>
                   </div>
-                  <Trash2 
-                    size={18}
-                    className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
-                    onClick={(e) => handleDelete(data.id, e)}
-                  />
+                  {isAdmin && (
+                    <Trash2 
+                      size={18}
+                      className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                      onClick={(e) => handleDelete(data.id, e)}
+                    />
+                  )}
                 </div>
               </div>
               <div className='p-4'>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <div className="flex items-center bg-blue-50 px-2 py-1 rounded text-xs">
+                    <Tag size={12} className="mr-1 text-custom-blue" />
+                    <span>{data.subject}</span>
+                  </div>
+                  <div className="flex items-center bg-gray-100 px-2 py-1 rounded text-xs">
+                    <Building size={12} className="mr-1 text-gray-500" />
+                    <span>{data.department}</span>
+                  </div>
+                </div>
+                
                 <p className='text-gray-700 mb-4 line-clamp-3'>{data.body}</p>
+                
                 <div className='flex justify-between items-center mt-4'>
-                  <span className='text-custom-blue font-medium bg-blue-50 px-2 py-1 rounded text-sm'>{data.department}</span>
                   <a 
                     href={data.document} 
                     target="_blank" 

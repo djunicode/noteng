@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Heart , MessageCircle, Calendar } from 'lucide-react';
+import { Heart, MessageCircle, Calendar, Link as LinkIcon, Users, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
+import { useAdmin } from './AdminContext';
 
 function LatestPosts() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [likedPosts, setLikedPosts] = useState({});
-
   const navigate = useNavigate();
+  const { isAdmin } = useAdmin();
   
   const handleViewMore = () => {
     navigate('/DiscoverPage', { state: { activeTab: 'Posts' } });
@@ -37,10 +37,12 @@ function LatestPosts() {
           heading1: item.title,
           body: item.description,
           likes: item.likes,
-          category: item.subtype, 
+          category: item.subtype,
+          organizer: item.organised_by,
           url: item.post_url,
           deadline: item.deadline,
           image: item.image,
+          dateUploaded: item.date_uploaded,
         }));
         setCardData(data.slice(0, 3));
       } catch (error) {
@@ -73,6 +75,21 @@ function LatestPosts() {
       [id]: !prev[id]
     }));
     // Here you would implement the actual like API call
+  };
+
+  const getEventTypeColor = (type) => {
+    switch(type) {
+      case 'hackathon':
+        return 'bg-purple-100 text-purple-700';
+      case 'cultural':
+        return 'bg-pink-100 text-pink-700';
+      case 'datathon':
+        return 'bg-blue-100 text-blue-700';
+      case 'startup':
+        return 'bg-green-100 text-green-700';
+      default:
+        return 'bg-gray-100 text-gray-700';
+    }
   };
 
   return (
@@ -114,11 +131,13 @@ function LatestPosts() {
             >
               <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
                 <h3 className='font-bold text-lg text-gray-800 line-clamp-1'>{post.heading1}</h3>
-                <Trash2 
-                  className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
-                  size={18}
-                  onClick={(e) => handleDelete(post.id, e)}
-                />
+                {isAdmin && (
+                  <Trash2 
+                    className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                    size={18}
+                    onClick={(e) => handleDelete(post.id, e)}
+                  />
+                )}
               </div>
               
               {post.image && (
@@ -132,18 +151,31 @@ function LatestPosts() {
               )}
               
               <div className='p-4'>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${getEventTypeColor(post.category)}`}>
+                    {post.category}
+                  </span>
+                  <div className="flex items-center bg-gray-100 px-2 py-1 rounded-full text-xs">
+                    <Users size={12} className="mr-1 text-gray-600" />
+                    <span>{post.organizer}</span>
+                  </div>
+                </div>
+                
                 <p className='text-gray-700 mb-4 line-clamp-3'>{post.body}</p>
                 
                 {post.url && (
-                  <a 
-                    href={post.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    onClick={(e) => e.stopPropagation()}
-                    className='text-custom-blue hover:underline block mb-4 truncate'
-                  >
-                    {post.url}
-                  </a>
+                  <div className="mb-4 flex">
+                    <LinkIcon size={14} className="mr-1 text-custom-blue flex-shrink-0 mt-1" />
+                    <a 
+                      href={post.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      onClick={(e) => e.stopPropagation()}
+                      className='text-custom-blue hover:underline truncate'
+                    >
+                      {post.url}
+                    </a>
+                  </div>
                 )}
                 
                 <div className='flex justify-between items-center border-t pt-3 mt-3'>
@@ -152,15 +184,11 @@ function LatestPosts() {
                     className='flex items-center text-gray-600 hover:text-red-500 transition-colors'
                   >
                     {likedPosts[post.id] ? 
-                      <FavoriteIcon  size={18} className="text-red-500" /> : 
+                      <FavoriteIcon size={18} className="text-red-500" /> : 
                       <Heart size={18} />
                     }
                     <span className='ml-1'>{post.likes}</span>
                   </button>
-                  
-                  <span className='bg-blue-100 text-custom-blue px-3 py-1 rounded-full text-xs font-medium'>
-                    {post.category}
-                  </span>
                   
                   {post.deadline && (
                     <div className='flex items-center text-gray-600 text-sm'>
