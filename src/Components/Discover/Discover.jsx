@@ -9,6 +9,11 @@ import { ReactComponent as VideosIcon } from '../../assets/video_svgrepo.com.svg
 import { ReactComponent as PostsIcon } from '../../assets/post_svgrepo.com.svg';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import JobCard from './JobCard';
+import VideoCard from './VideoCard';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import StarIcon from '@mui/icons-material/Star';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 function Discover() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,8 +28,8 @@ function Discover() {
   const [videos, setVideos] = useState([]);
   const [posts, setPosts] = useState([]);
   
-  // Filter states
-  const [jobFilters, setJobFilters] = useState({ mode: 'all', type: 'all', region: 'all' });
+  // Filter states - updated based on requirements
+  const [jobFilters, setJobFilters] = useState({ mode: 'all', type: 'all', duration: 'all' });
   const [noteFilters, setNoteFilters] = useState({ minRating: 0, department: 'all' });
   const [postFilters, setPostFilters] = useState({ dateRange: 'all', eventType: 'all' });
   const [videoFilters, setVideoFilters] = useState({ subject: 'all', semester: 'all' });
@@ -134,19 +139,28 @@ function Discover() {
     }
   };
   
-  // Filter data based on search query and filters
+  // Filter data based on search query and filters - updated filter matching logic
   const filteredJobs = jobs.filter(job => {
     const matchesSearch = searchQuery ? 
       (job.company?.toLowerCase().includes(searchQuery.toLowerCase()) || 
        job.job_title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
        job.description?.toLowerCase().includes(searchQuery.toLowerCase())) : true;
        
-    const matchesMode = jobFilters.mode === 'all' ? true : job.mode === jobFilters.mode;
-    const matchesType = jobFilters.type === 'all' ? true : job.subtype === jobFilters.type;
-    // Assuming region is a property in your job data
-    const matchesRegion = jobFilters.region === 'all' ? true : job.region === jobFilters.region;
+    // Fix mode filter - convert to lowercase for case-insensitive comparison
+    const matchesMode = jobFilters.mode === 'all' ? true : 
+      job.mode?.toLowerCase() === jobFilters.mode.toLowerCase();
     
-    return matchesSearch && matchesMode && matchesType && matchesRegion;
+    // Fix type filter - simplified to just internship or job
+    const matchesType = jobFilters.type === 'all' ? true : 
+      job.subtype?.toLowerCase() === jobFilters.type.toLowerCase();
+    
+    // New duration filter instead of region
+    const matchesDuration = jobFilters.duration === 'all' ? true :
+      (jobFilters.duration === 'short' && job.duration_in_months <= 3) ||
+      (jobFilters.duration === 'medium' && job.duration_in_months > 3 && job.duration_in_months <= 6) ||
+      (jobFilters.duration === 'long' && job.duration_in_months > 6);
+    
+    return matchesSearch && matchesMode && matchesType && matchesDuration;
   });
   
   const filteredNotes = notes.filter(note => {
@@ -155,7 +169,10 @@ function Discover() {
        note.note_description?.toLowerCase().includes(searchQuery.toLowerCase())) : true;
        
     const matchesRating = note.average_rating >= noteFilters.minRating;
-    const matchesDepartment = noteFilters.department === 'all' ? true : note.department === noteFilters.department;
+    
+    // Fix department filter - convert to lowercase for case-insensitive comparison
+    const matchesDepartment = noteFilters.department === 'all' ? true : 
+      note.department?.toLowerCase() === noteFilters.department.toLowerCase();
     
     return matchesSearch && matchesRating && matchesDepartment;
   });
@@ -165,8 +182,11 @@ function Discover() {
       (video.subject?.toLowerCase().includes(searchQuery.toLowerCase()) || 
        video.topics?.toLowerCase().includes(searchQuery.toLowerCase())) : true;
        
-    const matchesSubject = videoFilters.subject === 'all' ? true : video.subject === videoFilters.subject;
-    const matchesSemester = videoFilters.semester === 'all' ? true : video.sem === videoFilters.semester;
+    const matchesSubject = videoFilters.subject === 'all' ? true : 
+      video.subject?.toLowerCase() === videoFilters.subject.toLowerCase();
+    
+    const matchesSemester = videoFilters.semester === 'all' ? true : 
+      video.sem?.toString() === videoFilters.semester;
     
     return matchesSearch && matchesSubject && matchesSemester;
   });
@@ -176,12 +196,34 @@ function Discover() {
       (post.title?.toLowerCase().includes(searchQuery.toLowerCase()) || 
        post.description?.toLowerCase().includes(searchQuery.toLowerCase())) : true;
        
-    const matchesEventType = postFilters.eventType === 'all' ? true : post.subtype === postFilters.eventType;
-    // Date range filtering logic would go here if you have specific dates in your post data
-    const matchesDateRange = true; // Placeholder
+    const matchesEventType = postFilters.eventType === 'all' ? true : 
+      post.subtype?.toLowerCase() === postFilters.eventType.toLowerCase();
+    
+    // Date range filter - assumes post.deadline or post.upload_date exists
+    const matchesDateRange = postFilters.dateRange === 'all' ? true : 
+      (postFilters.dateRange === 'this-week' && isWithinLastDays(post.deadline || post.upload_time, 7)) ||
+      (postFilters.dateRange === 'this-month' && isWithinLastDays(post.deadline || post.upload_time, 30)) ||
+      (postFilters.dateRange === 'upcoming' && isFutureDate(post.deadline));
     
     return matchesSearch && matchesEventType && matchesDateRange;
   });
+
+  // Helper date functions for post filters
+  const isWithinLastDays = (dateStr, days) => {
+    if (!dateStr) return false;
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffTime = now - date;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= days && diffDays >= 0;
+  };
+  
+  const isFutureDate = (dateStr) => {
+    if (!dateStr) return false;
+    const date = new Date(dateStr);
+    const now = new Date();
+    return date > now;
+  };
 
   // Filtered content for "All" category
   const allFilteredContent = selectedCategory === 'All' && searchQuery ? (
@@ -249,6 +291,127 @@ function Discover() {
           <p className="text-gray-500 mt-2">Try adjusting your search terms</p>
         </div>
       )}
+    </>
+  ) : null;
+
+  // New content for "All" category when no search query exists - carousel style
+  const allContent = selectedCategory === 'All' && !searchQuery ? (
+    <>
+      {/* Jobs Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Latest Jobs</h2>
+          <button 
+            className="text-custom-blue hover:underline"
+            onClick={() => setSelectedCategory('Jobs')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
+          {jobs.slice(0, 5).map(job => (
+            <div className="min-w-[300px] max-w-[300px]" key={job.job_id}>
+              <JobCard job={job} onDelete={handleDeleteJob} isAdmin={isAdmin} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Notes Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Popular Notes</h2>
+          <button 
+            className="text-custom-blue hover:underline"
+            onClick={() => setSelectedCategory('Notes')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {notes.slice(0, 4).map(note => (
+            <div key={note.note_id} className="flex-shrink-0">
+              <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-300 h-full'>
+                <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
+                  <p className='font-bold'>{note.note_title}</p>
+                  <div className='flex items-center'>
+                    <StarIcon className="text-yellow-400 mr-1" style={{ width: '20px', height: '20px' }} />
+                    <p>{note.average_rating && note.average_rating.toFixed(1)}</p>
+                  </div>
+                </div>
+                <div className='flex-grow'>
+                  <p className='text-sm'>{note.note_description?.substring(0, 80)}...</p>
+                </div>
+                <div className='flex justify-between mt-auto'>
+                  <p className='text-custom-blue font-medium'>{note.department}</p>
+                  <a href={note.document} target="_blank" rel="noopener noreferrer">
+                    <PictureAsPdfIcon className='text-custom-blue' style={{ width: '20px', height: '20px' }} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Videos Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Featured Videos</h2>
+          <button 
+            className="text-custom-blue hover:underline"
+            onClick={() => setSelectedCategory('Videos')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
+          {videos.slice(0, 5).map(video => (
+            <div className="min-w-[350px] max-w-[350px]" key={video.video_id}>
+              <VideoCard video={video} onDelete={handleDeleteVideo} isAdmin={isAdmin} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Posts Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Recent Posts</h2>
+          <button 
+            className="text-custom-blue hover:underline"
+            onClick={() => setSelectedCategory('Posts')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
+          {posts.slice(0, 3).map(post => (
+            <div className="min-w-[350px] max-w-[350px]" key={post.post_id}>
+              <div className="border p-4 rounded-lg bg-gray-300 shadow">
+                <div className="flex justify-between items-center mb-3">
+                  <p className="font-bold text-lg">{post.title}</p>
+                </div>
+                <div className="flex flex-col items-center mb-4">
+                  <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-lg mb-3" />
+                </div>
+                <div className="mb-4">
+                  <p className="text-sm border-b-[1px] pb-3 border-custom-blue">
+                    {post.description?.substring(0, 80)}...
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <div className="flex items-center">
+                    <FavoriteBorderOutlinedIcon className="text-blue-500 mr-1" style={{ width: '20px', height: '20px' }} />
+                    <p className="text-custom-blue font-medium">{post.likes}</p>
+                  </div>
+                  <p className="text-custom-blue font-medium">{post.subtype}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   ) : null;
 
@@ -343,20 +506,20 @@ function Discover() {
                       >
                         <option value="all">All</option>
                         <option value="internship">Internship</option>
-                        <option value="full-time">Full Time</option>
-                        <option value="part-time">Part Time</option>
+                        <option value="job">Job</option>
                       </select>
                     </div>
                     <div>
-                      <label className='block text-sm font-medium mb-1'>Region</label>
+                      <label className='block text-sm font-medium mb-1'>Duration</label>
                       <select 
                         className='w-full p-2 border rounded'
-                        value={jobFilters.region}
-                        onChange={(e) => setJobFilters({...jobFilters, region: e.target.value})}
+                        value={jobFilters.duration}
+                        onChange={(e) => setJobFilters({...jobFilters, duration: e.target.value})}
                       >
                         <option value="all">All</option>
-                        <option value="india">India</option>
-                        <option value="international">International</option>
+                        <option value="short">Short (≤ 3 months)</option>
+                        <option value="medium">Medium (3-6 months)</option>
+                        <option value="long">Long (6 months+)</option>
                       </select>
                     </div>
                   </div>
@@ -402,7 +565,78 @@ function Discover() {
                 </div>
               ) : null}
               
-              {/* More filters for other categories as needed */}
+              {/* Add Video filters */}
+              {selectedCategory === 'Videos' || selectedCategory === 'All' ? (
+                <div className='mb-4'>
+                  <h3 className='font-semibold mb-2'>Video Filters</h3>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                      <label className='block text-sm font-medium mb-1'>Subject</label>
+                      <select 
+                        className='w-full p-2 border rounded'
+                        value={videoFilters.subject}
+                        onChange={(e) => setVideoFilters({...videoFilters, subject: e.target.value})}
+                      >
+                        <option value="all">All Subjects</option>
+                        {/* Get unique subjects from videos */}
+                        {Array.from(new Set(videos.map(v => v.subject))).filter(Boolean).map(subject => (
+                          <option key={subject} value={subject}>{subject}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className='block text-sm font-medium mb-1'>Semester</label>
+                      <select 
+                        className='w-full p-2 border rounded'
+                        value={videoFilters.semester}
+                        onChange={(e) => setVideoFilters({...videoFilters, semester: e.target.value})}
+                      >
+                        <option value="all">All Semesters</option>
+                        {/* Get unique semesters from videos */}
+                        {Array.from(new Set(videos.map(v => v.sem))).filter(Boolean).sort().map(sem => (
+                          <option key={sem} value={sem}>Semester {sem}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              
+              {/* Add Post filters */}
+              {selectedCategory === 'Posts' || selectedCategory === 'All' ? (
+                <div className='mb-4'>
+                  <h3 className='font-semibold mb-2'>Post Filters</h3>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                      <label className='block text-sm font-medium mb-1'>Date Range</label>
+                      <select 
+                        className='w-full p-2 border rounded'
+                        value={postFilters.dateRange}
+                        onChange={(e) => setPostFilters({...postFilters, dateRange: e.target.value})}
+                      >
+                        <option value="all">All Time</option>
+                        <option value="this-week">This Week</option>
+                        <option value="this-month">This Month</option>
+                        <option value="upcoming">Upcoming Events</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className='block text-sm font-medium mb-1'>Event Type</label>
+                      <select 
+                        className='w-full p-2 border rounded'
+                        value={postFilters.eventType}
+                        onChange={(e) => setPostFilters({...postFilters, eventType: e.target.value})}
+                      >
+                        <option value="all">All Types</option>
+                        {/* Get unique subtypes from posts */}
+                        {Array.from(new Set(posts.map(p => p.subtype))).filter(Boolean).map(type => (
+                          <option key={type} value={type}>{type}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
           )}
         </div>
@@ -421,7 +655,8 @@ function Discover() {
             </div>
           ) : (
             <>
-              {selectedCategory === 'All' ? allFilteredContent : null}
+              {selectedCategory === 'All' && searchQuery ? allFilteredContent : null}
+              {selectedCategory === 'All' && !searchQuery ? allContent : null}
               {selectedCategory === 'Jobs' && <Jobs jobs={filteredJobs} onDelete={handleDeleteJob} isAdmin={isAdmin} />}
               {selectedCategory === 'Notes' && <Notes notes={filteredNotes} onDelete={handleDeleteNote} isAdmin={isAdmin} />}
               {selectedCategory === 'Videos' && <Videos videos={filteredVideos} onDelete={handleDeleteVideo} isAdmin={isAdmin} />}
