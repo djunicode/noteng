@@ -1,48 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import StarIcon from '@mui/icons-material/Star';
-import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import { Star, FileText, BookOpen, Trash2, Tag, Building } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Skeleton from '@mui/material/Skeleton';
+import { useAdmin } from './AdminContext';
 
 function ShareNotes() {
   const [cardData, setCardData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { isAdmin } = useAdmin();
   
   const token = localStorage.getItem('token');
+  
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-        console.log(response.data);
         const data = response.data.toReversed().map((item) => ({
           id: item.note_id,
           heading1: item.note_title,
           body: item.note_description,
-          icon: <StarIcon className="text-yellow-400" style={{ width: '20px', height: '20px' }} />,
           stars: item.average_rating,
           department: item.department,
-          pdf: (
-            <a href={item.document} target="_blank" rel="noopener noreferrer">
-              <PictureAsPdfOutlinedIcon className='text-custom-blue' style={{ width: '20px', height: '20px' }} />
-            </a>
-          ),
+          subject: item.subject,
+          document: item.document,
         }));
 
-        setCardData(data.slice(0, 3)); // Display only 3 notes
+        setCardData(data.slice(0, 3));
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
     try {
       await axios.delete(`https://monilmeh.pythonanywhere.com/api/notes/${id}`, {
         headers: {
@@ -56,8 +58,8 @@ function ShareNotes() {
     }
   };
 
-  const handleSeeMore = () => {
-    navigate('/DiscoverPage'); // Adjust the route as per your requirement
+  const handleViewMore = () => {
+    navigate('/DiscoverPage', { state: { activeTab: 'Notes' } });
   };
 
   const handleCardClick = (id) => {
@@ -65,48 +67,100 @@ function ShareNotes() {
   };
 
   return (
-    <div className='flex flex-col'>
-      <p className='justify-center md:ml-6 md:justify-start flex items-center mt-5'>
-        <span className='font-bold text-[35px]'>Share Notes</span>
-      </p>
-      <div className='ml-6 border-b-2'></div>
-      <div className='flex flex-col md:flex-row justify-evenly gap-5 mt-4 px-10'>
-        {cardData.map((data, i) => (
-          <div 
-            className='flex justify-center w-full md:w-1/3 cursor-pointer' 
-            key={data.id} 
-            onClick={() => handleCardClick(data.id)}
-          >
-            <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-300 w-full'>
-              <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
-                <p className='font-bold'>{data.heading1}</p>
+    <section className='bg-white rounded-xl shadow-sm p-6 mb-8'>
+      <div className='flex justify-between items-center mb-6'>
+        <h2 className='text-2xl md:text-3xl font-bold text-gray-800 flex items-center'>
+          <BookOpen className="mr-2 text-custom-blue" size={24} />
+          Share Notes
+        </h2>
+        <button 
+          onClick={handleViewMore}
+          className='text-custom-blue hover:text-blue-700 font-medium flex items-center'
+        >
+          See More
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      {loading ? (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {[1, 2, 3].map((item) => (
+            <div key={item} className='bg-gray-100 rounded-lg p-4'>
+              <Skeleton variant="text" height={30} />
+              <Skeleton variant="text" height={20} />
+              <Skeleton variant="rectangular" height={100} />
+              <Skeleton variant="text" height={20} width="60%" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          {cardData.map((data) => (
+            <div 
+              key={data.id} 
+              onClick={() => handleCardClick(data.id)}
+              className='bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer'
+            >
+              <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
+                <div className="flex items-center">
+                  <span className={`w-3 h-3 rounded-full mr-2 ${
+                    data.subject === 'CS' ? 'bg-blue-500' :
+                    data.subject === 'IT' ? 'bg-green-500' :
+                    data.subject === 'AIML' ? 'bg-purple-500' :
+                    data.subject === 'AIDS' ? 'bg-red-500' :
+                    'bg-gray-500'
+                  }`}></span>
+                  <h3 className='font-bold text-lg text-gray-800 line-clamp-1'>{data.heading1}</h3>
+                </div>
+                
                 <div className='flex items-center'>
-                  {data.icon}
-                  <p className='ml-1'>{data.stars && data.stars.toFixed(1)}</p>
-                  <DeleteIcon 
-                    className='text-[#394dfd] cursor-pointer hover:text-red-500 ml-2' 
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent onClick of parent
-                      handleDelete(data.id);
-                    }} 
-                  />
+                  <div className='flex items-center mr-2 bg-yellow-100 px-2 py-1 rounded'>
+                    <Star className="text-yellow-400" size={16} />
+                    <span className='ml-1 text-sm font-medium'>{data.stars ? data.stars.toFixed(1) : 'N/A'}</span>
+                  </div>
+                  {isAdmin && (
+                    <Trash2 
+                      size={18}
+                      className='text-gray-400 hover:text-red-500 cursor-pointer transition-colors' 
+                      onClick={(e) => handleDelete(data.id, e)}
+                    />
+                  )}
                 </div>
               </div>
-              <div className='flex'>
-                <p>{data.body}</p>
-              </div>
-              <div className='flex justify-between'>
-                <p className='text-custom-blue font-bold md:font-normal'>{data.department}</p>
-                {data.pdf}
+              <div className='p-4'>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <div className="flex items-center bg-blue-50 px-2 py-1 rounded text-xs">
+                    <Tag size={12} className="mr-1 text-custom-blue" />
+                    <span>{data.subject}</span>
+                  </div>
+                  <div className="flex items-center bg-gray-100 px-2 py-1 rounded text-xs">
+                    <Building size={12} className="mr-1 text-gray-500" />
+                    <span>{data.department}</span>
+                  </div>
+                </div>
+                
+                <p className='text-gray-700 mb-4 line-clamp-3'>{data.body}</p>
+                
+                <div className='flex justify-between items-center mt-4'>
+                  <a 
+                    href={data.document} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className='text-custom-blue hover:text-blue-700 flex items-center'
+                  >
+                    <FileText size={16} className='mr-1' />
+                    <span>View PDF</span>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-center md:justify-end md:mr-5 mt-4">
-        <p className="text-blue-600 font-bold cursor-pointer" onClick={handleSeeMore}>See More</p>
-      </div>
-    </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 

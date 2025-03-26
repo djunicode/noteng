@@ -1,45 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import VideoCard from './VideoCard';
 
-function Videos() {
-  const [videos, setVideos] = useState([]);
-  const token = localStorage.getItem('token');
-
-  useEffect(() => {
-    fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => setVideos(data))
-      .catch(error => console.error('Error fetching videos:', error));
-  }, [token]);
-
-  const handleDelete = (videoId) => {
-    fetch(`https://monilmeh.pythonanywhere.com/api/videos/${videoId}/`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          setVideos(videos.filter(video => video.video_id !== videoId));
-        } else {
-          console.error('Error deleting video');
-        }
-      })
-      .catch(error => console.error('Error deleting video:', error));
-  };
-
+function Videos({ videos = [], onDelete, isAdmin }) {
   return (
-    <div className='m-6 grid grid-cols-1 md:grid-cols-2 gap-4'>
+    <div className='m-6 grid grid-cols-1 md:grid-cols-2 gap-6'>
       {videos.length === 0 ? (
-        <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl'>Please wait videos might be loading...</h1>
-      ) : (videos.map((video) => (
-        <VideoCard key={video.video_id} video={video} onDelete={handleDelete} />
-      )))}
+        <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl col-span-2'>
+          No videos found that match your criteria.
+        </h1>
+      ) : (
+        videos.map((video) => (
+          <VideoCard 
+            key={video.video_id} 
+            video={video} 
+            onDelete={onDelete}
+            isAdmin={isAdmin} 
+          />
+        ))
+      )}
     </div>
   );
 }

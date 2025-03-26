@@ -7,7 +7,7 @@ import '../styles/profile.css';
 import MyJobs from '../Components/Profile/MyJobs';
 import MyPosts from '../Components/Profile/MyPosts';
 import MyNotes from '../Components/Profile/MyNotes';
-import MyResources from '../Components/Profile/MyResources';
+// import MyResources from '../Components/Profile/MyResources';
 import MyCard from '../Components/Profile/MyCard';
 import DescriptionProfile from '../Components/Profile/DescriptionProfile';
 import axios from 'axios';
@@ -100,7 +100,7 @@ const Profile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [axiosInstance, sapid,userPosts]);
 
   const handleGoBack = (event) => {
     event.preventDefault();
