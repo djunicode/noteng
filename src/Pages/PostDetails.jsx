@@ -149,9 +149,9 @@ const PostDetails = () => {
   }
 
   return (
-    <div className='flex flex-col md:flex-row'>
+    <div className='flex min-h-screen'>
       <Sidebar />
-      <div className='flex flex-col flex-grow p-4 overflow-y-scroll h-[100vh]'>
+      <div className='flex-1 p-4 overflow-y-auto'>
         <div className='flex flex-row items-center'>
           <Button className='backButton' onClick={handleGoBack}>
             <img src={BackButton} alt='Back' className="w-6 h-6 sm:w-8 sm:h-8" />

@@ -225,14 +225,14 @@ const ViewNote = () => {
     }
 
     return (
-        <div className='flex flex-col lg:flex-row h-screen'>
+        <div className='flex min-h-screen'>
             <Sidebar />
-            <div className='flex flex-col flex-grow overflow-y-scroll p-4'>
+            <div className='flex-1 p-4 overflow-y-auto'>
                 <div className='flex items-center mb-4'>
                     <Button className='backButton' onClick={handleGoBack}>
                         <img src={BackButton} alt='Back' className="w-6 h-6 sm:w-8 sm:h-8" />
                     </Button>
-                    <p className='ml-6 mt-2 flex items-center'>
+                    <p className='ml-6 flex items-center'>
                         <span className='font-bold heading custom-heading text-lg lg:text-2xl'>Notes</span>
                     </p>
                 </div>

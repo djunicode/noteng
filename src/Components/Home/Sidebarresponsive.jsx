@@ -5,20 +5,18 @@ import { motion } from 'framer-motion';
 function Sidebarresponsive() {
   return (
     <motion.div 
-      className='flex w-full'
+      className='fixed top-4 left-4 z-10'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <div className='flex bg-custom-blue p-5 w-full'>
-        <motion.div 
-          className='h-8 w-8 bg-white flex items-center justify-center rounded-md shadow-sm'
-          whileHover={{ scale: 1.1, rotate: 10 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <MoreVertical size={20} color="#394DFD" />
-        </motion.div>
-      </div>
+      <motion.div 
+        className='h-10 w-10 bg-white flex items-center justify-center rounded-md shadow-md'
+        whileHover={{ scale: 1.1, rotate: 10 }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <MoreVertical size={24} color="#394DFD" />
+      </motion.div>
     </motion.div>
   );
 }

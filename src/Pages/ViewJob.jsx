@@ -142,14 +142,14 @@ const ViewJob = () => {
   }
 
   return (
-    <div className='flex flex-col lg:flex-row h-screen'>
+    <div className='flex min-h-screen'>
       <Sidebar />
-      <div className='flex flex-col flex-grow overflow-y-scroll p-4'>
+      <div className='flex-1 p-4 overflow-y-auto'>
         <div className='flex flex-row items-center'>
           <Button className='h-12 sm:h-20' onClick={handleGoBack}>
             <img src={BackButton} alt='Back' className="w-12 h-12 sm:w-8 sm:h-8" />
           </Button>
-          <p className='ml-6 mt-10 sm:mt-0 flex items-center'>
+          <p className='ml-6 flex items-center'>
             <span className='font-bold text-md lg:text-2xl custom-heading'>View Job Opportunity</span>
           </p>
         </div>
