@@ -42,7 +42,7 @@ jsonpointer==3.0.0
 langchain==0.3.21
 langchain-community==0.3.20
 langchain-core==0.3.48
-langchain-google-genai==2.1.1
+langchain-google-genai<2.1.1
 langchain-text-splitters==0.3.7
 langsmith==0.3.18
 marshmallow==3.26.1
