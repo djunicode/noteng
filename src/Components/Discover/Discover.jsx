@@ -10,10 +10,13 @@ import { ReactComponent as PostsIcon } from '../../assets/post_svgrepo.com.svg';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import JobCard from './JobCard';
-import VideoCard from './VideoCard';
+// import VideoCard from './VideoCard';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import StarIcon from '@mui/icons-material/Star';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+// import StarIcon from '@mui/icons-material/Star';
+// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Search, Star, Trash2, Tag, Building, FileText } from 'lucide-react';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Discover() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,6 +24,35 @@ function Discover() {
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState('All');
+  
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Extract search term from URL params
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const searchParam = queryParams.get('search');
+    
+    if (searchParam) {
+      setSearchTerm(searchParam);
+    }
+    
+    // If activeTab is passed from state (from the "See More" links)
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location]);
+  
+  // Use the search term to filter results or call API
+  useEffect(() => {
+    if (searchTerm) {
+      // Fetch data based on searchTerm and activeTab
+      console.log(`Searching for: ${searchTerm} in tab: ${activeTab}`);
+      // Call your search API here
+    }
+  }, [searchTerm, activeTab]);
   
   // Data states
   const [jobs, setJobs] = useState([]);
@@ -56,26 +88,49 @@ function Discover() {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const jobsData = await jobsResponse.json();
-        setJobs(jobsData);
+        // Sort jobs by date - newest first
+        const sortedJobs = jobsData.sort((a, b) => new Date(b.upload_time) - new Date(a.upload_time));
+        setJobs(sortedJobs);
         
         // Fetch notes
         const notesResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        setNotes(notesResponse.data);
+        // Sort notes by date if available, otherwise use provided order
+        const sortedNotes = notesResponse.data.sort((a, b) => {
+          if (a.created_at && b.created_at) {
+            return new Date(b.created_at) - new Date(a.created_at);
+          }
+          return 0;
+        });
+        setNotes(sortedNotes);
         
         // Fetch videos
         const videosResponse = await fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const videosData = await videosResponse.json();
-        setVideos(videosData);
+        // Sort videos by date if available
+        const sortedVideos = videosData.sort((a, b) => {
+          if (a.upload_time && b.upload_time) {
+            return new Date(b.upload_time) - new Date(a.upload_time);
+          }
+          return 0;
+        });
+        setVideos(sortedVideos);
         
         // Fetch posts
         const postsResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/posts', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
-        setPosts(postsResponse.data);
+        // Sort posts by date - newest first
+        const sortedPosts = postsResponse.data.sort((a, b) => {
+          if (a.upload_time && b.upload_time) {
+            return new Date(b.upload_time) - new Date(a.upload_time);
+          }
+          return 0;
+        });
+        setPosts(sortedPosts);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -225,6 +280,10 @@ function Discover() {
     return date > now;
   };
 
+  const handleCardClick = (noteId) => {
+    navigate(`/viewnote/${noteId}`);
+  };
+
   // Filtered content for "All" category
   const allFilteredContent = selectedCategory === 'All' && searchQuery ? (
     <>
@@ -300,9 +359,9 @@ function Discover() {
       {/* Jobs Carousel */}
       <div className="mb-10">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Latest Jobs</h2>
+          <h2 className="text-2xl font-semibold">Latest Jobs</h2>
           <button 
-            className="text-custom-blue hover:underline"
+            className="text-custom-blue hover:underline font-medium"
             onClick={() => setSelectedCategory('Jobs')}
           >
             View All
@@ -310,76 +369,21 @@ function Discover() {
         </div>
         <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
           {jobs.slice(0, 5).map(job => (
-            <div className="min-w-[300px] max-w-[300px]" key={job.job_id}>
+            <div className="min-w-[300px] max-w-[300px] hover:translate-y-[-5px] transition-all duration-300" key={job.job_id}>
               <JobCard job={job} onDelete={handleDeleteJob} isAdmin={isAdmin} />
             </div>
           ))}
+          {jobs.length === 0 && (
+            <div className="w-full text-center py-8 text-gray-500">No jobs available</div>
+          )}
         </div>
       </div>
-
-      {/* Notes Carousel */}
-      <div className="mb-10">
+       {/* Posts Carousel */}
+       <div className="mb-10">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Popular Notes</h2>
+          <h2 className="text-2xl font-semibold">Recent Posts</h2>
           <button 
-            className="text-custom-blue hover:underline"
-            onClick={() => setSelectedCategory('Notes')}
-          >
-            View All
-          </button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {notes.slice(0, 4).map(note => (
-            <div key={note.note_id} className="flex-shrink-0">
-              <div className='flex flex-col gap-2 border p-3 rounded-lg bg-gray-300 h-full'>
-                <div className='flex justify-between border-b-[1px] border-custom-blue pb-2'>
-                  <p className='font-bold'>{note.note_title}</p>
-                  <div className='flex items-center'>
-                    <StarIcon className="text-yellow-400 mr-1" style={{ width: '20px', height: '20px' }} />
-                    <p>{note.average_rating && note.average_rating.toFixed(1)}</p>
-                  </div>
-                </div>
-                <div className='flex-grow'>
-                  <p className='text-sm'>{note.note_description?.substring(0, 80)}...</p>
-                </div>
-                <div className='flex justify-between mt-auto'>
-                  <p className='text-custom-blue font-medium'>{note.department}</p>
-                  <a href={note.document} target="_blank" rel="noopener noreferrer">
-                    <PictureAsPdfIcon className='text-custom-blue' style={{ width: '20px', height: '20px' }} />
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Videos Carousel */}
-      <div className="mb-10">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Featured Videos</h2>
-          <button 
-            className="text-custom-blue hover:underline"
-            onClick={() => setSelectedCategory('Videos')}
-          >
-            View All
-          </button>
-        </div>
-        <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
-          {videos.slice(0, 5).map(video => (
-            <div className="min-w-[350px] max-w-[350px]" key={video.video_id}>
-              <VideoCard video={video} onDelete={handleDeleteVideo} isAdmin={isAdmin} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Posts Carousel */}
-      <div className="mb-10">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Recent Posts</h2>
-          <button 
-            className="text-custom-blue hover:underline"
+            className="text-custom-blue hover:underline font-medium"
             onClick={() => setSelectedCategory('Posts')}
           >
             View All
@@ -387,8 +391,22 @@ function Discover() {
         </div>
         <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
           {posts.slice(0, 3).map(post => (
-            <div className="min-w-[350px] max-w-[350px]" key={post.post_id}>
-              <div className="border p-4 rounded-lg bg-gray-300 shadow">
+            <div className="min-w-[350px] max-w-[350px] hover:translate-y-[-5px] transition-all duration-300" key={post.post_id}>
+              <div className="border p-4 rounded-lg bg-gray-300 shadow hover:shadow-lg transition-shadow relative cursor-pointer" 
+                   onClick={() => navigate(`/post/${post.post_id}`)}>
+                {isAdmin && (
+                  <button 
+                    className='absolute top-3 right-3 text-[#394dfd] hover:text-red-500 z-10'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePost(post.post_id);
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                )}
                 <div className="flex justify-between items-center mb-3">
                   <p className="font-bold text-lg">{post.title}</p>
                 </div>
@@ -410,8 +428,170 @@ function Discover() {
               </div>
             </div>
           ))}
+          {posts.length === 0 && (
+            <div className="w-full text-center py-8 text-gray-500">No posts available</div>
+          )}
         </div>
       </div>
+
+      {/* Notes Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Popular Notes</h2>
+          <button 
+            className="text-custom-blue hover:underline font-medium"
+            onClick={() => setSelectedCategory('Notes')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          {notes.slice(0, 4).map(note => (
+            <div 
+              key={note.note_id} 
+              onClick={() => handleCardClick(note.note_id)}
+              className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 cursor-pointer min-h-[360px] flex flex-col"
+            >
+              <div className='p-4 bg-gray-50 flex justify-between items-center border-b'>
+                <div className="flex items-center max-w-[70%]">
+                  <span className={`w-3 h-3 rounded-full mr-2 flex-shrink-0 ${
+                    note.subject === 'CS' ? 'bg-blue-500' :
+                    note.subject === 'IT' ? 'bg-green-500' :
+                    note.subject === 'AIML' ? 'bg-purple-500' :
+                    note.subject === 'AIDS' ? 'bg-red-500' :
+                    'bg-gray-500'
+                  }`}></span>
+                  <h3 className='font-bold text-lg text-gray-800 truncate'>{note.note_title}</h3>
+                </div>
+                
+                <div className='flex items-center gap-2'>
+                  {note.average_rating && (
+                    <div className='flex items-center bg-yellow-100 px-2 py-1 rounded'>
+                      <Star className="text-yellow-400" size={16} />
+                      <span className='ml-1 text-sm font-medium'>{note.average_rating.toFixed(1)}</span>
+                    </div>
+                  )}
+                  {isAdmin && (
+                    <button 
+                      className='p-1 rounded-full hover:bg-gray-200 transition-colors'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteNote(note.note_id);
+                      }}
+                    >
+                      <Trash2 
+                        size={18}
+                        className='text-gray-400 hover:text-red-500' 
+                      />
+                    </button>
+                  )}
+                </div>
+              </div>
+              
+              <div className='p-4 flex-1 flex flex-col'>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="flex items-center bg-blue-50 px-2 py-1 rounded text-xs">
+                    <Tag size={12} className="mr-1 text-custom-blue" />
+                    <span>{note.subject}</span>
+                  </div>
+                  <div className="flex items-center bg-gray-100 px-2 py-1 rounded text-xs">
+                    <Building size={12} className="mr-1 text-gray-500" />
+                    <span>{note.department}</span>
+                  </div>
+                </div>
+                
+                <div className="flex-grow">
+                  <p className='text-gray-700 mb-4 line-clamp-4'>{note.note_description}</p>
+                </div>
+                
+                <div className='mt-auto pt-4 border-t border-gray-100'>
+                  <a 
+                    href={note.document} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className='text-custom-blue hover:text-blue-700 flex items-center hover:underline'
+                  >
+                    <FileText size={16} className='mr-1' />
+                    <span>View PDF</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+          {notes.length === 0 && (
+            <div className="col-span-4 text-center py-8 text-gray-500">No notes available</div>
+          )}
+        </div>
+      </div>
+
+      {/* Videos Carousel */}
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Featured Videos</h2>
+          <button 
+            className="text-custom-blue hover:underline font-medium"
+            onClick={() => setSelectedCategory('Videos')}
+          >
+            View All
+          </button>
+        </div>
+        <div className="flex overflow-x-auto pb-4 space-x-4 scrollbar-hide">
+          {videos.slice(0, 5).reverse().map(video => (
+            <div className="min-w-[450px] max-w-[450px] transition-shadow duration-300" key={video.video_id}>
+              <div className='border p-4 rounded-lg shadow bg-gray-300 w-full cursor-pointer hover:shadow-md transition-shadow' 
+                   onClick={() => navigate(`/ViewVideo/${video.video_id}`)}>
+                <div className='relative'>
+                  {isAdmin && (
+                    <div className='absolute top-2 right-2 z-10'>
+                      <DeleteIcon 
+                        className='text-[#394dfd] cursor-pointer hover:text-red-500' 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteVideo(video.video_id);
+                        }} 
+                      />
+                    </div>
+                  )}
+                  
+                  <div className='mb-4'>
+                    <h2 className='font-bold text-lg'>{video.subject}</h2>
+                    <p className='text-sm md:text-base'>{video.topics} - {video.sem} Semester</p>
+                    {video.upload_time && (
+                      <p className='text-xs text-gray-600 mt-1'>
+                        {new Date(video.upload_time).toLocaleDateString()}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className='w-full mt-2 overflow-hidden rounded-lg'>
+                    <iframe
+                      width="100%"
+                      height="300"
+                      src={video.links}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="rounded transition-opacity"
+                    ></iframe>
+                  </div>
+                  
+                  <div className='flex justify-between mt-3'>
+                    <p className='text-gray-700 text-sm font-medium'>{video.subject}</p>
+                    <p className='text-gray-700 text-sm font-medium'>Semester {video.sem}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {videos.length === 0 && (
+            <div className="w-full text-center py-8 text-gray-500">No videos available</div>
+          )}
+        </div>
+      </div>
+
+     
     </>
   ) : null;
 

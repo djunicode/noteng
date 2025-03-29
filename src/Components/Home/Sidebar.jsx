@@ -27,23 +27,31 @@ const Sidebar = () => {
       }
     };
 
-    const checkAdminStatus = async () => {
-      try {
-        const response = await fetch('https://monilmeh.pythonanywhere.com/api/isAdmin/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        setIsAdmin(data.is_admin);
-        console.log('Admin status:', data.isAdmin);
-      } catch (error) {
-        console.error('Error checking admin status:', error);
-      }
-    };
+    // Check admin status from localStorage first
+    const adminStatus = localStorage.getItem('isAdmin');
+    if (adminStatus) {
+      setIsAdmin(adminStatus === 'true');
+    } else {
+      // Fallback to API if not in localStorage
+      const checkAdminStatus = async () => {
+        try {
+          const response = await fetch('https://monilmeh.pythonanywhere.com/api/isAdmin/', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const data = await response.json();
+          setIsAdmin(data.is_admin);
+          localStorage.setItem('isAdmin', data.is_admin);
+          console.log('Admin status:', data.is_admin);
+        } catch (error) {
+          console.error('Error checking admin status:', error);
+        }
+      };
+      checkAdminStatus();
+    }
 
     fetchUserData();
-    checkAdminStatus();
   }, [token]);
 
   function handleHomeClick() {
@@ -85,6 +93,7 @@ const Sidebar = () => {
 
   function handleLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
     localStorage.setItem('isLoggedIn', 'false');
     navigate('/splash');
   }

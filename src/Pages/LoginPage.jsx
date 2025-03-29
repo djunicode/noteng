@@ -71,6 +71,24 @@ const LoginPage = ({ onLoginChange }) => {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('token', data.access);
                 localStorage.setItem('sapid', sapid);
+                
+                // Check if user is an admin
+                try {
+                    const adminResponse = await fetch('https://monilmeh.pythonanywhere.com/api/isAdmin/', {
+                        headers: {
+                            'Authorization': `Bearer ${data.access}`
+                        }
+                    });
+                    
+                    if (adminResponse.ok) {
+                        const adminData = await adminResponse.json();
+                        localStorage.setItem('isAdmin', adminData.is_admin);
+                    }
+                } catch (adminError) {
+                    console.error('Error checking admin status:', adminError);
+                    localStorage.setItem('isAdmin', 'false');
+                }
+                
                 navigate('/Home');
             } else {
                 setError('Invalid credentials');

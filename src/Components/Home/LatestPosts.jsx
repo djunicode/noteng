@@ -5,11 +5,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import { useAdmin } from './AdminContext';
+import DeleteConfirmationModal from '../Common/DeleteConfirmationModal';
 
 function LatestPosts() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [likedPosts, setLikedPosts] = useState({});
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+  
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
   
@@ -54,15 +58,22 @@ function LatestPosts() {
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id, e) => {
+  const handleDelete = (id, e) => {
     e.stopPropagation();
+    setPostToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`https://monilmeh.pythonanywhere.com/api/posts/${id}`, {
+      await axios.delete(`https://monilmeh.pythonanywhere.com/api/posts/${postToDelete}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      setCardData((prevData) => prevData.filter((post) => post.id !== id));
+      setCardData((prevData) => prevData.filter((post) => post.id !== postToDelete));
+      setDeleteModalOpen(false);
+      setPostToDelete(null);
     } catch (error) {
       console.error('Error deleting post', error);
     }
@@ -202,6 +213,12 @@ function LatestPosts() {
           ))}
         </div>
       )}
+      <DeleteConfirmationModal 
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemType="post"
+      />
     </section>
   );
 }
