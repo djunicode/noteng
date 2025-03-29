@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, MenuItem, FormControl, Select } from '@mui/material';
+import { Button, TextField, MenuItem, FormControl, Select, Alert, Snackbar } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import BackButton from '../../assets/BackButton.png';
@@ -39,6 +39,27 @@ function NewPost() {
     { value: 'commitee', label: 'Committee' }
   ];
 
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification({...notification, open: false});
+  };
+
+  const showNotification = (message, severity = 'success') => {
+    setNotification({
+      open: true,
+      message,
+      severity
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -58,6 +79,12 @@ function NewPost() {
     const file = e.target.files[0];
     if (!file) return;
     
+    // Check file size (limit to 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      showNotification('File is too large. Please select a file under 10MB.', 'error');
+      return;
+    }
+    
     setFormData({
       ...formData,
       document: file
@@ -73,7 +100,7 @@ function NewPost() {
       reader.readAsDataURL(file);
     } else {
       setImagePreview(null);
-      alert('Please select an image file');
+      showNotification('Please select an image file', 'error');
     }
   };
 
@@ -81,7 +108,7 @@ function NewPost() {
     e.preventDefault();
 
     if (!formData.document) {
-      alert('Please upload an image');
+      showNotification('Please upload an image', 'error');
       return;
     }
 
@@ -107,7 +134,7 @@ function NewPost() {
       });
 
       if (response.status === 201) {
-        alert('Post created successfully!');
+        showNotification('Post created successfully!');
         navigate('/');
         // Reset form
         setFormData({
@@ -124,11 +151,11 @@ function NewPost() {
         setFileName('');
         setImagePreview(null);
       } else {
-        alert('Failed to create post');
+        showNotification('Failed to create post', 'error');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      showNotification('An error occurred while uploading. Please try again later.', 'error');
     }
   };
 
@@ -149,6 +176,22 @@ function NewPost() {
 
   return (
     <div className='flex flex-col gap-3 w-full' onKeyPress={handleKeyPress}>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={6000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
+      
       <div className='flex flex-row items-center'>
         <Button className='h-20' onClick={handleGoBack}>
           <img src={BackButton} alt='Back' />
