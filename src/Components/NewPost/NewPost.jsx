@@ -134,8 +134,11 @@ function NewPost() {
       });
 
       if (response.status === 201) {
-        showNotification('Post created successfully!');
-        navigate('/');
+        showNotification('Post created successfully! Redirecting to homepage...');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+        
         // Reset form
         setFormData({
           title: '',

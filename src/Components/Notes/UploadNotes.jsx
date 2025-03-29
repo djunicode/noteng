@@ -314,8 +314,11 @@ function UploadNotes() {
       });
 
       if (response.status === 201) {
-        showNotification('Notes uploaded successfully!');
-        navigate('/');
+        showNotification('Notes uploaded successfully! Redirecting to homepage...');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+        
         setFormData({
           notesTitle: '',
           subject: '',

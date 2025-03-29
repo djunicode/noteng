@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../Components/Home/Sidebar';
 import BackButton from '../assets/BackButton.png';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, MenuItem, FormControl, Select } from '@mui/material';
+import { Button, TextField, MenuItem, FormControl, Select, Snackbar, Alert } from '@mui/material';
 import axios from 'axios';
 import '../styles/UploadVideo.css';
 
@@ -36,6 +36,27 @@ const ViewNote = () => {
     const [previewLink, setPreviewLink] = useState('');
     const token = localStorage.getItem('token');
 
+    const [notification, setNotification] = useState({
+        open: false,
+        message: '',
+        severity: 'success'
+    });
+
+    const handleCloseNotification = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setNotification({...notification, open: false});
+    };
+
+    const showNotification = (message, severity = 'success') => {
+        setNotification({
+            open: true,
+            message,
+            severity
+        });
+    };
+
     const handleInputChange = (event) => {
         const { id, value } = event.target;
         setFormData({ ...formData, [id]: value });
@@ -61,11 +82,13 @@ const ViewNote = () => {
                 }
             });
             console.log(response.data);
-            alert('Video resource shared successfully!');
-            navigate('/'); // Redirect to homepage after successful submission
+            showNotification('Video resource shared successfully! Redirecting to homepage...');
+            setTimeout(() => {
+                navigate('/'); // Redirect to homepage after showing notification
+            }, 2000);
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('Failed to share video. Please try again.');
+            showNotification('Failed to share video. Please try again.', 'error');
         }
     };
 
@@ -91,7 +114,23 @@ const ViewNote = () => {
     return (
         <div className='view-note-container'>
             <Sidebar />
-            <div className='flex flex-col maincontent'>
+            <div className='flex flex-col maincontent w-full'>
+                <Snackbar
+                    open={notification.open}
+                    autoHideDuration={6000}
+                    onClose={handleCloseNotification}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert 
+                        onClose={handleCloseNotification} 
+                        severity={notification.severity} 
+                        sx={{ width: '100%' }}
+                        variant="filled"
+                    >
+                        {notification.message}
+                    </Alert>
+                </Snackbar>
+                
                 <div className='flex flex-row items-center'>
                     <Button className='backButton' onClick={handleGoBack}>
                         <img src={BackButton} alt='Back'/>
@@ -103,7 +142,7 @@ const ViewNote = () => {
                 <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray'/>
                 
                 <div className='subtitle'>
-                    <div className="flex flex-col lg:flex-row gap-6 p-6">
+                    <div className="flex flex-col lg:flex-row gap-6 p-6 w-full">
                         <div className="w-full lg:w-1/2 p-4">
                             <form className="main-form" onSubmit={handleSubmit}>
                                 <div className="mb-6">

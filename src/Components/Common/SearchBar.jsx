@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  console.log('Search bar rendered'); // Debugging line
 
   const handleSearch = (e) => {
     e.preventDefault();

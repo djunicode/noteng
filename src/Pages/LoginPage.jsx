@@ -183,7 +183,7 @@ const LoginPage = ({ onLoginChange }) => {
             </div>
 
             {/* Main Content */}
-            <div className="w-full max-w-7xl flex flex-col-reverse sm:flex-row justify-between items-center">
+            <div className="w-full max-w-7xl flex flex-col-reverse sm:flex-row justify-between items-center" style={{marginTop:'-64px'}}>
                 {/* Login Form */}
                 <div className="w-full sm:w-1/2 flex flex-col items-center sm:items-start mt-8 sm:mt-0">
                     <div className="w-full max-w-md">
@@ -275,7 +275,7 @@ const LoginPage = ({ onLoginChange }) => {
                 </div>
                 
                 {/* Image */}
-                <div className="w-full sm:w-1/2 flex justify-center">
+                <div className="w-full sm:w-1/2 flex justify-center hidden sm:block">
                     <img src={LoginImg2} alt="Login illustration" className="w-3/4 sm:w-4/5 max-w-lg" />
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchBar from '../Common/SearchBar';
+import SearchBar from './SearchBar'
 import ShareNotes from './ShareNotes';
 import SharedResources from './SharedResources';
 import JobOpportunity from './JobOpportunity';

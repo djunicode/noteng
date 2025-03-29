@@ -171,7 +171,7 @@ const PostJob = () => {
   };
 
   return (
-    <div className='flex flex-col lg:flex-row h-full' onKeyPress={handleKeyPress}>
+    <div className='flex flex-col lg:flex-row h-full ml-2' onKeyPress={handleKeyPress}>
       <Snackbar
         open={notification.open}
         autoHideDuration={6000}

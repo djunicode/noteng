@@ -15,7 +15,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 // import StarIcon from '@mui/icons-material/Star';
 // import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Search, Star, Trash2, Tag, Building, FileText } from 'lucide-react';
+import {  Star, Trash2, Tag, Building, FileText } from 'lucide-react';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function Discover() {
@@ -30,13 +30,14 @@ function Discover() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Extract search term from URL params
+  // Extract search term from URL params and prefill the search input
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const searchParam = queryParams.get('search');
     
     if (searchParam) {
       setSearchTerm(searchParam);
+      setSearchQuery(searchParam); // Set the search input value directly
     }
     
     // If activeTab is passed from state (from the "See More" links)
@@ -77,6 +78,14 @@ function Discover() {
     setSearchParams({ category });
   };
 
+  // Simplified handleAuthError function - just do a basic redirect
+  const handleAuthError = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('isAdmin');
+    localStorage.setItem('isLoggedIn', 'false');
+    navigate('/login');
+  };
+
   // Function to fetch all data
   useEffect(() => {
     setIsLoading(true);
@@ -84,67 +93,123 @@ function Discover() {
     const fetchAllData = async () => {
       try {
         // Fetch jobs
-        const jobsResponse = await fetch('https://monilmeh.pythonanywhere.com/api/jobboard/', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const jobsData = await jobsResponse.json();
-        // Sort jobs by date - newest first
-        const sortedJobs = jobsData.sort((a, b) => new Date(b.upload_time) - new Date(a.upload_time));
-        setJobs(sortedJobs);
+        try {
+          const jobsResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/jobboard/', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          // Sort jobs by date - newest first
+          const sortedJobs = jobsResponse.data.sort((a, b) => {
+            if (a.upload_time && b.upload_time) {
+              return new Date(b.upload_time) - new Date(a.upload_time);
+            }
+            return 0;
+          });
+          setJobs(sortedJobs);
+        } catch (error) {
+          console.error('Error fetching jobs:', error);
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            handleAuthError();
+            return;
+          }
+        }
         
         // Fetch notes
-        const notesResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        // Sort notes by date if available, otherwise use provided order
-        const sortedNotes = notesResponse.data.sort((a, b) => {
-          if (a.created_at && b.created_at) {
-            return new Date(b.created_at) - new Date(a.created_at);
+        try {
+          const notesResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/notes/', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          // Sort notes by date if available, otherwise use provided order
+          const sortedNotes = notesResponse.data.sort((a, b) => {
+            if (a.created_at && b.created_at) {
+              return new Date(b.created_at) - new Date(a.created_at);
+            }
+            return 0;
+          });
+          setNotes(sortedNotes);
+        } catch (error) {
+          console.error('Error fetching notes:', error);
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            handleAuthError();
+            return;
           }
-          return 0;
-        });
-        setNotes(sortedNotes);
+        }
         
         // Fetch videos
-        const videosResponse = await fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const videosData = await videosResponse.json();
-        // Sort videos by date if available
-        const sortedVideos = videosData.sort((a, b) => {
-          if (a.upload_time && b.upload_time) {
-            return new Date(b.upload_time) - new Date(a.upload_time);
+        try {
+          const videosResponse = await fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (!videosResponse.ok) {
+            if (videosResponse.status === 401 || videosResponse.status === 403) {
+              handleAuthError();
+              return;
+            }
+            throw new Error(`HTTP error! Status: ${videosResponse.status}`);
           }
-          return 0;
-        });
-        setVideos(sortedVideos);
+          const videosData = await videosResponse.json();
+          // Sort videos by date if available
+          const sortedVideos = videosData.sort((a, b) => {
+            if (a.upload_time && b.upload_time) {
+              return new Date(b.upload_time) - new Date(a.upload_time);
+            }
+            return 0;
+          });
+          setVideos(sortedVideos);
+        } catch (error) {
+          console.error('Error fetching videos:', error);
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            handleAuthError();
+            return;
+          }
+        }
         
         // Fetch posts
-        const postsResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/posts', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        // Sort posts by date - newest first
-        const sortedPosts = postsResponse.data.sort((a, b) => {
-          if (a.upload_time && b.upload_time) {
-            return new Date(b.upload_time) - new Date(a.upload_time);
+        try {
+          const postsResponse = await axios.get('https://monilmeh.pythonanywhere.com/api/posts', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          // Sort posts by date - newest first
+          const sortedPosts = postsResponse.data.sort((a, b) => {
+            if (a.upload_time && b.upload_time) {
+              return new Date(b.upload_time) - new Date(a.upload_time);
+            }
+            return 0;
+          });
+          setPosts(sortedPosts);
+        } catch (error) {
+          console.error('Error fetching posts:', error);
+          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            handleAuthError();
+            return;
           }
-          return 0;
-        });
-        setPosts(sortedPosts);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
+        handleAuthError();
       } finally {
         setIsLoading(false);
       }
     };
     
     fetchAllData();
-  }, [token]);
+  }, [token, navigate,handleAuthError]);
 
   // Handle search
   const handleSearch = (e) => {
     e.preventDefault();
-    // We'll handle the search through filtering the data directly
+    
+    // Update URL with search parameter
+    const queryParams = new URLSearchParams(location.search);
+    if (searchQuery.trim()) {
+      queryParams.set('search', searchQuery.trim());
+      navigate(`${location.pathname}?${queryParams.toString()}`);
+    } else {
+      queryParams.delete('search');
+      navigate(`${location.pathname}?${queryParams.toString()}`);
+    }
+    
+    // Set the search term for filtering
+    setSearchTerm(searchQuery);
   };
   
   // Handle delete functions for each type
