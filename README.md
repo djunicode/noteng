@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Noteng - All Your Notes in One Place
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Noteng Logo](https://i.imgur.com/YOUR_LOGO_IMAGE.png)
 
-## Available Scripts
+## 🚀 Quick Links
 
-In the project directory, you can run:
+- **Web App:** [noteng.vercel.app](https://noteng.vercel.app/)
+- **Mobile App:** [Download from Google Drive](https://drive.google.com/file/d/1aInFbgTugnLbesPj282mtCK8OIWkiaG6/view?usp=drivesdk)
+- **Backend API:** [MonilMeh.pythonanywhere.com](https://MonilMeh.pythonanywhere.com)
 
-### `npm start`
+## 📚 About Noteng
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Noteng is a revolutionary knowledge-sharing platform built by students, for students. It centralizes academic resources, career opportunities, and campus events in one seamless interface, empowering college students to excel in their academic journeys.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Our mission is to transform the college experience through collaborative learning and resource sharing, creating a community where knowledge flows freely between seniors and juniors.
 
-### `npm test`
+## ✨ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 📝 Note Sharing
+Access premium notes from seniors across different years and subjects, with a rating system for quality assurance.
 
-### `npm run build`
+### 💼 Job Opportunities
+Discover internships and job openings posted by seniors and alumni with direct contact information.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🎥 Video Resources
+Access curated YouTube videos for specific subjects and topics with embedded player functionality.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📅 Events Calendar
+Stay updated with campus events, workshops, hackathons, and important academic dates.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 💬 Chat with PDF
+Collaborate in real-time while viewing PDFs, enhancing group study sessions and discussions.
 
-### `npm run eject`
+### 📱 Cross-Platform
+Seamlessly switch between our responsive web platform and dedicated mobile application.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🛠️ Technology Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Frontend:** React.js
+- **Mobile App:** Flutter
+- **Backend:** Python (Flask/Django)
+- **Animations:** AOS (Animate On Scroll)
+- **UI Components:** React-Slick, Font Awesome
+- **Deployment:** Vercel (Frontend), PythonAnywhere (Backend)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🔧 Installation & Setup
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js (v14.0+)
+- npm or yarn
 
-## Learn More
+### Web Application Setup
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/noteng.git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Navigate to project directory
+cd noteng
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Install dependencies
+npm install
 
-### Code Splitting
+# Start development server
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Mobile Application
+Download the APK directly from our [Google Drive link](https://drive.google.com/file/d/1aInFbgTugnLbesPj282mtCK8OIWkiaG6/view?usp=drivesdk) and install on your Android device.
 
-### Analyzing the Bundle Size
+## 🌟 Project Stats
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **50+ Students** actively using the platform
+- **100+ Notes** shared across various subjects
+- **200+ Opportunities** posted for students
 
-### Making a Progressive Web App
+## 👨‍💻 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+We welcome contributions to Noteng! If you'd like to contribute, please:
 
-### Advanced Configuration
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📫 Contact
 
-### Deployment
+Got questions or feedback? Reach out to us:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Email:** [your.email@example.com](mailto:your.email@example.com)
+- **Twitter:** [@notengapp](https://twitter.com/notengapp)
+- **Instagram:** [@notengapp](https://instagram.com/notengapp)
 
-### `npm run build` fails to minify
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  <b>© 2023 Noteng. All rights reserved.</b><br>
+  Empowering students through knowledge sharing
+</p>

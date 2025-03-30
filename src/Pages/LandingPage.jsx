@@ -175,7 +175,7 @@ const LandingPage = () => {
           <h2>Take Noteng Wherever You Go</h2>
           <p>Download our mobile app to access your notes anywhere, anytime - even offline! Built with Flutter for a seamless experience across all devices.</p>
           <div className="download-buttons">
-            <a href="https://drive.google.com/drive/folders/your-app-folder-link" 
+            <a href="https://drive.google.com/file/d/1aInFbgTugnLbesPj282mtCK8OIWkiaG6/view?usp=drivesdk" 
                className="download-btn google-drive" 
                target="_blank" 
                rel="noopener noreferrer"
