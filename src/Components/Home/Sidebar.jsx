@@ -137,14 +137,16 @@ const Sidebar = () => {
                    overflow-hidden z-20 transition-all duration-300 
                    ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
-        <div className='flex justify-end p-3 lg:hidden' onClick={toggleSidebar}>
-          <motion.div
-            whileHover={{ scale: 1.2, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <X color="white" size={24} />
-          </motion.div>
-        </div>
+        {isOpen && (
+          <div className='flex justify-end p-3 lg:hidden' onClick={toggleSidebar}>
+            <motion.div
+              whileHover={{ scale: 1.2, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <X color="white" size={24} />
+            </motion.div>
+          </div>
+        )}
         
         <div className='flex flex-col h-screen'>
           <div className='flex flex-row px-5 py-5'>
@@ -275,7 +277,7 @@ const Sidebar = () => {
             
             {/* Logout Section */}
             <motion.div 
-className="flex gap-3 items-center justify-center cursor-pointer mx-auto mb-20 sm:mb-12 md:mb-8"
+className="flex gap-3 items-center justify-center cursor-pointer mx-auto mb-20 sm:mb-12 md:mb-16"
               onClick={handleLogout}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

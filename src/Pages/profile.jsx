@@ -199,12 +199,25 @@ const Profile = () => {
     <div className='flex flex-col lg:flex-row'>
       <Sidebar />
       <div className='flex flex-col maincontent'>
-        <div className='flex flex-row'>
-          <Button className='backButton' onClick={handleGoBack}>
-            <img src={BackButton} alt='Back' className="transition-transform hover:scale-110" />
-          </Button>
+        <div className='flex flex-row mt-12'>
+          <div className="w-auto">
+            <Button 
+              className='backButton' 
+              onClick={handleGoBack}
+              sx={{ 
+                minWidth: 'auto',
+                padding: 0,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none'
+                }
+              }}
+            >
+              <img src={BackButton} alt='Back' className="transition-transform hover:scale-110" />
+            </Button>
+          </div>
           <p className='ml-6 mt-10 flex items-center'>
-            <span className='font-bold heading custom-heading'>My Profile</span>
+            <span className='font-bold text-xl sm:text-2xl md:text-3xl heading custom-heading'>My Profile</span>
           </p>
         </div>
         <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
