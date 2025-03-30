@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Noteng - All Your Notes in One Place
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🚀 Quick Links
 
-## Available Scripts
+- **Web App:** [noteng.vercel.app](https://noteng.vercel.app/)
+- **Mobile App:** [Download from Google Drive](https://drive.google.com/file/d/1aInFbgTugnLbesPj282mtCK8OIWkiaG6/view?usp=drivesdk)
+- **Backend API:** [MonilMeh.pythonanywhere.com](https://MonilMeh.pythonanywhere.com)
 
-In the project directory, you can run:
+## 📚 About Noteng
 
-### `npm start`
+Noteng is a revolutionary knowledge-sharing platform built by students, for students. It centralizes academic resources, career opportunities, and campus events in one seamless interface, empowering college students to excel in their academic journeys.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Our mission is to transform the college experience through collaborative learning and resource sharing, creating a community where knowledge flows freely between seniors and juniors.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✨ Features
 
-### `npm test`
+### 📝 Note Sharing
+Access premium notes from seniors across different years and subjects, with a rating system for quality assurance.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 💼 Job Opportunities
+Discover internships and job openings posted by seniors and alumni with direct contact information.
 
-### `npm run build`
+### 🎥 Video Resources
+Access curated YouTube videos for specific subjects and topics with embedded player functionality.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 📅 Events Calendar
+Stay updated with campus events, workshops, hackathons, and important academic dates.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 💬 Chat with PDF
+Collaborate in real-time while viewing PDFs, enhancing group study sessions and discussions.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 📱 Cross-Platform
+Seamlessly switch between our responsive web platform and dedicated mobile application.
 
-### `npm run eject`
+## 🛠️ Technology Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Frontend:** React.js
+- **Mobile App:** Flutter
+- **Backend:** Python (Flask/Django)
+- **Animations:** AOS (Animate On Scroll)
+- **UI Components:** React-Slick, Font Awesome
+- **Deployment:** Vercel (Frontend), PythonAnywhere (Backend)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔧 Installation & Setup
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Prerequisites
+- Node.js (v14.0+)
+- npm or yarn
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Web Application Setup
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/noteng.git
 
-## Learn More
+# Navigate to project directory
+cd noteng
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Install dependencies
+npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Start development server
+npm start
+```
 
-### Code Splitting
+### Mobile Application
+Download the APK directly from our [Google Drive link](https://drive.google.com/file/d/1aInFbgTugnLbesPj282mtCK8OIWkiaG6/view?usp=drivesdk) and install on your Android device.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🌟 Project Stats
 
-### Analyzing the Bundle Size
+- **50+ Students** actively using the platform
+- **100+ Notes** shared across various subjects
+- **200+ Opportunities** posted for students
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 👨‍💻 Contributing
 
-### Making a Progressive Web App
+We welcome contributions to Noteng! If you'd like to contribute, please:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Advanced Configuration
+## 📫 Contact
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Got questions or feedback? Reach out to us:
 
-### Deployment
+- **Email:** [djunicode@gmail.com](mailto:djunicode@gmail.com)
+- **Instagram:** [@djunicode]([https://www.instagram.com/djunicode/?hl=en](https://www.instagram.com/djunicode/?hl=en))
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 📄 License
 
-### `npm run build` fails to minify
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+<p align="center">
+  <b>© 2023 Noteng. All rights reserved.</b><br>
+  Empowering students through knowledge sharing
+</p>
