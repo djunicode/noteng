@@ -10,6 +10,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 function UploadNotes() {
   const navigate = useNavigate();
+  const sapid = localStorage.getItem('sapid');
   const [formData, setFormData] = useState({
     notesTitle: '',
     department: '',
@@ -19,7 +20,7 @@ function UploadNotes() {
     rating: 4,
     document: null,
     type: '',
-    user: '60004220207'
+    user: sapid
   });
   const [fileName, setFileName] = useState('');
   const [filePreview, setFilePreview] = useState(null);
@@ -327,7 +328,7 @@ function UploadNotes() {
           rating: 4,
           type: '',
           document: null,
-          user: '60004220207'
+          user: sapid
         });
         setFileName('');
         setFilePreview(null);

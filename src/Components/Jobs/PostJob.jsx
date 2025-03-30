@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 const PostJob = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const sapid = localStorage.getItem('sapid');
   
   const [notification, setNotification] = useState({
     open: false,
@@ -57,7 +58,7 @@ const PostJob = () => {
     description: '',
     deadline: null,
     post_url: '',
-    user: '60004220207',
+    user: sapid,
     mode: 'Remote',
     location: '',
     salary: [30000, 100000],
@@ -146,7 +147,7 @@ const PostJob = () => {
           description: '',
           deadline: null,
           post_url: '',
-          user: '60004220207',
+          user: sapid,
           mode: 'Remote',
           location: '',
           salary: [30000, 100000],

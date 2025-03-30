@@ -11,6 +11,7 @@ import './viewpost.css';
 
 function NewPost() {
   const navigate = useNavigate();
+  const sapid = localStorage.getItem('sapid');
   const [formData, setFormData] = useState({
     title: '',
     subtype: '',
@@ -19,7 +20,7 @@ function NewPost() {
     deadline: null,
     likes: 100,
     post_url: '',
-    user: '60004220207',
+    user: sapid || '60004220207',
     organised_by: 'college'
   });
   const [fileName, setFileName] = useState('');
