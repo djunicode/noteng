@@ -78,14 +78,6 @@ function Discover() {
     setSearchParams({ category });
   };
 
-  // Simplified handleAuthError function - just do a basic redirect
-  const handleAuthError = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('isAdmin');
-    localStorage.setItem('isLoggedIn', 'false');
-    navigate('/login');
-  };
-
   // Function to fetch all data
   useEffect(() => {
     setIsLoading(true);
@@ -107,10 +99,6 @@ function Discover() {
           setJobs(sortedJobs);
         } catch (error) {
           console.error('Error fetching jobs:', error);
-          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            handleAuthError();
-            return;
-          }
         }
         
         // Fetch notes
@@ -128,10 +116,6 @@ function Discover() {
           setNotes(sortedNotes);
         } catch (error) {
           console.error('Error fetching notes:', error);
-          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            handleAuthError();
-            return;
-          }
         }
         
         // Fetch videos
@@ -139,28 +123,21 @@ function Discover() {
           const videosResponse = await fetch('https://monilmeh.pythonanywhere.com/api/videolinks/', {
             headers: { 'Authorization': `Bearer ${token}` }
           });
-          if (!videosResponse.ok) {
-            if (videosResponse.status === 401 || videosResponse.status === 403) {
-              handleAuthError();
-              return;
-            }
+          if (videosResponse.ok) {
+            const videosData = await videosResponse.json();
+            // Sort videos by date if available
+            const sortedVideos = videosData.sort((a, b) => {
+              if (a.upload_time && b.upload_time) {
+                return new Date(b.upload_time) - new Date(a.upload_time);
+              }
+              return 0;
+            });
+            setVideos(sortedVideos);
+          } else {
             throw new Error(`HTTP error! Status: ${videosResponse.status}`);
           }
-          const videosData = await videosResponse.json();
-          // Sort videos by date if available
-          const sortedVideos = videosData.sort((a, b) => {
-            if (a.upload_time && b.upload_time) {
-              return new Date(b.upload_time) - new Date(a.upload_time);
-            }
-            return 0;
-          });
-          setVideos(sortedVideos);
         } catch (error) {
           console.error('Error fetching videos:', error);
-          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            handleAuthError();
-            return;
-          }
         }
         
         // Fetch posts
@@ -178,21 +155,16 @@ function Discover() {
           setPosts(sortedPosts);
         } catch (error) {
           console.error('Error fetching posts:', error);
-          if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-            handleAuthError();
-            return;
-          }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        handleAuthError();
       } finally {
         setIsLoading(false);
       }
     };
     
     fetchAllData();
-  }, [token, navigate,handleAuthError]);
+  }, [token, navigate]);
 
   // Handle search
   const handleSearch = (e) => {

@@ -1,5 +1,7 @@
 # Noteng - All Your Notes in One Place
 
+![Noteng Logo](https://i.imgur.com/YOUR_LOGO_IMAGE.png)
+
 ## 🚀 Quick Links
 
 - **Web App:** [noteng.vercel.app](https://noteng.vercel.app/)
@@ -85,8 +87,9 @@ We welcome contributions to Noteng! If you'd like to contribute, please:
 
 Got questions or feedback? Reach out to us:
 
-- **Email:** [djunicode@gmail.com](mailto:djunicode@gmail.com)
-- **Instagram:** [@djunicode]([https://www.instagram.com/djunicode/?hl=en](https://www.instagram.com/djunicode/?hl=en))
+- **Email:** [your.email@example.com](mailto:your.email@example.com)
+- **Twitter:** [@notengapp](https://twitter.com/notengapp)
+- **Instagram:** [@notengapp](https://instagram.com/notengapp)
 
 ## 📄 License
 
