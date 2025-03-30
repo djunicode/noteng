@@ -1,40 +1,114 @@
 .flex {
     display: flex;
-  }
+}
   
-  .overflow-x-scroll {
+.overflow-x-scroll {
     overflow-x: auto;
-  }
+}
   
-  .space-x-4 > * + * {
-    margin-left: 1rem; /* Adjust spacing between cards as needed */
-  }
-  
-  .border {
-    border: 1px solid #ccc;
-  }
-  
-  .rounded-lg {
-    border-radius: 0.5rem;
-  }
-  
-  .shadow {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .bg-gray-300 {
-    background-color: #e2e8f0;
-  }
-  
-  .md\:w-full {
+.space-x-4 > * + * {
+    margin-left: 1rem;
+}
+
+/* Updated styles for job cards layout to fix horizontal overlap */
+.job-scroll-container {
     width: 100%;
-  }
+    max-width: 100%;
+    position: relative;
+    padding: 0 20px 30px;
+    overflow: visible;
+}
+
+.job-cards-wrapper {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px 10px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f3f4f6;
+    gap: 50px; /* Further increased spacing between cards */
+    padding-right: 40px; /* Ensure the last card doesn't get cut off */
+}
+
+.job-cards-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.job-cards-wrapper::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 10px;
+}
+
+.job-cards-wrapper::-webkit-scrollbar-thumb {
+    background-color: #d1d5db;
+    border-radius: 10px;
+}
+
+.job-card-container {
+    flex: 0 0 auto;
+    width: 380px;
+    min-width: 380px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    position: relative;
+}
+
+/* Ensure cards take the full height they need without extra space */
+.job-card-container > * {
+    height: 100%;
+    width: 100%;
+}
+
+/* Style enhancements for the JobCard component (assuming structure) */
+.border {
+    border: 1px solid #e5e7eb;
+}
   
-  .cursor-pointer {
+.rounded-lg {
+    border-radius: 0.75rem;
+}
+  
+.shadow {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+  
+.md\:w-full {
+    width: 100%;
+}
+  
+.cursor-pointer {
     cursor: pointer;
-  }
+}
   
-  .text-custom-blue {
+.text-custom-blue {
     color: #394dfd;
-  }
-  
+}
+
+/* Hide horizontal overflow on mobile */
+@media (max-width: 768px) {
+    .job-card-container {
+        width: 330px;
+        min-width: 330px;
+    }
+    
+    .job-cards-wrapper {
+        gap: 35px;
+        padding-right: 35px;
+    }
+}
+
+@media (max-width: 640px) {
+    .job-card-container {
+        width: 300px;
+        min-width: 300px;
+    }
+    
+    .job-cards-wrapper {
+        gap: 30px;
+        padding-right: 30px;
+    }
+}

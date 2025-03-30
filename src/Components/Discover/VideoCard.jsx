@@ -15,7 +15,7 @@ function VideoCard({ video, onDelete, isAdmin }) {
   };
 
   return (
-    <div className='border p-4 rounded-lg shadow bg-gray-300 w-full cursor-pointer hover:shadow-lg transition-shadow' onClick={handleCardClick}>
+    <div className='border p-4 rounded-lg shadow bg-gray-300 w-full cursor-pointer hover:shadow-md transition-shadow' onClick={handleCardClick}>
       <div className='relative'>
         {isAdmin && (
           <div className='absolute top-2 right-2 z-10'>
@@ -29,24 +29,29 @@ function VideoCard({ video, onDelete, isAdmin }) {
         <div className='mb-4'>
           <h2 className='font-bold text-lg'>{video.subject}</h2>
           <p className='text-sm md:text-base'>{video.topics} - {video.sem} Semester</p>
+          {video.upload_time && (
+            <p className='text-xs text-gray-600 mt-1'>
+              {new Date(video.upload_time).toLocaleDateString()}
+            </p>
+          )}
         </div>
         
-        <div className='w-full mt-2'>
+        <div className='w-full mt-2 overflow-hidden rounded-lg'>
           <iframe
             width="100%"
-            height="200"
+            height="300"
             src={video.links}
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="rounded"
+            className="rounded transition-opacity"
           ></iframe>
         </div>
         
         <div className='flex justify-between mt-3'>
-          <p className='text-custom-blue text-sm font-medium'>{video.subject}</p>
-          <p className='text-custom-blue text-sm font-medium'>Semester {video.sem}</p>
+          <p className='text-gray-700 text-sm font-medium'>{video.subject}</p>
+          <p className='text-gray-700 text-sm font-medium'>Semester {video.sem}</p>
         </div>
       </div>
     </div>

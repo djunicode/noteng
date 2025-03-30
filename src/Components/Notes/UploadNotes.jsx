@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
+import { Button, TextField, MenuItem, FormControl, InputLabel, Select, Alert, Snackbar } from '@mui/material';
 import BackButton from '../../assets/BackButton.png';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -228,9 +228,37 @@ function UploadNotes() {
     });
   };
 
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification({...notification, open: false});
+  };
+
+  const showNotification = (message, severity = 'success') => {
+    setNotification({
+      open: true,
+      message,
+      severity
+    });
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    
+    // Check file size (limit to 25MB)
+    const maxSize = 25 * 1024 * 1024; // 25MB in bytes
+    if (file.size > maxSize) {
+      showNotification('File is too large. Please select a file under 25MB.', 'error');
+      return;
+    }
     
     setFormData({
       ...formData,
@@ -262,7 +290,7 @@ function UploadNotes() {
     e.preventDefault();
 
     if (!formData.document) {
-      alert('Please upload a document');
+      showNotification('Please upload a document', 'error');
       return;
     }
 
@@ -286,8 +314,11 @@ function UploadNotes() {
       });
 
       if (response.status === 201) {
-        alert('Notes uploaded successfully!');
-        navigate('/');
+        showNotification('Notes uploaded successfully! Redirecting to homepage...');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+        
         setFormData({
           notesTitle: '',
           subject: '',
@@ -301,11 +332,22 @@ function UploadNotes() {
         setFileName('');
         setFilePreview(null);
       } else {
-        alert('Failed to upload notes');
+        showNotification('Failed to upload notes', 'error');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      
+      // Check for specific error types
+      if (error.response && error.response.data) {
+        if (error.response.data.document && 
+            error.response.data.document.includes('File too large')) {
+          showNotification('File is too large. Please select a smaller file.', 'error');
+        } else {
+          showNotification('An error occurred while uploading. Please try again later.', 'error');
+        }
+      } else {
+        showNotification('Network error. Please check your connection and try again.', 'error');
+      }
     }
   };
 
@@ -333,6 +375,21 @@ function UploadNotes() {
 
   return (
     <div className='flex flex-col gap-3'>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={6000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
       <div className='flex flex-row items-center'>
         <Button className='h-20' onClick={handleGoBack}>
           <img src={BackButton} alt='Back' />

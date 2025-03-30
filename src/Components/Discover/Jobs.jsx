@@ -10,12 +10,13 @@ function Jobs({ jobs = [], onDelete, isAdmin }) {
         </h1>
       ) : (
         jobs.map((job) => (
-          <JobCard 
-            key={job.job_id} 
-            job={job} 
-            onDelete={onDelete} 
-            isAdmin={isAdmin} 
-          />
+          <div className="hover:translate-y-[-5px] transition-all duration-300" key={job.job_id}>
+            <JobCard 
+              job={job} 
+              onDelete={onDelete} 
+              isAdmin={isAdmin} 
+            />
+          </div>
         ))
       )}
     </div>

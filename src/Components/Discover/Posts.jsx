@@ -25,11 +25,12 @@ function Posts({ posts = [], onDelete, isAdmin }) {
     url: post.post_url,
     deadlines: post.deadline,
     image: post.image,
+    uploadDate: post.upload_time,
   }));
 
   return (
     <div className='flex flex-col w-full'>
-      <div className='grid grid-cols-1 gap-5 m-10 md:grid-cols-2 md:gap-10'>
+      <div className='grid grid-cols-1 gap-5 m-10 md:grid-cols-2 md:gap-8'>
         {postItems.length === 0 ? (
           <h1 className='flex justify-center items-center self-center font-semibold text-xl md:text-2xl lg:text-3xl col-span-2'>
             No posts found that match your criteria.
@@ -37,41 +38,53 @@ function Posts({ posts = [], onDelete, isAdmin }) {
         ) : (
           postItems.map((data, i) => (
             <div
-              className='flex justify-evenly mr-1 ml-1 md:mr-2 md:ml-2 lg:mr-4 lg:ml-2 cursor-pointer'
+              className='transition-shadow duration-300'
               key={i}
               onClick={() => handleCardClick(data.id)}
             >
-              <div className='border p-4 rounded-lg bg-gray-300 w-full shadow hover:shadow-lg transition-shadow'>
-                <div className='flex justify-between items-center mb-3'>
-                  <p className='font-bold text-lg'>{data.heading1}</p>
-                  {isAdmin && (
+              <div className='border p-4 rounded-lg bg-gray-300 w-full shadow hover:shadow-md transition-shadow cursor-pointer relative flex flex-col h-[550px]'>
+                {isAdmin && (
+                  <div className='absolute top-3 right-3 z-10'>
                     <DeleteIcon 
                       className='text-[#394dfd] cursor-pointer hover:text-red-500' 
                       onClick={(e) => handleDelete(e, data.id)} 
                     />
+                  </div>
+                )}
+                
+                <div className='flex justify-between items-center mb-3'>
+                  <p className='font-bold text-lg line-clamp-1'>{data.heading1}</p>
+                  {data.uploadDate && (
+                    <span className='text-xs text-gray-600'>
+                      {new Date(data.uploadDate).toLocaleDateString()}
+                    </span>
                   )}
                 </div>
                 
-                <div className='flex flex-col items-center mb-4'>
-                  <img src={data.image} alt={data.heading1} className='w-full h-80 object-cover rounded-lg mb-3' />
+                <div className='h-64 mb-4 flex-shrink-0'>
+                  <img 
+                    src={data.image} 
+                    alt={data.heading1} 
+                    className='w-full h-full object-cover rounded-lg transition-transform duration-300' 
+                  />
                 </div>
                 
-                <div className='mb-4'>
-                  <p className='text-sm md:text-base border-b-[1px] pb-3 border-custom-blue'>{data.body}</p>
+                <div className='mb-4 flex-grow overflow-hidden'>
+                  <p className='text-sm md:text-base pb-3 line-clamp-4'>{data.body}</p>
                 </div>
                 
                 {data.url && (
-                  <p className='font-medium text-base mb-3 text-custom-blue overflow-hidden text-ellipsis'>{data.url}</p>
+                  <p className='font-medium text-base mb-3 text-gray-700 overflow-hidden text-ellipsis hover:text-[#394dfd] line-clamp-1'>{data.url}</p>
                 )}
                 
-                <div className='flex justify-between mt-3'>
+                <div className='flex justify-between mt-auto'>
                   <div className='flex items-center'>
                     {data.icon}
-                    <p className='text-custom-blue font-medium ml-1'>{data.timelimit}</p>
+                    <p className='text-gray-700 font-medium ml-1'>{data.timelimit}</p>
                   </div>
-                  <p className='text-custom-blue font-medium'>{data.category}</p>
+                  <p className='text-gray-700 font-medium'>{data.category}</p>
                   {data.deadlines && (
-                    <p className='text-custom-blue font-medium'>{data.deadlines}</p>
+                    <p className='text-gray-700 font-medium'>{data.deadlines}</p>
                   )}
                 </div>
               </div>

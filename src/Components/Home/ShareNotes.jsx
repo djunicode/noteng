@@ -4,10 +4,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import { useAdmin } from './AdminContext';
+import DeleteConfirmationModal from '../Common/DeleteConfirmationModal';
 
 function ShareNotes() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState(null);
+  
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
   
@@ -43,16 +47,23 @@ function ShareNotes() {
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id, e) => {
+  const handleDelete = (id, e) => {
     e.stopPropagation();
+    setNoteToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`https://monilmeh.pythonanywhere.com/api/notes/${id}`, {
+      await axios.delete(`https://monilmeh.pythonanywhere.com/api/notes/${noteToDelete}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
      
-      setCardData((prevData) => prevData.filter((note) => note.id !== id));
+      setCardData((prevData) => prevData.filter((note) => note.id !== noteToDelete));
+      setDeleteModalOpen(false);
+      setNoteToDelete(null);
     } catch (error) {
       console.error('Error deleting note', error);
     }
@@ -79,7 +90,7 @@ function ShareNotes() {
         >
           See More
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
           </svg>
         </button>
       </div>
@@ -160,6 +171,12 @@ function ShareNotes() {
           ))}
         </div>
       )}
+      <DeleteConfirmationModal 
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemType="note"
+      />
     </section>
   );
 }

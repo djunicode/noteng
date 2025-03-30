@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Smartphone, MapPin, Briefcase, Trash2, Building, FileText } from 'lucide-react';
+import { Calendar, Clock, MapPin, Briefcase, Trash2, Building, FileText } from 'lucide-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import { useAdmin } from './AdminContext';
+import DeleteConfirmationModal from '../Common/DeleteConfirmationModal';
 
 function JobOpportunity() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [jobToDelete, setJobToDelete] = useState(null);
+  
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
   
@@ -54,15 +58,22 @@ function JobOpportunity() {
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id, e) => {
+  const handleDelete = (id, e) => {
     e.stopPropagation();
+    setJobToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`https://monilmeh.pythonanywhere.com/api/jobboard/${id}/`, {
+      await axios.delete(`https://monilmeh.pythonanywhere.com/api/jobboard/${jobToDelete}/`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+      setCardData((prevData) => prevData.filter((job) => job.id !== jobToDelete));
+      setDeleteModalOpen(false);
+      setJobToDelete(null);
     } catch (error) {
       console.error('Error deleting job', error);
     }
@@ -183,6 +194,12 @@ function JobOpportunity() {
           ))}
         </div>
       )}
+      <DeleteConfirmationModal 
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemType="job opportunity"
+      />
     </section>
   );
 }

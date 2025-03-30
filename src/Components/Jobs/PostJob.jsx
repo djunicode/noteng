@@ -3,7 +3,7 @@ import Sidebar from '../Home/Sidebar';
 import './PostJob.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Chip, Slider, TextField, FormControl, Select, MenuItem } from '@mui/material';
+import { Button, Chip, Slider, TextField, FormControl, Select, MenuItem, Alert, Snackbar } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import BackButton from '../../assets/BackButton.png';
@@ -12,6 +12,27 @@ import dayjs from 'dayjs';
 const PostJob = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  
+  const [notification, setNotification] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification({...notification, open: false});
+  };
+
+  const showNotification = (message, severity = 'success') => {
+    setNotification({
+      open: true,
+      message,
+      severity
+    });
+  };
 
   const JOB_TITLES = [
     'Software Engineer',
@@ -116,7 +137,7 @@ const PostJob = () => {
       });
 
       if (response.status === 201) {
-        alert('Job post created successfully!');
+        showNotification('Job post created successfully!');
         navigate('/');
         // Reset form
         setFormData({
@@ -136,11 +157,11 @@ const PostJob = () => {
           requirements: '',
         });
       } else {
-        alert('Failed to create job post');
+        showNotification('Failed to create job post', 'error');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      showNotification('An error occurred while uploading. Please try again later.', 'error');
     }
   };
 
@@ -150,7 +171,22 @@ const PostJob = () => {
   };
 
   return (
-    <div className='flex flex-col lg:flex-row h-full' onKeyPress={handleKeyPress}>
+    <div className='flex flex-col lg:flex-row h-full ml-2' onKeyPress={handleKeyPress}>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={6000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          sx={{ width: '100%' }}
+          variant="filled"
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
       <div className='flex flex-col ml-3 gap-4 w-full maincontent mb-10'>
         <div className='flex flex-col sm:flex-row items-center'>
           <Button className='h-20 items-left sm:items-center' onClick={handleGoBack}>

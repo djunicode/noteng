@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { Trash2, Video, Tag, GraduationCap, ExternalLink } from 'lucide-react';
 import Skeleton from '@mui/material/Skeleton';
 import { useAdmin } from './AdminContext';
+import DeleteConfirmationModal from '../Common/DeleteConfirmationModal';
 
 function SharedResources() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [resourceToDelete, setResourceToDelete] = useState(null);
+  
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
   
@@ -43,15 +47,22 @@ function SharedResources() {
     fetchData();
   }, [token]);
 
-  const handleDelete = async (id, e) => {
+  const handleDelete = (id, e) => {
     e.stopPropagation();
+    setResourceToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
     try {
-      await axios.delete(`https://monilmeh.pythonanywhere.com//api/videolinks/${id}`, {
+      await axios.delete(`https://monilmeh.pythonanywhere.com//api/videolinks/${resourceToDelete}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      setCardData((prevData) => prevData.filter((job) => job.id !== id));
+      setCardData((prevData) => prevData.filter((resource) => resource.id !== resourceToDelete));
+      setDeleteModalOpen(false);
+      setResourceToDelete(null);
     } catch (error) {
       console.error('Error deleting video resource', error);
     }
@@ -70,7 +81,7 @@ function SharedResources() {
         >
           See More
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a 1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
           </svg>
         </button>
       </div>
@@ -148,6 +159,12 @@ function SharedResources() {
           ))}
         </div>
       )}
+      <DeleteConfirmationModal 
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemType="video resource"
+      />
     </section>
   );
 }
