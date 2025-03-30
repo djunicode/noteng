@@ -7,11 +7,11 @@ import '../styles/profile.css';
 import MyJobs from '../Components/Profile/MyJobs';
 import MyPosts from '../Components/Profile/MyPosts';
 import MyNotes from '../Components/Profile/MyNotes';
-// import MyResources from '../Components/Profile/MyResources';
 import MyCard from '../Components/Profile/MyCard';
 import DescriptionProfile from '../Components/Profile/DescriptionProfile';
 import axios from 'axios';
-import MyVideos from '../Components/Profile/MyVideos'; // Import MyVideos component
+import MyVideos from '../Components/Profile/MyVideos';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -20,7 +20,9 @@ const Profile = () => {
   const [userPosts, setUserPosts] = useState([]);
   const [userJobs, setUserJobs] = useState([]);
   const [userVideos, setUserVideos] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('all'); // 'all', 'jobs', 'posts', 'notes', 'videos'
 
   const token = localStorage.getItem('token');
   const sapid = localStorage.getItem('sapid');
@@ -70,6 +72,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         // Fetch user data
         const userResponse = await axiosInstance.get('/auth/user/');
@@ -93,18 +96,103 @@ const Profile = () => {
         if (adminResponse.data) {
           setUserVideos(videosResponse.data.filter(video => video.user === sapid));
         }
-        console.log(userPosts);
+        
+        // Add a small delay for smoother transition from loading state
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
       } catch (error) {
         console.error('Error fetching data:', error);
+        setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [axiosInstance, sapid,userPosts]);
+  }, []);
 
   const handleGoBack = (event) => {
     event.preventDefault();
     navigate(-1);
+  };
+
+  // Animation variants for content sections
+  const contentVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+  };
+
+  // Render content based on active tab
+  const renderTabContent = () => {
+    switch(activeTab) {
+      case 'jobs':
+        return (
+          <motion.div
+            key="jobs"
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <MyJobs jobs={userJobs} onDelete={handleJobDelete} isLoading={isLoading} />
+          </motion.div>
+        );
+      case 'posts':
+        return (
+          <motion.div
+            key="posts"
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <MyPosts posts={userPosts} onDelete={handlePostDelete} isLoading={isLoading} />
+          </motion.div>
+        );
+      case 'notes':
+        return (
+          <motion.div
+            key="notes"
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <MyNotes notes={userNotes} isLoading={isLoading} />
+          </motion.div>
+        );
+      case 'videos':
+        if (isAdmin) {
+          return (
+            <motion.div
+              key="videos"
+              variants={contentVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <MyVideos videos={userVideos} isLoading={isLoading} />
+            </motion.div>
+          );
+        }
+        return null;
+      case 'all':
+      default:
+        return (
+          <motion.div
+            key="all"
+            variants={contentVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <MyJobs jobs={userJobs} onDelete={handleJobDelete} isLoading={isLoading} />
+            <MyPosts posts={userPosts} onDelete={handlePostDelete} isLoading={isLoading} />
+            <MyNotes notes={userNotes} isLoading={isLoading} />
+            {isAdmin && <MyVideos videos={userVideos} isLoading={isLoading} />}
+          </motion.div>
+        );
+    }
   };
 
   return (
@@ -113,15 +201,16 @@ const Profile = () => {
       <div className='flex flex-col maincontent'>
         <div className='flex flex-row'>
           <Button className='backButton' onClick={handleGoBack}>
-            <img src={BackButton} alt='Back' />
+            <img src={BackButton} alt='Back' className="transition-transform hover:scale-110" />
           </Button>
           <p className='ml-6 mt-10 flex items-center'>
             <span className='font-bold heading custom-heading'>My Profile</span>
           </p>
         </div>
         <hr className='full-width-hr mr-6 ml-6 mt-2 border-b-2 border-gray' />
-        <div className='flex flex-col overflow-y-scroll h-[100vh]'>
-          <MyCard userData={userData} />
+        
+        <div className='flex flex-col overflow-y-scroll h-[100vh] pb-10'>
+          <MyCard userData={userData} isLoading={isLoading} />
           <DescriptionProfile
             jobCount={userJobs.length}
             postCount={userPosts.length}
@@ -129,11 +218,73 @@ const Profile = () => {
             videoCount={userVideos.length}
             userData={userData}
             updateUser={setUserData}
+            isLoading={isLoading}
           />
-          <MyJobs jobs={userJobs} onDelete={handleJobDelete}/>
-          <MyPosts posts={userPosts} onDelete={handlePostDelete} />
-          <MyNotes notes={userNotes} />
-          {isAdmin && <MyVideos videos={userVideos} />} {/* Show MyVideos only if user is admin */}
+          
+          {/* Tab navigation */}
+          <div className="flex justify-center mb-6 mt-4 mx-6">
+            <div className="bg-white rounded-lg shadow-sm flex p-1 overflow-x-auto max-w-full">
+              <button
+                onClick={() => setActiveTab('all')}
+                className={`px-4 py-2 whitespace-nowrap rounded-md transition-all ${
+                  activeTab === 'all' 
+                    ? 'bg-custom-blue text-white font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                All Content
+              </button>
+              <button
+                onClick={() => setActiveTab('jobs')}
+                className={`px-4 py-2 whitespace-nowrap rounded-md transition-all ${
+                  activeTab === 'jobs' 
+                    ? 'bg-custom-blue text-white font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                Jobs
+              </button>
+              <button
+                onClick={() => setActiveTab('posts')}
+                className={`px-4 py-2 whitespace-nowrap rounded-md transition-all ${
+                  activeTab === 'posts' 
+                    ? 'bg-custom-blue text-white font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                Posts
+              </button>
+              <button
+                onClick={() => setActiveTab('notes')}
+                className={`px-4 py-2 whitespace-nowrap rounded-md transition-all ${
+                  activeTab === 'notes' 
+                    ? 'bg-custom-blue text-white font-medium' 
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                Notes
+              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => setActiveTab('videos')}
+                  className={`px-4 py-2 whitespace-nowrap rounded-md transition-all ${
+                    activeTab === 'videos' 
+                      ? 'bg-custom-blue text-white font-medium' 
+                      : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  Videos
+                </button>
+              )}
+            </div>
+          </div>
+          
+          {/* Content area with animations */}
+          <div className="mx-auto w-full">
+            <AnimatePresence mode="wait">
+              {renderTabContent()}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>

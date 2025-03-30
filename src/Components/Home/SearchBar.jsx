@@ -20,7 +20,7 @@ function SearchBar() {
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto mb-8 mt-6">
+    <div className="w-[80%] max-w-lg mx-auto mb-8 mt-20">
       <div className="relative flex items-center">
         <input
           type="text"
