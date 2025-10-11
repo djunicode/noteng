@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1013959968506",
+    "project_id": "noteng-f7046",
+    "storage_bucket": "noteng-f7046.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013959968506:android:6127b71f4476a83cd2eb43",
+        "android_client_info": {
+          "package_name": "com.djunicode.noteng"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALzTIxUsPhpngE__AdmDOeg8MV-3H-KO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

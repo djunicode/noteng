@@ -43,7 +43,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: secondaryAccentColor.withAlpha(100),

@@ -1,14 +1,22 @@
 import 'dart:async';
+import 'package:firebase_ai/firebase_ai.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noteng/data/User/userRepo.dart';
+import 'package:noteng/firebase_options.dart';
 import 'package:noteng/pages/Auth/intro_screen.dart';
 import 'package:noteng/pages/Home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/colors.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  
   runApp(const MyApp());
 }
 

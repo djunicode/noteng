@@ -11,6 +11,7 @@ import 'package:noteng/Widgets/textFieldWidget.dart';
 import 'package:noteng/constants/colors.dart';
 import 'package:noteng/data/Notes/notesModel.dart';
 import 'package:noteng/data/Notes/notesRepo.dart';
+import 'package:noteng/gemini/ai_function.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UploadNotes extends StatefulWidget {
@@ -208,9 +209,74 @@ class _UploadNotesState extends State<UploadNotes> {
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Notes Description",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Notes Description",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        // Make this async
+                        if (notesTitle.text.isEmpty ||
+                            notesSubject.text.isEmpty ||
+                            _selectedItem.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Please fill all fields"),
+                            ),
+                          );
+                          return;
+                        }
+
+                        // Check if file is selected
+                        if (result == null || result!.files.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Please select a file first"),
+                            ),
+                          );
+                          return;
+                        }
+
+                        try {
+                          // Show loading indicator
+                          LoadingBar.loadingDialog(context);
+
+                          // Call AI function and await response
+                          String? summary = await AiFunction()
+                              .summarizePdf(result!.files.first.path!);
+
+                          // Close loading dialog
+                          Get.back();
+
+                          // Update description text field if summary is not null
+                          if (summary != null) {
+                            setState(() {
+                              notesDescription.text = summary;
+                            });
+                          }
+                        } catch (e) {
+                          // Close loading dialog
+                          Get.back();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Error generating summary: ${e.toString()}"),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: secondaryAccentColor,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Text("Summarize with AI")),
+                    )
+                  ],
                 ),
               ),
               textFieldWidget(
